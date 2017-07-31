@@ -1,0 +1,888 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CF89F673-676D-4412-9728-1F7F013302EA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LBKJClient</RootNamespace>
+    <AssemblyName>LBKJClient</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>syslb.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\x86\Debug\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.9.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.3.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\20170721LBKJClientSVN\LBKJClient\bin\x86\Debug\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.104.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="addUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addUser.Designer.cs">
+      <DependentUpon>addUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="bean\allDataSer.cs" />
+    <Compile Include="bean\houseInfo.cs" />
+    <Compile Include="bean\loginLogBean.cs" />
+    <Compile Include="bean\showReportBean.cs" />
+    <Compile Include="bean\warningHandleBean.cs" />
+    <Compile Include="convenientSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="convenientSet.Designer.cs">
+      <DependentUpon>convenientSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dao\deleteInvalidDataDao.cs" />
+    <Compile Include="dao\houseTypeDao.cs" />
+    <Compile Include="dao\loginLogDao.cs" />
+    <Compile Include="dao\showReportDao.cs" />
+    <Compile Include="dataBackUpSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataBackUpSet.Designer.cs">
+      <DependentUpon>dataBackUpSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dataReduction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataReduction.Designer.cs">
+      <DependentUpon>dataReduction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dataSynchronous.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataSynchronous.Designer.cs">
+      <DependentUpon>dataSynchronous.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Exit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Exit.Designer.cs">
+      <DependentUpon>Exit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="houseCheckInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="houseCheckInfo.Designer.cs">
+      <DependentUpon>houseCheckInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="houseManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="houseManage.Designer.cs">
+      <DependentUpon>houseManage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="imgUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="imgUp.Designer.cs">
+      <DependentUpon>imgUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="insertHouseManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="insertHouseManage.Designer.cs">
+      <DependentUpon>insertHouseManage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ipPortSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ipPortSet.Designer.cs">
+      <DependentUpon>ipPortSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="loginLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="loginLog.Designer.cs">
+      <DependentUpon>loginLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="measurePointInsert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="measurePointInsert.Designer.cs">
+      <DependentUpon>measurePointInsert.cs</DependentUpon>
+    </Compile>
+    <Compile Include="measurePointSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="measurePointSet.Designer.cs">
+      <DependentUpon>measurePointSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="measurePointSetPropert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="measurePointSetPropert.Designer.cs">
+      <DependentUpon>measurePointSetPropert.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyEncrypt.cs" />
+    <Compile Include="NT88API.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\x86\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\x86\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\x86\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="passWordUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="passWordUpdate.Designer.cs">
+      <DependentUpon>passWordUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="readHistoryData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="readHistoryData.Designer.cs">
+      <DependentUpon>readHistoryData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="service\deleteInvalidDataService.cs" />
+    <Compile Include="service\houseTypeService.cs" />
+    <Compile Include="service\loginLogService.cs" />
+    <Compile Include="service\showReportService.cs" />
+    <Compile Include="showReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="showReport.Designer.cs">
+      <DependentUpon>showReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SmartApp.cs" />
+    <Compile Include="SmartX1Api.cs" />
+    <Compile Include="SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="updateHouseManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="updateHouseManage.Designer.cs">
+      <DependentUpon>updateHouseManage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="updateManageHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="updateManageHost.Designer.cs">
+      <DependentUpon>updateManageHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="addManageHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addManageHost.Designer.cs">
+      <DependentUpon>addManageHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="basicSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="basicSetup.Designer.cs">
+      <DependentUpon>basicSetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="bean\dataSerialization.cs" />
+    <Compile Include="bean\deviceInformation.cs" />
+    <Compile Include="bean\manageHose.cs" />
+    <Compile Include="bean\UserInfo.cs" />
+    <Compile Include="ChangeCompanyName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeCompanyName.Designer.cs">
+      <DependentUpon>ChangeCompanyName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeTitle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeTitle.Designer.cs">
+      <DependentUpon>ChangeTitle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="changGuiCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="changGuiCheck.Designer.cs">
+      <DependentUpon>changGuiCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CRC1.cs" />
+    <Compile Include="dao\addDataDao.cs" />
+    <Compile Include="dao\changGuicheckDao.cs" />
+    <Compile Include="dao\chartsDao.cs" />
+    <Compile Include="dao\deviceInformationDao.cs" />
+    <Compile Include="dao\manageHostDao.cs" />
+    <Compile Include="dao\rtmonitoringDao.cs" />
+    <Compile Include="dao\UserDao.cs" />
+    <Compile Include="dao\warningDao.cs" />
+    <Compile Include="frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTest.Designer.cs">
+      <DependentUpon>frmTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="graphCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="graphCheck.Designer.cs">
+      <DependentUpon>graphCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="historydata.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="historydata.Designer.cs">
+      <DependentUpon>historydata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="manageHoseSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="manageHoseSet.Designer.cs">
+      <DependentUpon>manageHoseSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="service\addDataService.cs" />
+    <Compile Include="service\changGuicheckService.cs" />
+    <Compile Include="service\chartsCheck.cs" />
+    <Compile Include="service\deviceInformationService.cs" />
+    <Compile Include="service\manageHostService.cs" />
+    <Compile Include="service\rtmonitoringService.cs" />
+    <Compile Include="service\UserService.cs" />
+    <Compile Include="service\warningCheckService.cs" />
+    <Compile Include="SQLiteHelper\SQLiteColumn.cs" />
+    <Compile Include="SQLiteHelper\SQLiteColumnList.cs" />
+    <Compile Include="SQLiteHelper\SQLiteHelper.cs" />
+    <Compile Include="SQLiteHelper\SQLiteTable.cs" />
+    <Compile Include="updateUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="updateUser.Designer.cs">
+      <DependentUpon>updateUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="userManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="userManage.Designer.cs">
+      <DependentUpon>userManage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="utils\DataBaseUtil.cs" />
+    <Compile Include="utils\DbHelperMySQL.cs" />
+    <Compile Include="utils\HttpClient.cs" />
+    <Compile Include="utils\SQLiteHelper.cs" />
+    <Compile Include="warningForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="warningForm.Designer.cs">
+      <DependentUpon>warningForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="warningHandle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="warningHandle.Designer.cs">
+      <DependentUpon>warningHandle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="warningHandleCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="warningHandleCheck.Designer.cs">
+      <DependentUpon>warningHandleCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="warningSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="warningSetup.Designer.cs">
+      <DependentUpon>warningSetup.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="addUser.resx">
+      <DependentUpon>addUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="convenientSet.resx">
+      <DependentUpon>convenientSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataBackUpSet.resx">
+      <DependentUpon>dataBackUpSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataReduction.resx">
+      <DependentUpon>dataReduction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataSynchronous.resx">
+      <DependentUpon>dataSynchronous.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Exit.resx">
+      <DependentUpon>Exit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="houseCheckInfo.resx">
+      <DependentUpon>houseCheckInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="houseManage.resx">
+      <DependentUpon>houseManage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="imgUp.resx">
+      <DependentUpon>imgUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="insertHouseManage.resx">
+      <DependentUpon>insertHouseManage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ipPortSet.resx">
+      <DependentUpon>ipPortSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="loginLog.resx">
+      <DependentUpon>loginLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="measurePointInsert.resx">
+      <DependentUpon>measurePointInsert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="measurePointSet.resx">
+      <DependentUpon>measurePointSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="measurePointSetPropert.resx">
+      <DependentUpon>measurePointSetPropert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="obj\Debug\LBKJClient.addManageHost.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.addUser.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.basicSetup.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.ChangeCompanyName.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.ChangeTitle.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.changGuiCheck.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.dataBackUpSet.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.dataReduction.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.frmLogin.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.frmMain.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.frmTest.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.graphCheck.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.historydata.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.houseCheckInfo.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.houseManage.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.imgUp.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.insertHouseManage.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.manageHoseSet.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.measurePointInsert.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.measurePointSet.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.measurePointSetPropert.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.passWordUpdate.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.Properties.Resources.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.updateHouseManage.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.updateManageHost.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.updateUser.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.userManage.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.warningForm.resources" />
+    <EmbeddedResource Include="obj\Debug\LBKJClient.warningSetup.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.addManageHost.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.addUser.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.basicSetup.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.ChangeCompanyName.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.ChangeTitle.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.changGuiCheck.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.dataBackUpSet.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.dataReduction.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.frmLogin.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.frmMain.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.frmTest.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.graphCheck.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.historydata.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.houseCheckInfo.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.houseManage.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.imgUp.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.insertHouseManage.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.manageHoseSet.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.measurePointInsert.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.measurePointSet.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.measurePointSetPropert.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.passWordUpdate.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.Properties.Resources.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.updateHouseManage.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.updateManageHost.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.updateUser.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.userManage.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.warningForm.resources" />
+    <EmbeddedResource Include="obj\Release\LBKJClient.warningSetup.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.addManageHost.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.addUser.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.basicSetup.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.ChangeCompanyName.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.ChangeTitle.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.changGuiCheck.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.dataBackUpSet.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.dataReduction.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.frmLogin.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.frmMain.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.frmTest.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.graphCheck.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.historydata.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.houseCheckInfo.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.houseManage.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.imgUp.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.insertHouseManage.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.manageHoseSet.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.measurePointInsert.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.measurePointSet.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.measurePointSetPropert.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.passWordUpdate.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.Properties.Resources.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.updateHouseManage.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.updateManageHost.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.updateUser.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.userManage.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.warningForm.resources" />
+    <EmbeddedResource Include="obj\x86\Debug\LBKJClient.warningSetup.resources" />
+    <EmbeddedResource Include="passWordUpdate.resx">
+      <DependentUpon>passWordUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="readHistoryData.resx">
+      <DependentUpon>readHistoryData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="showReport.resx">
+      <DependentUpon>showReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="updateHouseManage.resx">
+      <DependentUpon>updateHouseManage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="updateManageHost.resx">
+      <DependentUpon>updateManageHost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="addManageHost.resx">
+      <DependentUpon>addManageHost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="basicSetup.resx">
+      <DependentUpon>basicSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeCompanyName.resx">
+      <DependentUpon>ChangeCompanyName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeTitle.resx">
+      <DependentUpon>ChangeTitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="changGuiCheck.resx">
+      <DependentUpon>changGuiCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTest.resx">
+      <DependentUpon>frmTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="graphCheck.resx">
+      <DependentUpon>graphCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="historydata.resx">
+      <DependentUpon>historydata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="manageHoseSet.resx">
+      <DependentUpon>manageHoseSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="updateUser.resx">
+      <DependentUpon>updateUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="userManage.resx">
+      <DependentUpon>userManage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="warningForm.resx">
+      <DependentUpon>warningForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="warningHandle.resx">
+      <DependentUpon>warningHandle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="warningHandleCheck.resx">
+      <DependentUpon>warningHandleCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="warningSetup.resx">
+      <DependentUpon>warningSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="bin\Debug\fonts\SIMYOU.TTF" />
+    <None Include="bin\Debug\LBKJClient.exe.config" />
+    <None Include="bin\Debug\LBKJClient.vshost.exe.config" />
+    <None Include="bin\Debug\new.db" />
+    <None Include="bin\Release\LBKJClient.exe.config" />
+    <None Include="bin\Release\LBKJClient.vshost.exe.config" />
+    <None Include="bin\x86\Debug\LBKJClient.exe.config" />
+    <None Include="bin\x86\Debug\LBKJClient.vshost.exe.config" />
+    <None Include="bin\x86\Release\fonts\simhei.ttf" />
+    <None Include="bin\x86\Release\fonts\SIMYOU.TTF" />
+    <None Include="bin\x86\Release\Help\科台斯冷藏车带打印报警说明书-20140702.pdf" />
+    <None Include="bin\x86\Release\Help\管理主机使用说明-20140709.pdf" />
+    <None Include="bin\x86\Release\LBKJClient.exe.config" />
+    <None Include="bin\x86\Release\LBKJClient.vshost.exe.config" />
+    <None Include="bin\x86\Release\new.baw" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="bin\Debug\fonts\simhei.ttf" />
+    <None Include="lbkj.db" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\LBKJClient.csproj.GenerateResource.Cache" />
+    <None Include="obj\Debug\LBKJClient.csprojResolveAssemblyReference.cache" />
+    <None Include="obj\Release\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Release\LBKJClient.csproj.GenerateResource.Cache" />
+    <None Include="obj\x86\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\x86\Debug\LBKJClient.csproj.GenerateResource.Cache" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\automateBackupTimes.txt" />
+    <Content Include="bin\Debug\companynemInfo.txt" />
+    <Content Include="bin\Debug\config.xml" />
+    <Content Include="bin\Debug\EntityFramework.dll" />
+    <Content Include="bin\Debug\EnvDTE.dll" />
+    <Content Include="bin\Debug\images\assign.png" />
+    <Content Include="bin\Debug\images\bj.png" />
+    <Content Include="bin\Debug\images\cancel.png" />
+    <Content Include="bin\Debug\images\cd1.png" />
+    <Content Include="bin\Debug\images\cd2.png" />
+    <Content Include="bin\Debug\images\cd3.png" />
+    <Content Include="bin\Debug\images\check.png" />
+    <Content Include="bin\Debug\images\close.png" />
+    <Content Include="bin\Debug\images\delete.png" />
+    <Content Include="bin\Debug\images\exit.jpg" />
+    <Content Include="bin\Debug\images\fangzi.png" />
+    <Content Include="bin\Debug\images\fangzi2.png" />
+    <Content Include="bin\Debug\images\fangzi3.png" />
+    <Content Include="bin\Debug\images\inputcontent.png" />
+    <Content Include="bin\Debug\images\insert.png" />
+    <Content Include="bin\Debug\images\login.png" />
+    <Content Include="bin\Debug\images\login1.png" />
+    <Content Include="bin\Debug\images\null.png" />
+    <Content Include="bin\Debug\images\password.png" />
+    <Content Include="bin\Debug\images\save.png" />
+    <Content Include="bin\Debug\images\shezhi.png" />
+    <Content Include="bin\Debug\images\tuichu.png" />
+    <Content Include="bin\Debug\images\update.png" />
+    <Content Include="bin\Debug\images\versions.png" />
+    <Content Include="bin\Debug\images\zc.png" />
+    <Content Include="bin\Debug\itextsharp.dll" />
+    <Content Include="bin\Debug\LBKJClient.exe" />
+    <Content Include="bin\Debug\LBKJClient.pdb" />
+    <Content Include="bin\Debug\LBKJClient.vshost.exe" />
+    <Content Include="bin\Debug\manualBackupTimes.txt" />
+    <Content Include="bin\Debug\Microsoft.MSXML.dll" />
+    <Content Include="bin\Debug\Microsoft.VisualStudio.ComponentModelHost.dll" />
+    <Content Include="bin\Debug\Microsoft.VisualStudio.GraphModel.dll" />
+    <Content Include="bin\Debug\Microsoft.VisualStudio.VSHelp.dll" />
+    <Content Include="bin\Debug\PdfSharp.Charting.dll" />
+    <Content Include="bin\Debug\PdfSharp.dll" />
+    <Content Include="bin\Debug\SQLite.Designer.dll" />
+    <Content Include="bin\Debug\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\sqlite3.exe" />
+    <Content Include="bin\Debug\stdole.dll" />
+    <Content Include="bin\Debug\System.Data.SQLite.dll" />
+    <Content Include="bin\Debug\System.Data.SQLite.Linq.dll" />
+    <Content Include="bin\Debug\titleInfo.txt" />
+    <Content Include="bin\Debug\zh-Hans\Microsoft.VisualStudio.GraphModel.resources.dll" />
+    <Content Include="bin\Release\bin\Debug\SQLite.Interop.dll" />
+    <Content Include="bin\Release\EntityFramework.dll" />
+    <Content Include="bin\Release\itextsharp.dll" />
+    <Content Include="bin\Release\LBKJClient.exe" />
+    <Content Include="bin\Release\LBKJClient.pdb" />
+    <Content Include="bin\Release\LBKJClient.vshost.exe" />
+    <Content Include="bin\Release\System.Data.SQLite.dll" />
+    <Content Include="bin\x86\Debug\EntityFramework.dll" />
+    <Content Include="bin\x86\Debug\EnvDTE.dll" />
+    <Content Include="bin\x86\Debug\itextsharp.dll" />
+    <Content Include="bin\x86\Debug\LBKJClient.exe" />
+    <Content Include="bin\x86\Debug\LBKJClient.pdb" />
+    <Content Include="bin\x86\Debug\LBKJClient.vshost.exe" />
+    <Content Include="bin\x86\Debug\Microsoft.MSXML.dll" />
+    <Content Include="bin\x86\Debug\Microsoft.VisualStudio.ComponentModelHost.dll" />
+    <Content Include="bin\x86\Debug\Microsoft.VisualStudio.GraphModel.dll" />
+    <Content Include="bin\x86\Debug\Microsoft.VisualStudio.VSHelp.dll" />
+    <Content Include="bin\x86\Debug\SQLite.Designer.dll" />
+    <Content Include="bin\x86\Debug\SQLite.Interop.dll" />
+    <Content Include="bin\x86\Debug\stdole.dll" />
+    <Content Include="bin\x86\Debug\System.Data.SQLite.dll" />
+    <Content Include="bin\x86\Debug\zh-Hans\Microsoft.VisualStudio.GraphModel.resources.dll" />
+    <Content Include="bin\x86\MySql.Data.dll" />
+    <Content Include="bin\x86\Release\automateBackupTimes.txt" />
+    <Content Include="bin\x86\Release\bin\Debug\SQLite.Interop.dll" />
+    <Content Include="bin\x86\Release\companynemInfo.txt" />
+    <Content Include="bin\x86\Release\config.xml" />
+    <Content Include="bin\x86\Release\EntityFramework.dll" />
+    <Content Include="bin\x86\Release\EnvDTE.dll" />
+    <Content Include="bin\x86\Release\images\about.png" />
+    <Content Include="bin\x86\Release\images\assign.png" />
+    <Content Include="bin\x86\Release\images\bj.png" />
+    <Content Include="bin\x86\Release\images\bjcl.png" />
+    <Content Include="bin\x86\Release\images\c2ce.jpg" />
+    <Content Include="bin\x86\Release\images\cancel.png" />
+    <Content Include="bin\x86\Release\images\cd.png" />
+    <Content Include="bin\x86\Release\images\cd1.png" />
+    <Content Include="bin\x86\Release\images\cd2.png" />
+    <Content Include="bin\x86\Release\images\cd3.png" />
+    <Content Include="bin\x86\Release\images\cdbc.png" />
+    <Content Include="bin\x86\Release\images\cdbj.png" />
+    <Content Include="bin\x86\Release\images\cdkong.png" />
+    <Content Include="bin\x86\Release\images\check.png" />
+    <Content Include="bin\x86\Release\images\Chrysanthemum.jpg" />
+    <Content Include="bin\x86\Release\images\clear.png" />
+    <Content Include="bin\x86\Release\images\close.png" />
+    <Content Include="bin\x86\Release\images\ddbj.png" />
+    <Content Include="bin\x86\Release\images\delete.png" />
+    <Content Include="bin\x86\Release\images\Desert.jpg" />
+    <Content Include="bin\x86\Release\images\dqjl.png" />
+    <Content Include="bin\x86\Release\images\exit.jpg" />
+    <Content Include="bin\x86\Release\images\fangzi.png" />
+    <Content Include="bin\x86\Release\images\fangzi2.png" />
+    <Content Include="bin\x86\Release\images\fangzi3.png" />
+    <Content Include="bin\x86\Release\images\fanhui.png" />
+    <Content Include="bin\x86\Release\images\hover.png" />
+    <Content Include="bin\x86\Release\images\Hydrangeas.jpg" />
+    <Content Include="bin\x86\Release\images\ico06.png" />
+    <Content Include="bin\x86\Release\images\inputcontent.png" />
+    <Content Include="bin\x86\Release\images\insert.png" />
+    <Content Include="bin\x86\Release\images\Jellyfish.jpg" />
+    <Content Include="bin\x86\Release\images\Koala.jpg" />
+    <Content Include="bin\x86\Release\images\kong.png" />
+    <Content Include="bin\x86\Release\images\kongku.png" />
+    <Content Include="bin\x86\Release\images\Lighthouse.jpg" />
+    <Content Include="bin\x86\Release\images\login.png" />
+    <Content Include="bin\x86\Release\images\login1.png" />
+    <Content Include="bin\x86\Release\images\null.png" />
+    <Content Include="bin\x86\Release\images\password.png" />
+    <Content Include="bin\x86\Release\images\Penguins.jpg" />
+    <Content Include="bin\x86\Release\images\read.png" />
+    <Content Include="bin\x86\Release\images\save.png" />
+    <Content Include="bin\x86\Release\images\shezhi.png" />
+    <Content Include="bin\x86\Release\images\sjtb.png" />
+    <Content Include="bin\x86\Release\images\startPic.png" />
+    <Content Include="bin\x86\Release\images\stop.png" />
+    <Content Include="bin\x86\Release\images\tpbc.png" />
+    <Content Include="bin\x86\Release\images\tpsc.png" />
+    <Content Include="bin\x86\Release\images\tuichu.png" />
+    <Content Include="bin\x86\Release\images\Tulips.jpg" />
+    <Content Include="bin\x86\Release\images\update.png" />
+    <Content Include="bin\x86\Release\images\versions.png" />
+    <Content Include="bin\x86\Release\images\xzwj.png" />
+    <Content Include="bin\x86\Release\images\zc.png" />
+    <Content Include="bin\x86\Release\itextsharp.dll" />
+    <Content Include="bin\x86\Release\LBKJClient.exe" />
+    <Content Include="bin\x86\Release\LBKJClient.pdb" />
+    <Content Include="bin\x86\Release\LBKJClient.vshost.exe" />
+    <Content Include="bin\x86\Release\manualBackupTimes.txt" />
+    <Content Include="bin\x86\Release\Microsoft.MSXML.dll" />
+    <Content Include="bin\x86\Release\Microsoft.VisualStudio.ComponentModelHost.dll" />
+    <Content Include="bin\x86\Release\Microsoft.VisualStudio.GraphModel.dll" />
+    <Content Include="bin\x86\Release\Microsoft.VisualStudio.VSHelp.dll" />
+    <Content Include="bin\x86\Release\NT88.X64.dll" />
+    <Content Include="bin\x86\Release\NT88.X86.dll" />
+    <Content Include="bin\x86\Release\PdfSharp.Charting.dll" />
+    <Content Include="bin\x86\Release\PdfSharp.dll" />
+    <Content Include="bin\x86\Release\SmartX1App.dll" />
+    <Content Include="bin\x86\Release\SmartX1AppX64.dll" />
+    <Content Include="bin\x86\Release\SQLite.Designer.dll" />
+    <Content Include="bin\x86\Release\SQLite.Interop.dll" />
+    <Content Include="bin\x86\Release\sqlite3.exe" />
+    <Content Include="bin\x86\Release\stdole.dll" />
+    <Content Include="bin\x86\Release\System.Data.SQLite.dll" />
+    <Content Include="bin\x86\Release\System.Data.SQLite.Linq.dll" />
+    <Content Include="bin\x86\Release\titleInfo.txt" />
+    <Content Include="bin\x86\Release\zh-Hans\Microsoft.VisualStudio.GraphModel.resources.dll" />
+    <Content Include="obj\Debug\LBKJClient.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\LBKJClient.exe" />
+    <Content Include="obj\Debug\LBKJClient.pdb" />
+    <Content Include="obj\Debug\TempPE\Properties.Resources.Designer.cs.dll" />
+    <Content Include="obj\Release\LBKJClient.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Release\LBKJClient.exe" />
+    <Content Include="obj\Release\LBKJClient.pdb" />
+    <Content Include="obj\Release\TempPE\Properties.Resources.Designer.cs.dll" />
+    <Content Include="obj\x86\Debug\LBKJClient.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\x86\Debug\LBKJClient.exe" />
+    <Content Include="obj\x86\Debug\LBKJClient.pdb" />
+    <Content Include="obj\x86\Debug\TempPE\Properties.Resources.Designer.cs.dll" />
+    <Content Include="syslb.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\de\" />
+    <Folder Include="bin\x64\Debug\" />
+    <Folder Include="bin\x64\Release\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
