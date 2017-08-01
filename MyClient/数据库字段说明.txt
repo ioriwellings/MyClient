@@ -1,0 +1,164 @@
+#基础数据表
+CREATE TABLE `lb_base_data_home` (
+	`id`	varchar(36) NOT NULL,     #编号
+	`measureCode`	varchar(2000),				        #管理主机编号
+
+	`meterNo`	varchar(2000),					#仪表编号
+	`temperature`	float,					#温度
+	`humidity`	float,					#湿度
+	`lng`	varchar(2000),						#经度
+	`lat`	varchar(2000),						#纬度
+
+	`warnState`	varchar(2000),					#历史数据断电报警标识（查询数据用）
+
+	`sign`	varchar(2000),						#实时数据断电报警标识（首页实时数据断电标识用）
+
+	`devtime`	datetime,					#采集时间（查询用）
+	`createDate`	datetime,					#创建时间
+	`measureMeterCode`	varchar(2000),				#管理主机编号+测点编号作为唯一标识
+	`warningistrue`	varchar(2000),					#温湿度上下限报警标识
+	`houseinterval`	varchar(2000),					#库房设备存储间隔标识
+	`carinterval`	varchar(2000),					#车载设备存储间隔标识
+PRIMARY KEY (`id`),
+INDEX `indexdevtime` (`devtime`, `meterNo`) 
+);
+#空库
+CREATE TABLE `lb_empty_data` (
+	`id`	varchar(36) NOT NULL,     #编号
+	`measureCode`	varchar(2000),				        #管理主机编号
+
+	`meterNo`	varchar(2000),					#仪表编号
+	`temperature`	float,					#温度
+	`humidity`	float,					#湿度
+	`lng`	varchar(2000),						#经度
+	`lat`	varchar(2000),						#纬度
+
+	`warnState`	varchar(2000),					#历史数据断电报警标识（查询数据用）
+
+	`sign`	varchar(2000),						#实时数据断电报警标识（首页实时数据断电标识用）
+
+	`devtime`	datetime,					#采集时间（查询用）
+	`createDate`	datetime,					#创建时间
+	`measureMeterCode`	varchar(2000),				#管理主机编号+测点编号作为唯一标识
+	`warningistrue`	varchar(2000),					#温湿度上下限报警标识
+	`houseinterval`	varchar(2000),					#库房设备存储间隔标识
+	`carinterval`	varchar(2000),					#车载设备存储间隔标识
+PRIMARY KEY (`id`),
+INDEX `indexdevtime` (`devtime`, `meterNo`) 
+);
+#预警
+CREATE TABLE `lb_warning_data` (
+	`id`	varchar(36) NOT NULL,     #编号
+	`measureCode`	varchar(2000),				        #管理主机编号
+
+	`meterNo`	varchar(2000),					#仪表编号
+	`temperature`	float,					#温度
+	`humidity`	float,					#湿度
+	`lng`	varchar(2000),						#经度
+	`lat`	varchar(2000),						#纬度
+
+	`warnState`	varchar(2000),					#历史数据断电报警标识（查询数据用）
+
+	`sign`	varchar(2000),						#实时数据断电报警标识（首页实时数据断电标识用）
+
+	`devtime`	datetime,					#采集时间（查询用）
+	`createDate`	datetime,					#创建时间
+	`measureMeterCode`	varchar(2000),				#管理主机编号+测点编号作为唯一标识
+	`warningistrue`	varchar(2000),					#温湿度上下限报警标识
+	`houseinterval`	varchar(2000),					#库房设备存储间隔标识
+	`carinterval`	varchar(2000),					#车载设备存储间隔标识
+PRIMARY KEY (`id`),
+INDEX `indexdevtime` (`devtime`, `meterNo`) 
+);
+
+#测点信息表
+CREATE TABLE `lb_device_information` (
+	`id`	varchar(36)  NOT NULL,	#编号
+	`measureCode`	varchar(2000),					#管理主机号
+	`meterNo`	varchar(2000),					#仪表号
+	`house_code`	varchar(2000),					#库房类型号
+
+	`terminalname`	varchar(2000),					#测点名称
+
+	`t_high`	float,					#温度上限
+	`t_low`	float,                                          #温度下限
+	`h_high`	float,                                  #湿度上限
+	`h_low`	float,                                          #湿度下限
+
+	`createtime`	datetime,                              #创建时间
+
+	`powerflag`	varchar(2000),                                   #是否为空库（0非空库）
+PRIMARY KEY (`id`)
+);
+
+#库房类型表
+CREATE TABLE `lb_house_type` (
+	`id`	varchar(36)  NOT NULL,
+	`name`	varchar(2000),                                            #库房类型名称
+	`t_high`	varchar(2000),                                   # 温度上限
+	`t_low`	varchar(2000),                                            #温度下限
+	`h_high`	varchar(2000),                                    #湿度上限
+	`h_low`	varchar(2000),                                            #湿度下限
+	`imgPath`	varchar(2000),                                    #图片地址
+	`isUsed`	INTEGER                                  #是否启用
+,PRIMARY KEY (`id`)
+);
+
+#登录日志表
+CREATE TABLE `lb_login_log` (
+	`id`	INTEGER NOT NULL,
+	`name`	varchar(2000),                                           #名称
+	`createTime`	datetime,                                   #创建时间
+	`eventInfo`	varchar(2000)                                    #事件
+,PRIMARY KEY (`id`)
+); 
+
+#管理主机信息表
+CREATE TABLE `lb_managehost_info` (
+	`id`	varchar(36)  NOT NULL,
+	`hostName`	varchar(2000),                                #主机名称
+	`hostAddress`	varchar(2000),                                #主机地址
+	`CommunicationType`	varchar(2000),                        #通讯类型
+	`serialPort`	varchar(2000),                                #无用
+	`portNumber`	varchar(2000),                                #测点数量                               
+	`storeType`	varchar(2000),                                #仓储类型
+	`measureCode`	varchar(2000),                                #主机编号
+	`createTime`	datetime,                                #创建时间
+	`houseType`	varchar(2000)                                 #库房类型
+,PRIMARY KEY (`id`)
+);
+
+#连接状态 显示报告表
+CREATE TABLE `lb_show_report` (
+	`id`	varchar(36)  NOT NULL,
+	`createTime`	datetime,                                 #创建时间
+	`eventInfo`	varchar(2000),                                 #事件
+	`type`	varchar(2000)                                          #类型
+,PRIMARY KEY (`id`)
+);
+
+#报警处理表
+CREATE TABLE `lb_warning_handle` (
+	`id`	varchar(36)  NOT NULL,
+	`handleUser`	varchar(2000),                                #处理人名称
+	`warningTime`	datetime,                                #报警时间
+	`handleTime`	varchar(2000),                                #处理时间
+	`handleType`	varchar(2000),                                #报警类型
+	`handleResult`	varchar(2000),                                #处理结果
+	`handleTetails`	varchar(2000),                                #处理描述
+	`createTime`	datetime,                                #创建时间
+	`measureMeterCode`	varchar(2000)                         #测点编号
+,PRIMARY KEY (`id`)
+);
+
+#用户信息表
+CREATE TABLE `userinfo` (
+	`id`	varchar(36)  NOT NULL ,
+	`name`	varchar(2000),                                         #用户名称
+	`pwd`	varchar(2000),                                         #用户密码
+	`enable`	INTEGER,                              #是否可用
+	`auth`	INTEGER,                                      #等级权限
+	`createTime`	datetime,                                 #创建时间
+	`power`	varchar(2000)                                          #菜单权限
+,PRIMARY KEY (`id`)
+);

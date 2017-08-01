@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace BOYA.CRMS.Common
 {
     /// <summary>
-    /// 数据访问抽象基础类
+    /// 数据访问抽象基础类 
     /// </summary>
     public static class DbHelperMySQL
     {
