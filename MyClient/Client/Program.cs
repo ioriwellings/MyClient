@@ -17,20 +17,20 @@ namespace LBKJClient
         [STAThread]
         static void Main()
         {
-            int vv = 1;
+            int vv = 0;
             //int[] keyHandles = new int[8];
             //int[] keyNumber = new int[8];
             //SmartApp smart = new SmartApp();
             //vv = smart.SmartX1Find("GSPAutoMonitor", keyHandles, keyNumber);
 
-            if (IntPtr.Size == 4)
-            {
-                vv = NT88_X86.NTFindFirst("longbangrj716");
-            }
-            else
-            {
-                vv = NT88_X64.NTFindFirst("longbangrj716");
-            }
+            //if (IntPtr.Size == 4)
+            //{
+            //    vv = NT88_X86.NTFindFirst("longbangrj716");
+            //}
+            //else
+            //{
+            //    vv = NT88_X64.NTFindFirst("longbangrj716");
+            //}
             if (vv != 0)
             {
                 //MessageBox.Show("系统程序未检测到加密狗，请插入加密狗或联系售后人员！");
