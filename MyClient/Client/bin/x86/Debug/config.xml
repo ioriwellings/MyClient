@@ -9,15 +9,9 @@
   </user>
   <passd>
   </passd>
-  <stoptime>170729182336</stoptime>
-  <starttime>170729182321</starttime>
+  <stoptime>170801180218</stoptime>
+  <starttime>170731152957</starttime>
   <communicationType>1-COM7</communicationType>
-  <stoptime>170622211009</stoptime>
-  <starttime>170622195012</starttime>
-  <communicationType>1-COM4</communicationType>
-  <stoptime>170718103158</stoptime>
-  <starttime>170718103145</starttime>
-  <communicationType>1-COM9</communicationType>
   <communicationTcpType>123456789-1111</communicationTcpType>
   <datarefreshtime>60</datarefreshtime>
   <datasavetime>60</datasavetime>
@@ -29,6 +23,4 @@
   <autosave16>0</autosave16>
   <autoSizeX>220</autoSizeX>
   <autoSizeY>185</autoSizeY>
-  <autoSizeX>180</autoSizeX>
-  <autoSizeY>155</autoSizeY>
 </config>

@@ -276,3 +276,5 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+/Client/obj/x86/Debug/LBKJClient.exe
+/Client/bin/x86/Debug/LBKJClient.exe
