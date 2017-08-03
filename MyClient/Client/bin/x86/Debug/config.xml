@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <!--<username>60.205.85.233</username>
+  <password>8991</password>-->
+  <username>123.56.205.200</username>
+  <password>8991</password>
+  <historyDataIport>47.94.112.2:8992/history</historyDataIport>
+  <user>
+  </user>
+  <passd>
+  </passd>
+  <stoptime>170729182336</stoptime>
+  <starttime>170729182321</starttime>
+  <communicationType>1-COM7</communicationType>
+  <stoptime>170622211009</stoptime>
+  <starttime>170622195012</starttime>
+  <communicationType>1-COM4</communicationType>
+  <stoptime>170718103158</stoptime>
+  <starttime>170718103145</starttime>
+  <communicationType>1-COM9</communicationType>
+  <communicationTcpType>123456789-1111</communicationTcpType>
+  <datarefreshtime>60</datarefreshtime>
+  <datasavetime>60</datasavetime>
+  <datahousesavetime>30</datahousesavetime>
+  <databasetimer>1</databasetimer>
+  <carsavetime>5</carsavetime>
+  <log>1</log>
+  <autosave02>0</autosave02>
+  <autosave16>0</autosave16>
+  <autoSizeX>220</autoSizeX>
+  <autoSizeY>185</autoSizeY>
+  <autoSizeX>180</autoSizeX>
+  <autoSizeY>155</autoSizeY>
+</config>

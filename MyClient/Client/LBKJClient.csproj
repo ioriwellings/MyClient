@@ -244,12 +244,6 @@
     </Compile>
     <Compile Include="MyEncrypt.cs" />
     <Compile Include="NT88API.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
-    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="obj\x86\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\x86\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\x86\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
@@ -476,64 +470,6 @@
     <EmbeddedResource Include="measurePointSetPropert.resx">
       <DependentUpon>measurePointSetPropert.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="obj\Debug\LBKJClient.addManageHost.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.addUser.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.basicSetup.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.ChangeCompanyName.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.ChangeTitle.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.changGuiCheck.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.dataBackUpSet.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.dataReduction.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.frmLogin.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.frmMain.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.frmTest.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.graphCheck.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.historydata.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.houseCheckInfo.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.houseManage.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.imgUp.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.insertHouseManage.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.manageHoseSet.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.measurePointInsert.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.measurePointSet.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.measurePointSetPropert.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.passWordUpdate.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.Properties.Resources.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.updateHouseManage.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.updateManageHost.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.updateUser.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.userManage.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.warningForm.resources" />
-    <EmbeddedResource Include="obj\Debug\LBKJClient.warningSetup.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.addManageHost.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.addUser.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.basicSetup.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.ChangeCompanyName.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.ChangeTitle.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.changGuiCheck.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.dataBackUpSet.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.dataReduction.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.frmLogin.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.frmMain.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.frmTest.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.graphCheck.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.historydata.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.houseCheckInfo.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.houseManage.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.imgUp.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.insertHouseManage.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.manageHoseSet.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.measurePointInsert.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.measurePointSet.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.measurePointSetPropert.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.passWordUpdate.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.Properties.Resources.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.updateHouseManage.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.updateManageHost.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.updateUser.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.userManage.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.warningForm.resources" />
-    <EmbeddedResource Include="obj\Release\LBKJClient.warningSetup.resources" />
     <EmbeddedResource Include="obj\x86\Debug\LBKJClient.addManageHost.resources" />
     <EmbeddedResource Include="obj\x86\Debug\LBKJClient.addUser.resources" />
     <EmbeddedResource Include="obj\x86\Debug\LBKJClient.basicSetup.resources" />
@@ -642,12 +578,6 @@
     <EmbeddedResource Include="warningSetup.resx">
       <DependentUpon>warningSetup.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="bin\Debug\fonts\SIMYOU.TTF" />
-    <None Include="bin\Debug\LBKJClient.exe.config" />
-    <None Include="bin\Debug\LBKJClient.vshost.exe.config" />
-    <None Include="bin\Debug\new.db" />
-    <None Include="bin\Release\LBKJClient.exe.config" />
-    <None Include="bin\Release\LBKJClient.vshost.exe.config" />
     <None Include="bin\x86\Debug\LBKJClient.exe.config" />
     <None Include="bin\x86\Debug\LBKJClient.vshost.exe.config" />
     <None Include="bin\x86\Release\fonts\simhei.ttf" />
@@ -658,15 +588,7 @@
     <None Include="bin\x86\Release\LBKJClient.vshost.exe.config" />
     <None Include="bin\x86\Release\new.baw" />
     <None Include="ClassDiagram1.cd" />
-    <None Include="bin\Debug\fonts\simhei.ttf" />
     <None Include="lbkj.db" />
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\LBKJClient.csproj.GenerateResource.Cache" />
-    <None Include="obj\Debug\LBKJClient.csprojResolveAssemblyReference.cache" />
-    <None Include="obj\Release\DesignTimeResolveAssemblyReferences.cache" />
-    <None Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Release\LBKJClient.csproj.GenerateResource.Cache" />
     <None Include="obj\x86\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="obj\x86\Debug\LBKJClient.csproj.GenerateResource.Cache" />
     <None Include="Properties\Settings.settings">
@@ -688,64 +610,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\automateBackupTimes.txt" />
-    <Content Include="bin\Debug\companynemInfo.txt" />
-    <Content Include="bin\Debug\config.xml" />
-    <Content Include="bin\Debug\EntityFramework.dll" />
-    <Content Include="bin\Debug\EnvDTE.dll" />
-    <Content Include="bin\Debug\images\assign.png" />
-    <Content Include="bin\Debug\images\bj.png" />
-    <Content Include="bin\Debug\images\cancel.png" />
-    <Content Include="bin\Debug\images\cd1.png" />
-    <Content Include="bin\Debug\images\cd2.png" />
-    <Content Include="bin\Debug\images\cd3.png" />
-    <Content Include="bin\Debug\images\check.png" />
-    <Content Include="bin\Debug\images\close.png" />
-    <Content Include="bin\Debug\images\delete.png" />
-    <Content Include="bin\Debug\images\exit.jpg" />
-    <Content Include="bin\Debug\images\fangzi.png" />
-    <Content Include="bin\Debug\images\fangzi2.png" />
-    <Content Include="bin\Debug\images\fangzi3.png" />
-    <Content Include="bin\Debug\images\inputcontent.png" />
-    <Content Include="bin\Debug\images\insert.png" />
-    <Content Include="bin\Debug\images\login.png" />
-    <Content Include="bin\Debug\images\login1.png" />
-    <Content Include="bin\Debug\images\null.png" />
-    <Content Include="bin\Debug\images\password.png" />
-    <Content Include="bin\Debug\images\save.png" />
-    <Content Include="bin\Debug\images\shezhi.png" />
-    <Content Include="bin\Debug\images\tuichu.png" />
-    <Content Include="bin\Debug\images\update.png" />
-    <Content Include="bin\Debug\images\versions.png" />
-    <Content Include="bin\Debug\images\zc.png" />
-    <Content Include="bin\Debug\itextsharp.dll" />
-    <Content Include="bin\Debug\LBKJClient.exe" />
-    <Content Include="bin\Debug\LBKJClient.pdb" />
-    <Content Include="bin\Debug\LBKJClient.vshost.exe" />
-    <Content Include="bin\Debug\manualBackupTimes.txt" />
-    <Content Include="bin\Debug\Microsoft.MSXML.dll" />
-    <Content Include="bin\Debug\Microsoft.VisualStudio.ComponentModelHost.dll" />
-    <Content Include="bin\Debug\Microsoft.VisualStudio.GraphModel.dll" />
-    <Content Include="bin\Debug\Microsoft.VisualStudio.VSHelp.dll" />
-    <Content Include="bin\Debug\PdfSharp.Charting.dll" />
-    <Content Include="bin\Debug\PdfSharp.dll" />
-    <Content Include="bin\Debug\SQLite.Designer.dll" />
-    <Content Include="bin\Debug\SQLite.Interop.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\sqlite3.exe" />
-    <Content Include="bin\Debug\stdole.dll" />
-    <Content Include="bin\Debug\System.Data.SQLite.dll" />
-    <Content Include="bin\Debug\System.Data.SQLite.Linq.dll" />
-    <Content Include="bin\Debug\titleInfo.txt" />
-    <Content Include="bin\Debug\zh-Hans\Microsoft.VisualStudio.GraphModel.resources.dll" />
-    <Content Include="bin\Release\bin\Debug\SQLite.Interop.dll" />
-    <Content Include="bin\Release\EntityFramework.dll" />
-    <Content Include="bin\Release\itextsharp.dll" />
-    <Content Include="bin\Release\LBKJClient.exe" />
-    <Content Include="bin\Release\LBKJClient.pdb" />
-    <Content Include="bin\Release\LBKJClient.vshost.exe" />
-    <Content Include="bin\Release\System.Data.SQLite.dll" />
     <Content Include="bin\x86\Debug\EntityFramework.dll" />
     <Content Include="bin\x86\Debug\EnvDTE.dll" />
     <Content Include="bin\x86\Debug\itextsharp.dll" />
@@ -846,25 +710,13 @@
     <Content Include="bin\x86\Release\System.Data.SQLite.Linq.dll" />
     <Content Include="bin\x86\Release\titleInfo.txt" />
     <Content Include="bin\x86\Release\zh-Hans\Microsoft.VisualStudio.GraphModel.resources.dll" />
-    <Content Include="obj\Debug\LBKJClient.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\LBKJClient.exe" />
-    <Content Include="obj\Debug\LBKJClient.pdb" />
-    <Content Include="obj\Debug\TempPE\Properties.Resources.Designer.cs.dll" />
-    <Content Include="obj\Release\LBKJClient.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Release\LBKJClient.exe" />
-    <Content Include="obj\Release\LBKJClient.pdb" />
-    <Content Include="obj\Release\TempPE\Properties.Resources.Designer.cs.dll" />
     <Content Include="obj\x86\Debug\LBKJClient.csproj.FileListAbsolute.txt" />
     <Content Include="obj\x86\Debug\LBKJClient.exe" />
     <Content Include="obj\x86\Debug\LBKJClient.pdb" />
     <Content Include="obj\x86\Debug\TempPE\Properties.Resources.Designer.cs.dll" />
     <Content Include="syslb.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\de\" />
-    <Folder Include="bin\x64\Debug\" />
-    <Folder Include="bin\x64\Release\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">
       <Visible>False</Visible>

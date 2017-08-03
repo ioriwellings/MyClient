@@ -1,0 +1,71 @@
+;/*++
+;
+;Copyright (c) 2003 ELTIMA Software
+;
+;Module Name:
+;
+;    VSB.INF
+;
+;Abstract:
+;    INF file for installing virtual serial bus enumerator driver
+;
+;--*/
+[Version]
+Signature="$WINDOWS NT$"
+Class=System
+ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider=%ELTIMA%
+DriverVer=11/10/2004,4.5.219
+CatalogFile=vsb.cat
+
+[DestinationDirs]
+Drivers_Dir = 12
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[SourceDisksFiles]
+vsb.sys  = 1,,
+vserial.sys = 1,,
+
+;*****************************************
+; VSBus  Install Section
+;*****************************************
+
+[Manufacturer]
+%ELTIMA%=Eltima
+
+[Eltima]
+;
+; These are the virtual serial bus pnp ids
+;
+
+%VSBus.DeviceDesc%=VSBus_Device, VSBUS
+
+[VSBus_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+vsb.sys
+vserial.sys
+
+;-------------- Service installation
+[VSBus_Device.NT.Services]
+AddService = vsbus,%SPSVCINST_ASSOCSERVICE%, VSBus_Service_Inst
+
+; -------------- vsbus driver install sections
+[VSBus_Service_Inst]
+DisplayName    = %VSBus.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START 
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\vsb.sys
+LoadOrderGroup = Extended Base
+
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ELTIMA = "ELTIMA Software"
+DiskId1 = "Virtual Serial Bus Installation Disk #1"
+VSBus.DeviceDesc = "Virtual Serial Bus Enumerator"
+VSBus.SVCDESC = "Virtual Serial Bus Enumerator"

@@ -1,0 +1,64 @@
+;/*++
+;
+;Copyright (c) 2003 ELTIMA Software
+;
+;Module Name:
+;
+;    VSERIAL.INF
+;
+;Abstract:
+;
+;    INF file for installing VSPorts class with Virtual Serial Port device driver.
+;
+;--*/
+[Version]
+Signature="$WINDOWS NT$"
+Class=VSPorts
+ClassGuid={cc0ef009-b820-42f4-95a9-9bfa6a5ab7ab}
+Provider=%ELTIMA%
+DriverVer=11/10/2004,4.5.219
+CatalogFile=vserial.cat
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=VSerialClassReg     
+
+[VSerialClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-23
+HKR,,SilentInstall,,1
+HKR,,NoInstallClass,,1
+
+;*********************************************
+; Virtual Serial Port Device  Install Section
+;*********************************************
+
+[Manufacturer]
+%ELTIMA%=Eltima
+
+[Eltima]
+%VSerialDevice.DeviceDesc%=VSerial_Device, VSERIAL
+
+[VSerial_Device.NT]
+
+;-------------- Service installation
+
+[VSerial_Device.NT.Services]
+AddService = vserial, %SPSVCINST_ASSOCSERVICE%, vserial_Service_Inst
+
+; -------------- VSerial Driver install sections
+[vserial_Service_Inst]
+DisplayName    = %vserial.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START 
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\vserial.sys
+LoadOrderGroup = Extended Base
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ELTIMA = "ELTIMA Software"
+ClassName = "ELTIMA Virtual Serial Ports"
+VSerialDevice.DeviceDesc = "ELTIMA Virtual Serial Port"
+vserial.SVCDESC = "ELTIMA Virtual Serial Ports Driver"

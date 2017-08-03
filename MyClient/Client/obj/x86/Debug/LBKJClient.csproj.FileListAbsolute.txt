@@ -1,0 +1,148 @@
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\bin\x86\Debug\LBKJClient.exe.config
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\bin\x86\Debug\bin\Debug\SQLite.Interop.dll
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\bin\x86\Debug\LBKJClient.exe
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\bin\x86\Debug\LBKJClient.pdb
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\bin\x86\Debug\itextsharp.dll
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\bin\x86\Debug\System.Data.SQLite.dll
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.About.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.addUser.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.convenientSet.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.dataBackUpSet.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.dataReduction.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.dataSynchronous.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.Exit.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.houseCheckInfo.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.houseManage.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.imgUp.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.insertHouseManage.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.ipPortSet.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.loginLog.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.measurePointInsert.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.measurePointSet.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.measurePointSetPropert.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.passWordUpdate.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.readHistoryData.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.SplashScreen.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.updateHouseManage.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.updateManageHost.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.addManageHost.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.basicSetup.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.ChangeCompanyName.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.ChangeTitle.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.changGuiCheck.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.frmLogin.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.frmMain.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.frmTest.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.graphCheck.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.historydata.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.manageHoseSet.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.Properties.Resources.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.updateUser.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.userManage.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.warningForm.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.warningHandle.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.warningHandleCheck.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.warningSetup.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.csproj.GenerateResource.Cache
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.exe
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.pdb
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\bin\x86\Debug\EntityFramework.dll
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.showReport.resources
+C:\Users\lb\Documents\Visual Studio 2015\Projects\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.csprojResolveAssemblyReference.cache
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.About.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.addUser.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.convenientSet.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.dataBackUpSet.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.dataReduction.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.dataSynchronous.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.Exit.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.houseCheckInfo.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.houseManage.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.imgUp.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.insertHouseManage.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.ipPortSet.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.loginLog.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.measurePointInsert.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.measurePointSet.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.measurePointSetPropert.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.passWordUpdate.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.readHistoryData.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.showReport.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.SplashScreen.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.updateHouseManage.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.updateManageHost.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.addManageHost.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.basicSetup.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.ChangeCompanyName.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.ChangeTitle.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.changGuiCheck.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.frmLogin.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.frmMain.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.frmTest.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.graphCheck.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.historydata.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.manageHoseSet.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.Properties.Resources.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.updateUser.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.userManage.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.warningForm.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.warningHandle.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.warningHandleCheck.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.warningSetup.resources
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.csproj.GenerateResource.Cache
+D:\codes\LBKJClient\LBKJClient\bin\x86\Debug\bin\Debug\SQLite.Interop.dll
+D:\codes\LBKJClient\LBKJClient\bin\x86\Debug\LBKJClient.exe.config
+D:\codes\LBKJClient\LBKJClient\bin\x86\Debug\LBKJClient.exe
+D:\codes\LBKJClient\LBKJClient\bin\x86\Debug\LBKJClient.pdb
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.exe
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.pdb
+D:\codes\LBKJClient\LBKJClient\obj\x86\Debug\LBKJClient.csprojResolveAssemblyReference.cache
+D:\codes\LBKJClient\LBKJClient\bin\x86\Debug\MySql.Data.dll
+D:\codes\MyClient\MyClient\Client\bin\x86\Debug\LBKJClient.exe.config
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.exe
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.pdb
+D:\codes\MyClient\MyClient\Client\bin\x86\Debug\LBKJClient.exe
+D:\codes\MyClient\MyClient\Client\bin\x86\Debug\LBKJClient.pdb
+D:\codes\MyClient\MyClient\Client\bin\x86\Debug\MySql.Data.dll
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.csprojResolveAssemblyReference.cache
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.About.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.addUser.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.convenientSet.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.dataBackUpSet.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.dataReduction.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.dataSynchronous.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.Exit.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.houseCheckInfo.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.houseManage.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.imgUp.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.insertHouseManage.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.ipPortSet.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.loginLog.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.measurePointInsert.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.measurePointSet.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.measurePointSetPropert.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.passWordUpdate.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.readHistoryData.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.showReport.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.SplashScreen.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.updateHouseManage.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.updateManageHost.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.addManageHost.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.basicSetup.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.ChangeCompanyName.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.ChangeTitle.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.changGuiCheck.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.frmLogin.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.frmMain.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.frmTest.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.graphCheck.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.historydata.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.manageHoseSet.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.Properties.Resources.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.updateUser.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.userManage.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.warningForm.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.warningHandle.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.warningHandleCheck.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.warningSetup.resources
+D:\codes\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.csproj.GenerateResource.Cache
