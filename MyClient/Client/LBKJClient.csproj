@@ -259,7 +259,6 @@
     <Compile Include="readHistoryData.Designer.cs">
       <DependentUpon>readHistoryData.cs</DependentUpon>
     </Compile>
-    <Compile Include="Result.cs" />
     <Compile Include="service\deleteInvalidDataService.cs" />
     <Compile Include="service\houseTypeService.cs" />
     <Compile Include="service\loginLogService.cs" />
@@ -398,6 +397,7 @@
     <Compile Include="utils\DataBaseUtil.cs" />
     <Compile Include="utils\DbHelperMySQL.cs" />
     <Compile Include="utils\HttpClient.cs" />
+    <Compile Include="utils\Result.cs" />
     <Compile Include="utils\SQLiteHelper.cs" />
     <Compile Include="warningForm.cs">
       <SubType>Form</SubType>

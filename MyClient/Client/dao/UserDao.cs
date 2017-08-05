@@ -1,20 +1,11 @@
 ﻿using System;
 using System.Data;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using LBKJClient.bean;
-using System.Data.SQLite;
-using System.Windows;
-using BOYA.CRMS.Common;
-using Common;
 
 namespace LBKJClient.dao
 {
     class UserDao
     {
-        private static readonly object obj = new object();
         public DataTable exists(UserInfo user)
         {
             string despwd = "";
@@ -62,9 +53,7 @@ namespace LBKJClient.dao
             string id = Result.GetNewId();
                 if (ret== -1) {
                     string sql1 = "insert into userinfo (id,name,pwd,enable,createTime,power) values ('" + id + "','" + ui.UserName + "', '" + ui.Pwd + "', '" + ui.Enable + "', '" + time + "', '" + ui.Power + "')";
-                    Monitor.Enter(obj);
                     rt = DbHelperMySQL.ExecuteSql(sql1);
-                   Monitor.Exit(obj);
                 }
 
             return rt == 0 ? false : true;
@@ -73,11 +62,7 @@ namespace LBKJClient.dao
         {
             int ret = 0;
             String sql = "update userinfo set name='" + ui.UserName + "',enable='" + ui.Enable + "',power='"+ui.Power+"' where id='" +ui.Id+ "'";
-                Monitor.Enter(obj);
-                ret = DbHelperMySQL.ExecuteSql(sql);
-               Monitor.Exit(obj);
-
-
+            ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
     }

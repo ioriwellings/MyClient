@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Common
+namespace LBKJClient.dao
 {
     /// <summary>
     /// 系统公共使用部分
