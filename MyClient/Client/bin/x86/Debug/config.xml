@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config>
-  <!--<username>60.205.85.233</username>
-  <password>8991</password>-->
-  <username>123.56.205.200</username>
+  <username>60.205.85.233</username>
   <password>8991</password>
   <historyDataIport>47.94.112.2:8992/history</historyDataIport>
   <user>
   </user>
   <passd>
   </passd>
-  <stoptime>170807110754</stoptime>
-  <starttime>170807110805</starttime>
-  <communicationType>1-COM7</communicationType>
+  <stoptime>170807151707</stoptime>
+  <starttime>170807151436</starttime>
+  <communicationType>
+  </communicationType>
   <communicationTcpType>123456789-1111</communicationTcpType>
   <datarefreshtime>60</datarefreshtime>
   <datasavetime>60</datasavetime>

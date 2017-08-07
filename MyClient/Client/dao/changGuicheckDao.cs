@@ -9,7 +9,7 @@ namespace LBKJClient.dao
     {
         public DataSet changguicheck(String time1, String time2, String cd)
         {
-            String sql = "select aa.* from (select a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,b.t_high,b.t_low,b.h_high,b.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc == '1' then '空库' else '非空库' end as housetype,a.mcc  from lb_base_data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "' order by a.devtime) aa";
+            String sql = "select aa.* from (select a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,b.t_high,b.t_low,b.h_high,b.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc  from lb_base_data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "' order by a.devtime) aa";
             if (cd!=null) {
                 sql += "  where  ";
                 string[] cds = cd.Split(',');
@@ -26,7 +26,7 @@ namespace LBKJClient.dao
         }
         public DataSet changguicheckGlzj(String time1, String time2, String glzj)
         {
-            String sql = "select aa.* from (select a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,b.t_high,b.t_low,b.h_high,b.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc == '1' then '空库' else '非空库' end as housetype,a.mcc from lb_base_data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "' order by a.devtime) aa";
+            String sql = "select aa.* from (select a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,b.t_high,b.t_low,b.h_high,b.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc from lb_base_data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "' order by a.devtime) aa";
             if (glzj != null)
             {
                 sql += "  where  ";
