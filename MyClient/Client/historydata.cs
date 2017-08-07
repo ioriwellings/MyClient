@@ -50,6 +50,7 @@ namespace LBKJClient
                 {
                     DataTable dtt = changeguicheck.dt.Copy();
                     dtt.Columns.Remove("warnState");
+                    dtt.Columns.Remove("mcc");
                     double hwd = 0;
                     double lwd = 0;
                     double hsd = 0;
@@ -132,6 +133,7 @@ namespace LBKJClient
                     this.dataGridView1.Columns[9].HeaderCell.Value = "湿度下限";
                     this.dataGridView1.Columns[10].Visible = false;
                     this.dataGridView1.Columns[11].Visible = false;
+                    this.dataGridView1.Columns[12].HeaderCell.Value = "是否为空库";
                     this.dataGridView1.Columns[0].Width = 150;
                     this.dataGridView1.Columns[1].Width = 170;
                     this.dataGridView1.Columns[2].Width = 150;
@@ -180,7 +182,7 @@ namespace LBKJClient
     
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         { //******调用处理报警数据信息********
-            showWarning();
+           
             //******显示报警信息**********************************************************************
             bool check=this.checkBox1.Checked;
             if (check != true)
@@ -190,6 +192,7 @@ namespace LBKJClient
                 //this.groupBox2.Enabled = false;
             }
             else {
+                showWarning();
                 this.groupBox1.Size = new Size(1507,480);
                 this.groupBox2.Visible = true;
                 //this.groupBox2.Enabled = true;
@@ -201,7 +204,7 @@ namespace LBKJClient
             if (changeguicheck.dt != null)
             {
                 DataTable dd1 = changeguicheck.dt.Copy();
-                DataRow[] dr1 = dd1.Select("warningistrue='2' or warningistrue='3' or warnState='1' or warnState='3'");
+                DataRow[] dr1 = dd1.Select("mcc = '0'and warningistrue='2' or warningistrue='3' or warnState='1' or warnState='3'");
                 if (dr1.Length > 0)
                 {
                     dd = dr1[0].Table.Clone();
@@ -209,26 +212,11 @@ namespace LBKJClient
                     {
                         dd.ImportRow(row); // 将DataRow添加到DataTable中
                     }
-                    service.deviceInformationService ds = new service.deviceInformationService();
-                    DataTable dts = ds.selectHouseTypeK();
-                    if (dts.Rows.Count > 0)
-                    {
-                        for (int i = 0; i < dts.Rows.Count; i++)
-                        {
-                            for (int j = 0; j < dd.Rows.Count; j++)
-                            {
-                                if (dts.Rows[i]["measureMeterCode"].ToString() == dd.Rows[j]["measureMeterCode"].ToString())
-                                {
-                                    dd.Rows[i].Delete();
-                                }
-                            }
-                        }
-                        dd.AcceptChanges();
-                    }
-                    if (dd.Columns.Count == 13)
-                    {
-                        dd.Columns.RemoveAt(12);
-                    }
+
+                    dd.Columns.RemoveAt(14);
+                    dd.Columns.RemoveAt(13);
+                    dd.Columns.RemoveAt(12);
+
                     dd.Columns["devtime"].SetOrdinal(0);
                     dd.Columns["terminalname"].SetOrdinal(1);
                     dd.Columns.Add("wdcz", typeof(string));
@@ -294,18 +282,6 @@ namespace LBKJClient
                             warningEvent = "解除报警 ";
                         }
                         dd.Rows[i][10] = warningEvent;
-                        //if (sd == 0 && wd < wdsx && wd > wdxx)
-                        //{
-                        //    dd.Rows[i].Delete();
-                        //}
-                        //else
-                        //{
-                        //    if (wd <= wdsx && wd >= wdxx && sd <= sdsx && sd >= sdxx)
-                        //    {
-                        //        dd.Rows[i].Delete();
-                        //    }
-                        //}
-                        //dd.AcceptChanges();
                     }
                     DataView dv = dd.DefaultView;//虚拟视图
                     dv.Sort = "devtime asc";
@@ -352,6 +328,7 @@ namespace LBKJClient
             if (dts != null&&dts.Rows.Count>0)
             {
                 dts.Columns.Remove("warnState");
+                dts.Columns.Remove("mcc");
                 string localFilePath = String.Empty;
                 SaveFileDialog fileDialog = new SaveFileDialog();
 
@@ -467,7 +444,7 @@ namespace LBKJClient
                 PdfPTable table = null;
                
                 //   , "温度上限", "温度下限", "湿度上限", "湿度下限"
-                string[] columnsnames = { "序号", "采集时间", "设备标识", "管理主机编号", "仪表编号", "温度", "湿度" };
+                string[] columnsnames = { "序号", "采集时间", "设备标识", "管理主机编号", "仪表编号", "温度", "湿度", "是否为空库" };
                 //标题
                 if (flag == 1)
                 {
@@ -481,9 +458,9 @@ namespace LBKJClient
                 }
                 else
                 {
-                    table=new PdfPTable(7);
+                    table=new PdfPTable(8);
                     pdftitle = new Paragraph(frmMain.companyName + "历史数据查询结果", fonttitle);
-                    table.SetWidths(new int[] { 5, 25, 20, 20, 10, 10, 10 });
+                    table.SetWidths(new int[] { 5, 20, 15, 20, 10, 10, 10 ,10});
                     dts.Columns.Remove("measureMeterCode");
                     dts.Columns.Remove("warningistrue");
                 }
