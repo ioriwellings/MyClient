@@ -150,10 +150,10 @@ namespace LBKJClient
             if (dt!=null) {
                 if (dt.Rows.Count > 0)
                 {
-                    double t1 = (double)dt.Compute("Max(temperature)", "true");
-                    double t2 = (double)dt.Compute("Min(temperature)", "true");
-                    double h1 = (double)dt.Compute("Max(humidity)", "true");
-                    double h2 = (double)dt.Compute("Min(humidity)", "true");
+                    double t1 = double.Parse(dt.Compute("Max(temperature)", "true").ToString());
+                    double t2 = double.Parse(dt.Compute("Min(temperature)", "true").ToString());
+                    double h1 = double.Parse(dt.Compute("Max(humidity)", "true").ToString());
+                    double h2 = double.Parse(dt.Compute("Min(humidity)", "true").ToString());
 
                     chart1.ChartAreas[0].AxisY.Maximum = t1 > h1 ? t1+5 : h1+5;//设置Y轴最大值
                     chart1.ChartAreas[0].AxisY.Minimum = t2 > h2 ? h2-5 : t2-5;//设置Y轴最大值

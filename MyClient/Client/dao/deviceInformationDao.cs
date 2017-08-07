@@ -199,7 +199,7 @@ namespace LBKJClient.dao
         {
             DataSet ds = new DataSet();
             ds.Clear();
-            String sql = "select CAST(measureCode AS VARCHAR(50)) || '_' || CAST(meterNo AS VARCHAR(10)) as measureMeterCode from lb_device_information where housetype = 1 ";
+            String sql = "select CONCAT(measureCode,'_',meterNo) AS measureMeterCode from lb_device_information where housetype = 1 ";
             ds = DbHelperMySQL.Query(sql);
             return ds.Tables[0];
         }

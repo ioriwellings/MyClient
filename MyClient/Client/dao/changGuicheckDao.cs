@@ -65,7 +65,7 @@ namespace LBKJClient.dao
             String sql = "";
             if (code != null && !"".Equals(code))
             {
-                sql = "select measureCode,meterNo,terminalname,CAST(measureCode AS VARCHAR(50)) || '_' || CAST(meterNo AS VARCHAR(10)) as measureMeterCode from lb_device_information where measureCode='" + code+"'";
+                sql = "select measureCode,meterNo,terminalname,CONCAT(measureCode,'_',meterNo) AS measureMeterCode from lb_device_information where measureCode='" + code+"'";
             }
             else {
                 sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode";
