@@ -10,15 +10,14 @@ namespace LBKJClient.dao
             string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string id = Result.GetNewId();
             int ret = 0;
-            String sql = "insert into lb_managehost_info (id,measureCode,hostName,hostAddress,CommunicationType,serialPort,portNumber,storeType,createTime,houseType) values ('" + id + "','" + mh.measureCode + "', '" + mh.hostName + "', '" + mh.hostAddress + "', '" + mh.CommunicationType + "', '" + mh.serialPort + "', '" + mh.portNumber + "', '" + mh.storeType + "', '" + time + "', '" + mh.houseType + "')";
+            String sql = "insert into lb_managehost_info (id,measureCode,hostName,hostAddress,CommunicationType,serialPort,portNumber,storeType,createTime,houseType) values ('" + id + "','" + mh.measureCode + "', '" + mh.hostName + "', '" + mh.hostAddress + "', '" + mh.CommunicationType + "', '" + mh.serialPort + "', '" + mh.portNumber + "', '" + mh.storeType + "', '" + time + "', '" + mh.houseType + "');CREATE TABLE a" + mh.measureCode + "lb_base_data_home" + "(id varchar(36) NOT NULL,measureCode varchar(2000),meterNo varchar(1000),temperature float,humidity float,lng varchar(2000),lat varchar(2000),warnState varchar(2000),sign varchar(2000),devtime datetime,createDate datetime,measureMeterCode varchar(2000),warningistrue varchar(2000),houseinterval varchar(2000),carinterval varchar(2000),PRIMARY KEY (id),INDEX indexdevtime (devtime, meterNo));CREATE TABLE a" + mh.measureCode + "alb_warning_data" + "(id varchar(36) NOT NULL,measureCode varchar(2000),meterNo varchar(1000),temperature float,humidity float,lng varchar(2000),lat varchar(2000),warnState varchar(2000),sign varchar(2000),devtime datetime,createDate datetime,measureMeterCode varchar(2000),warningistrue varchar(2000),houseinterval varchar(2000),carinterval varchar(2000),PRIMARY KEY (id),INDEX indexdevtime (devtime, meterNo));CREATE TABLE a" + mh.measureCode + "lb_readywarning_data" + "(id varchar(36) NOT NULL,measureCode varchar(2000),meterNo varchar(1000),temperature float,humidity float,lng varchar(2000),lat varchar(2000),warnState varchar(2000),sign varchar(2000),devtime datetime,createDate datetime,measureMeterCode varchar(2000),warningistrue varchar(2000),houseinterval varchar(2000),carinterval varchar(2000),PRIMARY KEY (id),INDEX indexdevtime (devtime, meterNo))";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
-
         public DataTable querymanageHostDao() {
             String sql = "SELECT m.*,h.name FROM lb_managehost_info m join lb_house_type h on m.houseType=h.id";
             DataSet ds = new DataSet();
-            ds.Clear();
+            ds.Clear();    
             ds = DbHelperMySQL.Query(sql);
             return ds.Tables[0];
         }

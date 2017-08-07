@@ -152,8 +152,9 @@ namespace LBKJClient
              }
           }
             privateFonts.AddFontFile(@str + @"/fonts/SIMYOU.TTF");//加载路径的字体
-            this.menuStrip1.BackColor = Color.FromArgb(181, 220, 255);
-            this.toolStrip1.BackColor = Color.FromArgb(200, 233, 253);
+            //this.menuStrip1.BackColor = Color.FromArgb(181, 220, 255);
+            //this.toolStrip1.BackColor = Color.FromArgb(200, 233, 253);
+            this.toolStrip1.BackColor = Color.FromArgb(83, 189, 255);
             getFromXml();
             rect = Screen.GetWorkingArea(this);
             initPointsInfo();

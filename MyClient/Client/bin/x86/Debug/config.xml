@@ -9,9 +9,10 @@
   </user>
   <passd>
   </passd>
-  <stoptime>170801180218</stoptime>
-  <starttime>170731152957</starttime>
-  <communicationType>1-COM7</communicationType>
+  <stoptime>170807190237</stoptime>
+  <starttime>170807190132</starttime>
+  <communicationType>
+  </communicationType>
   <communicationTcpType>123456789-1111</communicationTcpType>
   <datarefreshtime>60</datarefreshtime>
   <datasavetime>60</datasavetime>

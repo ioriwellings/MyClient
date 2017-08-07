@@ -119,7 +119,6 @@ namespace LBKJClient.dao
                 }
             }
         }
-
         public static int ExecuteSqlByTime(string SQLString, int Times)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
