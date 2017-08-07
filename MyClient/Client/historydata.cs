@@ -324,7 +324,7 @@ namespace LBKJClient
         }
         private void label2_Click(object sender, EventArgs e)
         {
-            DataTable dts= changeguicheck.dt;
+            DataTable dts= changeguicheck.dt.Copy();
             if (dts != null&&dts.Rows.Count>0)
             {
                 dts.Columns.Remove("warnState");
