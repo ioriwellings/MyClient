@@ -538,6 +538,7 @@ namespace LBKJClient
             int kk = 0;
             DataTable dt = rs.queryMonitoringByhousecode(houseid);
             int num = dt.Rows.Count;
+            if (num < 1) { return; }
             String codemeter;
             String code;
             String meter;
