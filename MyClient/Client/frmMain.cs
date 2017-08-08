@@ -2252,7 +2252,6 @@ namespace LBKJClient
             }
             return f.ToString();
         }
-
         bean.showReportBean rb = new bean.showReportBean();
         private void yunpingtaiDatas()
         {
