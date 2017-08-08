@@ -135,6 +135,7 @@
             this.label2.Size = new System.Drawing.Size(131, 12);
             this.label2.TabIndex = 13;
             this.label2.Text = "数据同步中，请稍等...";
+            this.label2.Visible = false;
             // 
             // textBox1
             // 
@@ -170,6 +171,7 @@
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 14;
             this.label5.Text = "已完成0%";
+            this.label5.Visible = false;
             // 
             // tabControl1
             // 

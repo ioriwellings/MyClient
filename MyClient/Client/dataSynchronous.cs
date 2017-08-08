@@ -109,6 +109,8 @@ namespace LBKJClient
             DialogResult result = MessageBox.Show("是否确认同步服务器历史数据？", "操作提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
+                this.label2.Visible = true;
+                this.label5.Visible = true;
                 foreach (Control ctr in this.tabControl1.TabPages[0].Controls)
                 {
                     //判断该控件是不是CheckBox

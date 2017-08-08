@@ -77,7 +77,7 @@ namespace LBKJClient.dao
         {
             DataSet ds = new DataSet();
             ds.Clear();
-            String sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode and b.hostAddress < 1";
+            String sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode and b.hostAddress < 1 order by b.createTime,a.measureCode,a.meterNo";
             ds = DbHelperMySQL.Query(sql);
             return ds;
         }
