@@ -2595,7 +2595,6 @@ namespace LBKJClient
                                         }
                                         else
                                         {
-                                            Whistory = 0;
                                         }
 
 
