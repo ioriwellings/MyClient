@@ -22,7 +22,7 @@ namespace LBKJClient.bean
         public float h_high { get; set; }
         //湿度下限
         public float h_low { get; set; }
-        public int housecode { get; set; }
+        public string  housecode { get; set; }
         public int pointX { get; set; }
         public int pointY { get; set; }
         public int powerflag { get; set; }
