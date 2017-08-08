@@ -344,7 +344,7 @@ namespace LBKJClient
                         for (int i = 0; i < cds.Length; i++)
                         {
                             DataRow[] drs = dtt.Select("measureMeterCode = '" + cds[i] + "'");
-
+                            if (drs.Length < 1) { continue; };
                             series1 = new Series();
                             series1.Name = drs[0]["terminalname"] +"温度";
                             series1.ChartType = SeriesChartType.Line;
