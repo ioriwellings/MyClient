@@ -278,3 +278,4 @@ __pycache__/
 *.xsd.cs
 /MyClient/Client/obj/x86/Debug/LBKJClient.exe
 /MyClient/Client/bin/x86/Debug/LBKJClient.exe
+/MyClient/Client/bin/x86/Debug

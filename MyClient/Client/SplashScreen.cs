@@ -51,7 +51,7 @@ namespace LBKJClient
                 {
                     //g.DrawString(showInfo, font, Brushes.Black, 130, 315);
                     g.DrawString(showInfo, font, Brushes.Black, 250, 255);
-                    Font font1 = new Font("Consoles", 8);
+                    Font font1 = new Font("Consoles", 12);
                     string aa = "主程序版本：V" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
                     g.DrawString(aa, font1, Brushes.Red, 20, 330);
                     string bb = "核心版本：V"+Environment.Version.ToString().Substring(0,9);
