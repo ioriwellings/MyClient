@@ -139,15 +139,15 @@ namespace LBKJClient
                         sdsx = double.Parse(this.dataGridView1.Rows[i].Cells[9].Value.ToString());
                         sdxx = double.Parse(this.dataGridView1.Rows[i].Cells[10].Value.ToString());
                         warningTime = dt.Rows[i][11].ToString();
-                        if (warningTime != null && !"".Equals(warningTime))
-                        {
-                            this.dataGridView1.Rows[i].Cells[11].Value = "已处理";
-                        }
-                        else
-                        {
-                            this.dataGridView1.Rows[i].Cells[11].Value = "未处理";
-                            this.dataGridView1.Rows[i].Cells[11].Style.ForeColor = Color.Red;
-                        }
+                        //if (warningTime != null && !"".Equals(warningTime))
+                        //{
+                        //    this.dataGridView1.Rows[i].Cells[11].Value = "已处理";
+                        //}
+                        //else
+                        //{
+                        //    this.dataGridView1.Rows[i].Cells[11].Value = "未处理";
+                        //    this.dataGridView1.Rows[i].Cells[11].Style.ForeColor = Color.Red;
+                        //}
                         if (wd > wdsx)
                         {
                             this.dataGridView1.Rows[i].Cells[12].Value = Math.Round(wd - wdsx, 1).ToString("0.0");

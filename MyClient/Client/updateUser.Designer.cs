@@ -164,9 +164,9 @@
             this.checkBox17.ForeColor = System.Drawing.SystemColors.ControlText;
             this.checkBox17.Location = new System.Drawing.Point(33, 123);
             this.checkBox17.Name = "checkBox17";
-            this.checkBox17.Size = new System.Drawing.Size(72, 16);
+            this.checkBox17.Size = new System.Drawing.Size(108, 16);
             this.checkBox17.TabIndex = 16;
-            this.checkBox17.Text = "数据同步";
+            this.checkBox17.Text = "采集器数据同步";
             this.checkBox17.UseVisualStyleBackColor = true;
             // 
             // checkBox16
