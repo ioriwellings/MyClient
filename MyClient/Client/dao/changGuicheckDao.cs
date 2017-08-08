@@ -50,10 +50,10 @@ namespace LBKJClient.dao
             String sql = null;
             if (code != null && !"".Equals(code))
             {
-                sql = "select a.measureCode,a.meterNo,b.terminalname,a.measureMeterCode from lb_base_data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo where a.measureCode='" + code + "' group by a.measureCode,a.meterNo order by b.id";
+                sql = "select a.measureCode,a.meterNo,b.terminalname,a.measureMeterCode from lb_base_data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo where a.measureCode='" + code + "' group by a.measureCode,a.meterNo order by b.createtime";
             }
             else {
-                sql = "select a.measureCode,a.meterNo,b.terminalname,a.measureMeterCode from lb_device_information b left join lb_base_data_home a on a.measureCode=b.measureCode and a.meterNo=b.meterNo group by a.measureCode,a.meterNo,b.terminalname order by b.id";
+                sql = "select a.measureCode,a.meterNo,b.terminalname,a.measureMeterCode from lb_device_information b left join lb_base_data_home a on a.measureCode=b.measureCode and a.meterNo=b.meterNo group by a.measureCode,a.meterNo,b.terminalname order by b.createtime";
             }
             ds = DbHelperMySQL.Query(sql);
             return ds;
