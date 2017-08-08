@@ -66,7 +66,9 @@ namespace LBKJClient
                         di.terminalname = cdname;
                         di.measureCode = mcode;
                         di.meterNo = cdnum;
-                        di.housecode = Int32.Parse(type);
+                        //di.housecode = Int32.Parse(type);
+                        di.housecode = type;
+
 
                         bool bl = dis.queryDeviceBycode(di);
                         if (bl)
