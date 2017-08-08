@@ -41,8 +41,7 @@ namespace LBKJClient
             this.comboBox1.DataSource =dt;//绑定数据源
             this.comboBox1.DisplayMember = "name";//显示给用户的数据集表项
             this.comboBox1.ValueMember = "id";//操作时获取的值 
-
-            imgSwitch(1.ToString());
+            imgSwitch(this.comboBox1.SelectedValue.ToString());
             
         }
         private void imgSwitch(string houseCode) {
