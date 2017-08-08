@@ -575,6 +575,7 @@ namespace LBKJClient
             string code = this.comboBox1.SelectedValue.ToString();
             DataTable dat = ms.queryMonitoringByhousecode(code);
             int num = dat.Rows.Count;
+            if (num < 1) { return; }
             String codemeter;
             String temperature;
             String humidity;
