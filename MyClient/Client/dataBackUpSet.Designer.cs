@@ -131,7 +131,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(185, 12);
             this.label4.TabIndex = 7;
-            this.label4.Text = "注：备份路径只能不能有中文名称";
+            this.label4.Text = "注：备份路径不能有中文名称";
             // 
             // checkBox2
             // 
@@ -260,7 +260,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(185, 12);
             this.label3.TabIndex = 6;
-            this.label3.Text = "注：备份路径只能不能有中文名称";
+            this.label3.Text = "注：备份路径不能有中文名称";
             // 
             // btnChoose
             // 

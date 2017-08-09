@@ -125,7 +125,7 @@ namespace LBKJClient.dao
             int ret = 0;
             String sql = "SELECT count(1) FROM lb_device_information where measureCode='" + di.measureCode + "' and meterNo='" + di.meterNo + "'";
             ret = DbHelperMySQL.ExecuteSql(sql);
-            return ret == 0 ? true : false;
+            return ret == -1 ? true : false;
         }
         public bool deletetDeviceInformation(bean.deviceInformation di)
         {

@@ -18,11 +18,11 @@ namespace LBKJClient.dao
                        id = Result.GetNewId();
                       if (j > 0)
                         {
-                            sql1 += " , ('" + id + "','" + list[j].managerID + "', '" + list[j].deviceNum + "','" + list[j].devicedate + "','" + list[j].temperature + "','" + list[j].humidity + "','" + list[j].lng + "','" + list[j].lat + "','" + list[j].sysdate + "','" + list[j].warnState + "','" + list[j].sign + "','" + list[j].measureMeterCode + "','" + list[j].warningistrue + "','" + list[j].carinterval + "','" + list[j].houseinterval + "',case when (select housetype from lb_device_information where measureCode = '" + list[j].managerID + "') = '1' then  '1' else '0' end)";
+                            sql1 += " , ('" + id + "','" + list[j].managerID + "', '" + list[j].deviceNum + "','" + list[j].devicedate + "','" + list[j].temperature + "','" + list[j].humidity + "','" + list[j].lng + "','" + list[j].lat + "','" + list[j].sysdate + "','" + list[j].warnState + "','" + list[j].sign + "','" + list[j].measureMeterCode + "','" + list[j].warningistrue + "','" + list[j].carinterval + "','" + list[j].houseinterval + "',case when (select max(housetype) from lb_device_information where measureCode = '" + list[j].managerID + "') = '1' then  '1' else '0' end)";
                         }
                         else
                         {
-                            sql1 += "('" + id + "','" + list[j].managerID + "', '" + list[j].deviceNum + "','" + list[j].devicedate + "','" + list[j].temperature + "','" + list[j].humidity + "','" + list[j].lng + "','" + list[j].lat + "','" + list[j].sysdate + "','" + list[j].warnState + "','" + list[j].sign + "','" + list[j].measureMeterCode + "','" + list[j].warningistrue + "','" + list[j].carinterval + "','" + list[j].houseinterval + "',case when (select housetype from lb_device_information where measureCode = '" + list[j].managerID + "') = '1' then  '1' else '0' end)";
+                            sql1 += "('" + id + "','" + list[j].managerID + "', '" + list[j].deviceNum + "','" + list[j].devicedate + "','" + list[j].temperature + "','" + list[j].humidity + "','" + list[j].lng + "','" + list[j].lat + "','" + list[j].sysdate + "','" + list[j].warnState + "','" + list[j].sign + "','" + list[j].measureMeterCode + "','" + list[j].warningistrue + "','" + list[j].carinterval + "','" + list[j].houseinterval + "',case when (select max(housetype) from lb_device_information where measureCode = '" + list[j].managerID + "') = '1' then  '1' else '0' end)";
                         }
                     }
                   DbHelperMySQL.ExecuteSql(sql1);
@@ -35,17 +35,17 @@ namespace LBKJClient.dao
                string id;
                     if (list.Count > 0)
                     {
-                        String sql1 = "insert into lb_base_data_home (id,measureCode,meterNo,warnState,devtime,temperature,humidity,lng,lat,createDate,speed,direction,gpsFlag,measureMeterCode,warningistrue,carinterval,houseinterval,mcc) values ";
+                        String sql1 = "insert into lb_base_data_home (id,measureCode,meterNo,warnState,devtime,temperature,humidity,lng,lat,createDate,measureMeterCode,warningistrue,carinterval,houseinterval,mcc) values ";
                         for (int j = 0; j < list.Count; j++)
                         {
                           id = Result.GetNewId();
                          if (j > 0)
                             {
-                                sql1 += " , ('" + id + "','" + list[j].managerID + "', '" + list[j].deviceNum + "','" + list[j].warnState + "','" + list[j].devicedate + "','" + list[j].temperature + "','" + list[j].humidity + "','" + list[j].lng + "','" + list[j].lat + "','" + list[j].sysdate + "','" + list[j].speed + "','" + list[j].direction + "','" + list[j].gpsFlag + "','" + list[j].measureMeterCode + "','" + list[j].warningistrue + "','" + list[j].carinterval + "','" + list[j].houseinterval + "',case when (select housetype from lb_device_information where measureCode = '" + list[j].managerID + "') = '1' then  '1' else '0' end)";
+                                sql1 += " , ('" + id + "','" + list[j].managerID + "', '" + list[j].deviceNum + "','" + list[j].warnState + "','" + list[j].devicedate + "','" + list[j].temperature + "','" + list[j].humidity + "','" + list[j].lng + "','" + list[j].lat + "','" + list[j].sysdate + "','" + list[j].measureMeterCode + "','" + list[j].warningistrue + "','" + list[j].carinterval + "','" + list[j].houseinterval + "',case when (select max(housetype) from lb_device_information where measureCode = '" + list[j].managerID + "') = '1' then  '1' else '0' end)";
                             }
                             else
                             {
-                                sql1 += "('" + id + "','" + list[j].managerID + "', '" + list[j].deviceNum + "','" + list[j].warnState + "','" + list[j].devicedate + "','" + list[j].temperature + "','" + list[j].humidity + "','" + list[j].lng + "','" + list[j].lat + "','" + list[j].sysdate + "','" + list[j].speed + "','" + list[j].direction + "','" + list[j].gpsFlag + "','" + list[j].measureMeterCode + "','" + list[j].warningistrue + "','" + list[j].carinterval + "','" + list[j].houseinterval + "',case when (select housetype from lb_device_information where measureCode = '" + list[j].managerID + "') = '1' then  '1' else '0' end)";
+                                sql1 += "('" + id + "','" + list[j].managerID + "', '" + list[j].deviceNum + "','" + list[j].warnState + "','" + list[j].devicedate + "','" + list[j].temperature + "','" + list[j].humidity + "','" + list[j].lng + "','" + list[j].lat + "','" + list[j].sysdate + "','" + list[j].measureMeterCode + "','" + list[j].warningistrue + "','" + list[j].carinterval + "','" + list[j].houseinterval + "',case when (select max(housetype) from lb_device_information where measureCode = '" + list[j].managerID + "') = '1' then  '1' else '0' end)";
                             }
                         }
                       DbHelperMySQL.ExecuteSql(sql1);    
