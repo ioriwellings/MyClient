@@ -17,6 +17,8 @@ using System.Diagnostics;
 using NT88Test;
 using SmartX1Demo;
 using System.Collections;
+using System.Net;
+using System.Net.Sockets;
 namespace LBKJClient
 {
     public partial class frmMain : Form
@@ -31,6 +33,7 @@ namespace LBKJClient
         private int totalReceivedBytes = 0;
         private int totalSendBytes = 0;
         private int logrizhi = 0;
+        private int socketserver = 0;
         private bool needWrite = false;
         public delegate void UpdateAcceptTextBoxTextHandler(string text);
         public UpdateAcceptTextBoxTextHandler UpdateTextHandler;
@@ -62,7 +65,7 @@ namespace LBKJClient
         service.manageHostService mhs = new service.manageHostService();//查询GZ02有串口地址的数据
         dataBackUpSet sb = new dataBackUpSet();//数据备份
         service.showReportService lls = new service.showReportService();
-
+        Socket sk;//连接用Socket
         DataSet da;
         DataTable dt;
         DataTable dtcdinfo;
@@ -102,6 +105,7 @@ namespace LBKJClient
         private DataTable dtCom;
         private string[] result;
         private int comnum = 0;
+        Thread multiHS;
         public frmMain()
         {
             InitializeComponent();
@@ -152,9 +156,8 @@ namespace LBKJClient
              }
           }
             privateFonts.AddFontFile(@str + @"/fonts/SIMYOU.TTF");//加载路径的字体
-            //this.menuStrip1.BackColor = Color.FromArgb(181, 220, 255);
+           // this.menuStrip1.BackColor = Color.FromArgb(181, 220, 255);
             //this.toolStrip1.BackColor = Color.FromArgb(200, 233, 253);
-            this.toolStrip1.BackColor = Color.FromArgb(83, 189, 255);
             getFromXml();
             rect = Screen.GetWorkingArea(this);
             initPointsInfo();
@@ -166,11 +169,7 @@ namespace LBKJClient
             dtcdinfo1 = dis.checkPointInfo(1);
             if (getresults != null && !"".Equals(getresults))
             {
-                //启动服务器自动同步关服时间到开服时间无线主机历史数据
-                if (autosave16 == 1)
-                {
-                    insertHStopData();
-                };
+
 
                 //自动读取历史数据占用主线程
                 if (autosave02 == 1)
@@ -193,6 +192,13 @@ namespace LBKJClient
                 }
             }
             queryMeterIds();
+            //启动服务器自动同步关服时间到开服时间无线主机历史数据
+            if (autosave16 == 1)
+            {
+                multiHS = new Thread(new ThreadStart(insertHStopData));
+                multiHS.IsBackground = true;
+                multiHS.Start();
+            };
             sdfilename = sb.textBox1.Text;
             zdfilename = sb.textBox2.Text;
             //以下是标题的操作
@@ -558,7 +564,7 @@ namespace LBKJClient
                    {
                     json = "{\"id\":\"" + cdlist[i] + "\",\"sign\":\"1wVebSp57j67GOV7bQ6IDg==\",\"starttime\":\"" + starttime + "\",\"endtime\":\"" + stoptime + "\"}";
                     string jsonData = utils.HttpClient.getDeviceData(json, ipportH);
-                    if (jsonData != "" && jsonData.Length > 50)
+                        if (jsonData != "" && jsonData.Length > 50)
                     {
                         list = js.Deserialize<List<bean.dataSerialization>>(jsonData);
                         insertHData(list);
@@ -582,7 +588,8 @@ namespace LBKJClient
         {
             List<bean.dataSerialization> listed = new List<bean.dataSerialization>();
             int history = 0;
-            string measureMeterCodeB = "";
+            int Whistory = 0;
+
             foreach (bean.dataSerialization datas in list)
             {
                 datas.temperature = getFloat(datas.temperature);
@@ -607,6 +614,7 @@ namespace LBKJClient
                 }
                 if (datas.devicedate != null && datas.devicedate.Length > 0)
                 {
+                    //datas.devicedate = GetTime(datas.devicedate);
                     MyDate = DateTime.ParseExact(datas.devicedate, TarStr, formatH);
                     datas.devicedate = MyDate.ToString(TarStr1);
                     int mm = MyDate.Minute;
@@ -626,7 +634,7 @@ namespace LBKJClient
                     {
                         intervalNum2 = 0;
                     }
-                    if (mm % housetime == 30)
+                    if (mm % housetime == 0)
                     {
                         intervalNum3 = 3;
                     }
@@ -641,10 +649,10 @@ namespace LBKJClient
                     datas.sysdate = MyDate1.ToString(TarStr1);
                 }
                 datas.measureMeterCode = datas.managerID + "_" + datas.deviceNum;
-                measureMeterCodeB = datas.measureMeterCode;
-                dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode);
-                if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
 
+                dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode);
+                if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
+                if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
                 DataRow[] drs = dtcdinfo.Select("measureCode='" + datas.managerID + "' and meterNo='" + datas.deviceNum + "'"); ;
                 tt = Double.Parse(datas.temperature);
                 t1 = Double.Parse(drs[0]["t_high"].ToString());
@@ -653,17 +661,56 @@ namespace LBKJClient
                 h1 = Double.Parse(drs[0]["h_high"].ToString());
                 h2 = Double.Parse(drs[0]["h_low"].ToString());
                 string CommunicationType = drs[0]["CommunicationType"].ToString();
-                if (CommunicationType == "LBCC-16" || CommunicationType == "[管理主机]LB863RSB_N1(LBGZ-02)")
+                if (CommunicationType == "LBCC-16" || CommunicationType == "[管理主机]LB863RSB_N1(LBGZ-02)" || CommunicationType == "LBGZ-04" || CommunicationType == "RC-8/-10")
                 {
+                    //if (hh != 0)
+                    //{
+
+                    if (CommunicationType == "LBGZ-04" && datas.charge == "0")
+                    {
+                        datas.sign = "1";
+                        datas.warnState = "1";
+                    }
+                    else if (CommunicationType == "LBGZ-04" && datas.charge != "0" && Whistory == 1)
+                    {
+                        datas.sign = "3";
+                        datas.warnState = "3";
+                        Whistory = 0;
+                    }
+                    else
+                    {
+                    }
+
+
+                    if (CommunicationType == "RC-8/-10" && datas.charge == "0")
+                    {
+                        datas.sign = "1";
+                        datas.warnState = "1";
+                    }
+                    else if (CommunicationType == "RC-8/-10" && datas.charge != "0" && Whistory == 1)
+                    {
+                        datas.sign = "3";
+                        datas.warnState = "3";
+                        Whistory = 0;
+                    }
+                    else
+                    {
+                        Whistory = 0;
+                    }
+
+
+
                     if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
                     {
-                            datas.warningistrue = "2";                        
-                    }else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
+                        datas.warningistrue = "2";
+                    }
+                    else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
                     {
                         datas.warningistrue = "3";
                         history = 0;
                     }
-                    else {
+                    else
+                    {
                         datas.warningistrue = "1";
                         history = 0;
                     }
@@ -674,14 +721,16 @@ namespace LBKJClient
                     {
                         if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
                         {
-                                datas.warningistrue = "2";
+                            datas.warningistrue = "2";
                         }
-                        else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
+                        if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
                         {
                             datas.warningistrue = "3";
                             history = 0;
                         }
-                        else {
+                        else
+                        {
+                            datas.warningistrue = "1";
                             history = 0;
                         }
                     }
@@ -700,7 +749,6 @@ namespace LBKJClient
             {
                 for (int i = 0; i < listed.Count; i++)
                 {
-                    
                     DataRow[] drArr = dtH.Select("measureCode='" + listed[i].managerID + "' and meterNo='" + listed[i].deviceNum + "' and devtime='" + listed[i].devicedate + "'");
                     if (drArr.Length > 0)
                     {
@@ -714,11 +762,11 @@ namespace LBKJClient
                             i = -1;
                         }
                     }
-
                 }
             }
             adddatas.addData(listed);
         }
+
         List<bean.dataSerialization> lds = null;
         private void mySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
@@ -732,6 +780,7 @@ namespace LBKJClient
                 if (byteRead.Length == 0)
                 {
                     doGetDeviceInfo();
+                    return;
                 }
                 sp.Read(byteRead, 0, byteRead.Length);
                 sp.DiscardInBuffer();
@@ -921,7 +970,7 @@ namespace LBKJClient
                     if (lds.Count>0) {
                         //adddatas.addData(lds);//把x86管理主机的数据插入数据库
                         Thread multiAdd = new Thread(new ThreadStart(addData));
-                        multiAdd.IsBackground = false;
+                        multiAdd.IsBackground = true;
                         multiAdd.Start();
                         if (logrizhi == 1)
                         {
@@ -930,6 +979,15 @@ namespace LBKJClient
                                 sw.WriteLine("开始：" + time111 + "  结束：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "   成功：" + text + "  插入数量：" + lds.Count.ToString() + "  报文数量：" + totalByteRead.Length.ToString());
                             }
                         }
+                    }
+                    if (socketserver > 0)
+                    {
+                        socketConnection();//Socket连接
+                        string sendStr = text + "BEBE" + measureCode;
+                        byte[] bs = Encoding.ASCII.GetBytes(sendStr);
+                        sk.Send(bs, bs.Length, 0); //发送信息
+                        sk.Shutdown(SocketShutdown.Both);
+                        sk.Close();
                     }
                     totalByteRead = new Byte[0];
                     doGetDeviceInfo();
@@ -1545,6 +1603,10 @@ namespace LBKJClient
                 tsmi.CheckState = CheckState.Unchecked;
             else
             {
+               
+                ////autoSizeX = 220;
+                ////autoSizeY = 185;
+                //xmlDoc = new XmlDocument();
                 xmlDoc.Load(path);
                 XmlNode node;
                 node = xmlDoc.SelectSingleNode("config/autoSizeX");
@@ -1570,6 +1632,8 @@ namespace LBKJClient
                 tsmi.CheckState = CheckState.Unchecked;
             else
             {
+                //autoSizeX =180;
+                //autoSizeY =155;
                 xmlDoc.Load(path);
                 XmlNode node;
                 node = xmlDoc.SelectSingleNode("config/autoSizeX");
@@ -1594,6 +1658,9 @@ namespace LBKJClient
                 tsmi.CheckState = CheckState.Unchecked;
             else
             {
+                ////autoSizeX = 280;
+                ////autoSizeY = 230;
+
                 xmlDoc.Load(path);
                 XmlNode node;
                 node = xmlDoc.SelectSingleNode("config/autoSizeX");
@@ -1618,6 +1685,9 @@ namespace LBKJClient
                 tsmi.CheckState = CheckState.Unchecked;
             else
             {
+                //autoSizeX = 160;
+                //autoSizeY = 140;
+
                 xmlDoc.Load(path);
                 XmlNode node;
                 node = xmlDoc.SelectSingleNode("config/autoSizeX");
@@ -1643,6 +1713,9 @@ namespace LBKJClient
                 tsmi.CheckState = CheckState.Unchecked;
             else
             {
+                //autoSizeX = 260;
+                //autoSizeY = 215;
+
                 xmlDoc.Load(path);
                 XmlNode node;
                 node = xmlDoc.SelectSingleNode("config/autoSizeX");
@@ -1667,6 +1740,9 @@ namespace LBKJClient
                 tsmi.CheckState = CheckState.Unchecked;
             else
             {
+                //autoSizeX = 240;
+                //autoSizeY = 200;
+
                 xmlDoc.Load(path);
                 XmlNode node;
                 node = xmlDoc.SelectSingleNode("config/autoSizeX");
@@ -2252,6 +2328,7 @@ namespace LBKJClient
             }
             return f.ToString();
         }
+
         bean.showReportBean rb = new bean.showReportBean();
         private void yunpingtaiDatas()
         {
@@ -2404,8 +2481,7 @@ namespace LBKJClient
                                         datas.sign = "3";
                                         datas.warnState = "3";
                                         Whistory = 0;
-                                    }
-                                    else
+                                    } else
                                     {
                                         Whistory = 0;
                                     }
@@ -2593,7 +2669,7 @@ namespace LBKJClient
                                             Whistory = 0;
                                         }
                                         else
-                                        {
+                                        {                                         
                                         }
 
 
@@ -3210,7 +3286,7 @@ namespace LBKJClient
         //加密狗定时程序
         private void timer5_Tick(object sender, EventArgs e)
         {
-            int vv = 0;
+            int vv = 1;
             //int[] keyHandles = new int[8];
             //int[] keyNumber = new int[8];
             //SmartApp smart = new SmartApp();
@@ -3251,6 +3327,8 @@ namespace LBKJClient
             {
                 ipport = username + ":" + password;
             }
+            node = xmlDoc.SelectSingleNode("config/scoketServer");
+            socketserver = Int32.Parse(node.InnerText);
         }
 
         private void 取消自动登录ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3482,6 +3560,21 @@ namespace LBKJClient
         {
             dataSynchronous dsh = new dataSynchronous();
             dsh.ShowDialog();
+        }
+        private void socketConnection()
+        {
+            try
+            {
+                //创建终结点EndPoint
+                IPAddress ip = IPAddress.Parse(Properties.Settings.Default.ip);
+                IPEndPoint ipe = new IPEndPoint(ip, Int32.Parse(Properties.Settings.Default.port));   //把ip和端口转化为IPEndPoint的实例                                          
+                sk = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);   //  创建Socket
+                sk.Connect(ipe); //连接到服务器
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
     }
 }

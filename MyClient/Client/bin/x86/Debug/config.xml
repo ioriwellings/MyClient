@@ -7,19 +7,21 @@
   </user>
   <passd>
   </passd>
-  <stoptime>170808180408</stoptime>
-  <starttime>170808180323</starttime>
+  <stoptime>170809133720</stoptime>
+  <starttime>170809115753</starttime>
   <communicationType>
   </communicationType>
-  <communicationTcpType>123456789-1111</communicationTcpType>
+  <communicationTcpType>
+  </communicationTcpType>
   <datarefreshtime>60</datarefreshtime>
   <datasavetime>60</datasavetime>
   <datahousesavetime>30</datahousesavetime>
   <databasetimer>1</databasetimer>
   <carsavetime>5</carsavetime>
-  <log>1</log>
+  <log>0</log>
   <autosave02>0</autosave02>
   <autosave16>0</autosave16>
-  <autoSizeX>220</autoSizeX>
-  <autoSizeY>185</autoSizeY>
+  <autoSizeX>180</autoSizeX>
+  <autoSizeY>155</autoSizeY>
+  <scoketServer>0</scoketServer>
 </config>
