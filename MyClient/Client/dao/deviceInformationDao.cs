@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data;
-
+using System.Windows;
 
 namespace LBKJClient.dao
 {
