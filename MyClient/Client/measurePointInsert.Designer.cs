@@ -135,7 +135,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(89, 12);
             this.label7.TabIndex = 9;
-            this.label7.Text = "管理主机编号：";
+            this.label7.Text = "管理主机名称：";
             // 
             // textBox1
             // 
