@@ -9,33 +9,37 @@ namespace LBKJClient.dao
         {
             string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string id = Result.GetNewId();
+            int measureNo = id.GetHashCode();
             int ret = 0;
             String sql = "insert into lb_managehost_info (id,measureCode,hostName,hostAddress,CommunicationType,serialPort,portNumber,storeType,createTime,houseType) values ('" + id + "','" + mh.measureCode + "', '" + mh.hostName + "', '" + mh.hostAddress + "', '" + mh.CommunicationType + "', '" + mh.serialPort + "', '" + mh.portNumber + "', '" + mh.storeType + "', '" + time + "', '" + mh.houseType + "');CREATE TABLE a" + mh.measureCode + "lb_base_data_home" + "(id varchar(36) NOT NULL,measureCode varchar(2000),meterNo varchar(1000),temperature float,humidity float,lng varchar(2000),lat varchar(2000),warnState varchar(2000),sign varchar(2000),devtime datetime,createDate datetime,measureMeterCode varchar(2000),warningistrue varchar(2000),houseinterval varchar(2000),carinterval varchar(2000),PRIMARY KEY (id),INDEX indexdevtime (devtime, meterNo));CREATE TABLE a" + mh.measureCode + "alb_warning_data" + "(id varchar(36) NOT NULL,measureCode varchar(2000),meterNo varchar(1000),temperature float,humidity float,lng varchar(2000),lat varchar(2000),warnState varchar(2000),sign varchar(2000),devtime datetime,createDate datetime,measureMeterCode varchar(2000),warningistrue varchar(2000),houseinterval varchar(2000),carinterval varchar(2000),PRIMARY KEY (id),INDEX indexdevtime (devtime, meterNo));CREATE TABLE a" + mh.measureCode + "lb_readywarning_data" + "(id varchar(36) NOT NULL,measureCode varchar(2000),meterNo varchar(1000),temperature float,humidity float,lng varchar(2000),lat varchar(2000),warnState varchar(2000),sign varchar(2000),devtime datetime,createDate datetime,measureMeterCode varchar(2000),warningistrue varchar(2000),houseinterval varchar(2000),carinterval varchar(2000),PRIMARY KEY (id),INDEX indexdevtime (devtime, meterNo))";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
-        public DataTable querymanageHostDao() {
+        public DataTable querymanageHostDao()
+        {
             String sql = "SELECT m.*,h.name FROM lb_managehost_info m join lb_house_type h on m.houseType=h.id";
             DataSet ds = new DataSet();
-            ds.Clear();    
+            ds.Clear();
             ds = DbHelperMySQL.Query(sql);
             return ds.Tables[0];
         }
-        public bool deletemanageHostDao(string id,string code) {
+        public bool deletemanageHostDao(string id, string code)
+        {
             int ret = 0;
             int cd = 0;
-            String sql = "delete from lb_managehost_info where id = '"+id+"'";
-                ret = DbHelperMySQL.ExecuteSql(sql);
-                if (ret>0) {
-                    string sql1 = "delete from lb_device_information where measureCode = '"+code+"'";
-                    cd = DbHelperMySQL.ExecuteSql(sql1);
-                }
+            String sql = "delete from lb_managehost_info where id = '" + id + "'";
+            ret = DbHelperMySQL.ExecuteSql(sql);
+            if (ret > 0)
+            {
+                string sql1 = "delete from lb_device_information where measureCode = '" + code + "'";
+                cd = DbHelperMySQL.ExecuteSql(sql1);
+            }
             return cd == 0 ? false : true;
         }
         public bool updatemanageHostDao(bean.manageHose mh)
         {
             int ret = 0;
-            String sql = "update lb_managehost_info set hostName='"+mh.hostName+"',hostAddress='"+mh.hostAddress+ "',CommunicationType='"+mh.CommunicationType+ "',serialPort='"+mh.serialPort+ "',portNumber='"+mh.portNumber+ "',storeType='"+mh.storeType+ "',houseType='" + mh.houseType + "' where measureCode = '" + mh.measureCode+"'";
+            String sql = "update lb_managehost_info set hostName='" + mh.hostName + "',hostAddress='" + mh.hostAddress + "',CommunicationType='" + mh.CommunicationType + "',serialPort='" + mh.serialPort + "',portNumber='" + mh.portNumber + "',storeType='" + mh.storeType + "',houseType='" + mh.houseType + "' where measureCode = '" + mh.measureCode + "'";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
@@ -45,11 +49,11 @@ namespace LBKJClient.dao
             int cd = 0;
             String sql = "SELECT count(1) FROM lb_device_information where measureCode='" + mh.measureCode + "'";
             ret = DbHelperMySQL.ExecuteSql(sql);
-                if (ret > 0)
-                {
-                    string sql1 = "update lb_managehost_info set portNumber='" + ret.ToString() + "' where measureCode = '" + mh.measureCode + "'";
-                    cd = DbHelperMySQL.ExecuteSql(sql1);
-                }
+            if (ret > 0)
+            {
+                string sql1 = "update lb_managehost_info set portNumber='" + ret.ToString() + "' where measureCode = '" + mh.measureCode + "'";
+                cd = DbHelperMySQL.ExecuteSql(sql1);
+            }
             return cd == 0 ? false : true;
         }
         //查询管理主机中  使用串口通信的主机信息  判断地址栏不为空
