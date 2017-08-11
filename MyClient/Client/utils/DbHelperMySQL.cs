@@ -346,15 +346,19 @@ namespace LBKJClient.dao
         {
             MySqlConnection connection = new MySqlConnection(connectionString);
             MySqlCommand cmd = new MySqlCommand(strSQL, connection);
+            MySqlDataReader myReader = null;
             try
             {
                 connection.Open();
-                MySqlDataReader myReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                myReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 return myReader;
             }
             catch (MySql.Data.MySqlClient.MySqlException e)
             {
                 throw e;
+            }
+            finally {
+                myReader.Close();
             }   
 
         }

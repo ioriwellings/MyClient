@@ -247,6 +247,12 @@
     <Compile Include="obj\x86\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\x86\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\x86\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="PagerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PagerControl.Designer.cs">
+      <DependentUpon>PagerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="passWordUpdate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -425,9 +431,11 @@
     </Compile>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="addUser.resx">
       <DependentUpon>addUser.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="convenientSet.resx">
       <DependentUpon>convenientSet.cs</DependentUpon>
@@ -500,6 +508,9 @@
     <EmbeddedResource Include="obj\x86\Debug\LBKJClient.userManage.resources" />
     <EmbeddedResource Include="obj\x86\Debug\LBKJClient.warningForm.resources" />
     <EmbeddedResource Include="obj\x86\Debug\LBKJClient.warningSetup.resources" />
+    <EmbeddedResource Include="PagerControl.resx">
+      <DependentUpon>PagerControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="passWordUpdate.resx">
       <DependentUpon>passWordUpdate.cs</DependentUpon>
     </EmbeddedResource>
@@ -520,9 +531,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="addManageHost.resx">
       <DependentUpon>addManageHost.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="basicSetup.resx">
       <DependentUpon>basicSetup.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ChangeCompanyName.resx">
       <DependentUpon>ChangeCompanyName.cs</DependentUpon>

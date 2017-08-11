@@ -48,7 +48,7 @@ namespace LBKJClient
                     }
                     else
                     {
-                        MessageBox.Show("车载管理主机编号为空，请输入...");
+                        MessageBox.Show("管理主机编号为空，请输入...");
                     }
                 if (istrue)
                     {

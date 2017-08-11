@@ -1160,10 +1160,10 @@ namespace LBKJClient
                     lls.addReport(rb);
                     return false;
                 }
-        }catch(Exception ee) {
+        }catch{
                 port.Close();
                 rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                rb.eventInfo = "串口连接失败了！"+ee.Message;
+                rb.eventInfo = "串口连接失败了！";
                 rb.type = "0";
                 lls.addReport(rb);
                 return false;
@@ -1559,12 +1559,12 @@ namespace LBKJClient
                     service.deleteInvalidDataService did = new service.deleteInvalidDataService();
                     did.deleteInvalidData();
 
-                    service.loginLogService lls = new service.loginLogService();
+                    service.loginLogService llse = new service.loginLogService();
                     bean.loginLogBean lb = new bean.loginLogBean();
                     lb.name = frmLogin.name;
                     lb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     lb.eventInfo = "退出系统！";
-                    lls.addCheckLog(lb);
+                    llse.addCheckLog(lb);
                     saveToXmlsStoptime(DateTime.Now.ToString("yyMMddHHmmss"));
                     if (port.IsOpen)
                     {
