@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Windows.Forms;
 
 namespace LBKJClient.dao
 {
@@ -11,7 +12,7 @@ namespace LBKJClient.dao
             string id = Result.GetNewId();
             int measureNo = id.GetHashCode();
             int ret = 0;
-            String sql = "insert into lb_managehost_info (id,measureCode,hostName,hostAddress,CommunicationType,serialPort,portNumber,storeType,createTime,houseType) values ('" + id + "','" + mh.measureCode + "', '" + mh.hostName + "', '" + mh.hostAddress + "', '" + mh.CommunicationType + "', '" + mh.serialPort + "', '" + mh.portNumber + "', '" + mh.storeType + "', '" + time + "', '" + mh.houseType + "');CREATE TABLE a" + mh.measureCode + "lb_base_data_home" + "(id varchar(36) NOT NULL,measureCode varchar(2000),meterNo varchar(1000),temperature float,humidity float,lng varchar(2000),lat varchar(2000),warnState varchar(2000),sign varchar(2000),devtime datetime,createDate datetime,measureMeterCode varchar(2000),warningistrue varchar(2000),houseinterval varchar(2000),carinterval varchar(2000),PRIMARY KEY (id),INDEX indexdevtime (devtime, meterNo));CREATE TABLE a" + mh.measureCode + "alb_warning_data" + "(id varchar(36) NOT NULL,measureCode varchar(2000),meterNo varchar(1000),temperature float,humidity float,lng varchar(2000),lat varchar(2000),warnState varchar(2000),sign varchar(2000),devtime datetime,createDate datetime,measureMeterCode varchar(2000),warningistrue varchar(2000),houseinterval varchar(2000),carinterval varchar(2000),PRIMARY KEY (id),INDEX indexdevtime (devtime, meterNo));CREATE TABLE a" + mh.measureCode + "lb_readywarning_data" + "(id varchar(36) NOT NULL,measureCode varchar(2000),meterNo varchar(1000),temperature float,humidity float,lng varchar(2000),lat varchar(2000),warnState varchar(2000),sign varchar(2000),devtime datetime,createDate datetime,measureMeterCode varchar(2000),warningistrue varchar(2000),houseinterval varchar(2000),carinterval varchar(2000),PRIMARY KEY (id),INDEX indexdevtime (devtime, meterNo))";
+            String sql = "insert into lb_managehost_info (id,measureCode,hostName,hostAddress,CommunicationType,serialPort,portNumber,storeType,createTime,houseType,measureNo) values ('" + id + "','" + mh.measureCode + "', '" + mh.hostName + "', '" + mh.hostAddress + "', '" + mh.CommunicationType + "', '" + mh.serialPort + "', '" + mh.portNumber + "', '" + mh.storeType + "', '" + time + "', '" + mh.houseType + "','" + measureNo + "');ALTER TABLE `data_home` ADD PARTITION (PARTITION p"+ measureNo + " VALUES LESS THAN("+measureNo+"))";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
