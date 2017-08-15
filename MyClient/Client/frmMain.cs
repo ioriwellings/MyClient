@@ -156,8 +156,6 @@ namespace LBKJClient
              }
           }
             privateFonts.AddFontFile(@str + @"/fonts/SIMYOU.TTF");//加载路径的字体
-           // this.menuStrip1.BackColor = Color.FromArgb(181, 220, 255);
-            //this.toolStrip1.BackColor = Color.FromArgb(200, 233, 253);
             getFromXml();
             rect = Screen.GetWorkingArea(this);
             initPointsInfo();
@@ -169,8 +167,6 @@ namespace LBKJClient
             dtcdinfo1 = dis.checkPointInfo(1);
             if (getresults != null && !"".Equals(getresults))
             {
-
-
                 //自动读取历史数据占用主线程
                 if (autosave02 == 1)
                 {
@@ -2891,7 +2887,7 @@ namespace LBKJClient
                 {
                     //if (istrueport)
                     //{
-                        initPort(result[1]);
+                        if(initPort(result[1]))
                         //port.Open();
                         doGetDeviceInfo();
                     //}
