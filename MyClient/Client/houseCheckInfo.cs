@@ -42,7 +42,6 @@ namespace LBKJClient
         private void houseCheckInfo_Load(object sender, EventArgs e)
         {
             string str = Application.StartupPath;//项目路径
-            this.button1.BackgroundImage = Image.FromFile(@str + "/images/close.png");
             this.button2.BackgroundImage = Image.FromFile(@str + "/images/fanhui.png");
             privateFonts.AddFontFile(@str + @"/fonts/SIMYOU.TTF");//加载路径的字体
             rect = Screen.GetWorkingArea(this);
@@ -826,14 +825,6 @@ namespace LBKJClient
                 }
             }
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.timer2.Stop();
-            this.timer1.Stop();
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             this.timer1.Stop();

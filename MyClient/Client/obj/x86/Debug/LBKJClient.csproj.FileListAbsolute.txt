@@ -99,3 +99,4 @@ D:\codes\MyClient\Client\obj\x86\Debug\LBKJClient.csproj.GenerateResource.Cache
 D:\codes\MyClient\Client\obj\x86\Debug\LBKJClient.exe
 D:\codes\MyClient\Client\obj\x86\Debug\LBKJClient.pdb
 C:\Users\lb\Desktop\newClient\MyClient\Client\obj\x86\Debug\LBKJClient.PagerControl.resources
+D:\codes\MyClient\Client\obj\x86\Debug\LBKJClient.PagerControl.resources
