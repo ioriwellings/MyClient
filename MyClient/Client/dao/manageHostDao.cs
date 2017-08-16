@@ -10,15 +10,19 @@ namespace LBKJClient.dao
         {
             string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string id = Result.GetNewId();
-            int measureNo = id.GetHashCode();
+            int measureNo = System.Math.Abs(id.GetHashCode());
             int ret = 0;
-            String sql = "insert into lb_managehost_info (id,measureCode,hostName,hostAddress,CommunicationType,serialPort,portNumber,storeType,createTime,houseType,measureNo) values ('" + id + "','" + mh.measureCode + "', '" + mh.hostName + "', '" + mh.hostAddress + "', '" + mh.CommunicationType + "', '" + mh.serialPort + "', '" + mh.portNumber + "', '" + mh.storeType + "', '" + time + "', '" + mh.houseType + "','" + measureNo + "');ALTER TABLE `data_home` ADD PARTITION (PARTITION p"+ measureNo + " VALUES LESS THAN("+measureNo+"))";
+            String sql = "insert into lb_managehost_info (id,measureCode,hostName,hostAddress,CommunicationType,serialPort,portNumber,storeType,createTime,houseType,measureNo,tcp_ip_Port,networkType) values ('" + id + "','" + mh.measureCode + "', '" + mh.hostName + "', '" + mh.hostAddress + "', '" + mh.CommunicationType + "', '" + mh.serialPort + "', '" + mh.portNumber + "', '" + mh.storeType + "', '" + time + "', '" + mh.houseType + "','" + measureNo + "','" + mh.tcp_ip_Port + "','" + mh.networkType + "');ALTER TABLE `data_home` ADD PARTITION (PARTITION p" + measureNo + " VALUES LESS THAN("+measureNo+"))";
+            using (System.IO.StreamWriter sw = new System.IO.StreamWriter("C:/Users/a/Desktop/log.txt", true))
+            {
+                sw.WriteLine("测点存入对象数量：" + measureNo);
+            }
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
         public DataTable querymanageHostDao()
         {
-            String sql = "SELECT m.*,h.name FROM lb_managehost_info m join lb_house_type h on m.houseType=h.id";
+            String sql = "SELECT m.id,m.hostName,m.hostAddress,m.CommunicationType,m.serialPort,m.tcp_ip_Port,m.networkType,m.portNumber,m.storeType,m.measureCode,m.createTime,m.houseType,m.measureNo,h.name FROM lb_managehost_info m join lb_house_type h on m.houseType=h.id";
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);
