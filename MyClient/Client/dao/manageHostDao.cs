@@ -11,12 +11,11 @@ namespace LBKJClient.dao
             string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string id = Result.GetNewId();
             int measureNo = System.Math.Abs(id.GetHashCode());
+            measureNo = Int32.Parse(measureNo.ToString().Substring(0, 5));
             int ret = 0;
-            String sql = "insert into lb_managehost_info (id,measureCode,hostName,hostAddress,CommunicationType,serialPort,portNumber,storeType,createTime,houseType,measureNo,tcp_ip_Port,networkType) values ('" + id + "','" + mh.measureCode + "', '" + mh.hostName + "', '" + mh.hostAddress + "', '" + mh.CommunicationType + "', '" + mh.serialPort + "', '" + mh.portNumber + "', '" + mh.storeType + "', '" + time + "', '" + mh.houseType + "','" + measureNo + "','" + mh.tcp_ip_Port + "','" + mh.networkType + "');ALTER TABLE `data_home` ADD PARTITION (PARTITION p" + measureNo + " VALUES LESS THAN("+measureNo+"))";
-            using (System.IO.StreamWriter sw = new System.IO.StreamWriter("C:/Users/a/Desktop/log.txt", true))
-            {
-                sw.WriteLine("测点存入对象数量：" + measureNo);
-            }
+            String sql = "insert into lb_managehost_info (id,measureCode,hostName,hostAddress,CommunicationType,serialPort,portNumber,storeType,createTime,houseType,measureNo,tcp_ip_Port,networkType) values ('" + id + "','" + mh.measureCode + "', '" + mh.hostName + "', '" + mh.hostAddress + "', '" + mh.CommunicationType + "', '" + mh.serialPort + "', '" + mh.portNumber + "', '" + mh.storeType + "', '" + time + "', '" + mh.houseType + "','" + measureNo + "','" + mh.tcp_ip_Port + "','" + mh.networkType + "');ALTER TABLE `data_home` ADD PARTITION (PARTITION p" + measureNo + " VALUES LESS THAN(" + measureNo + "));ALTER TABLE `data_home` ADD PARTITION (PARTITION p" + measureNo + " VALUES LESS THAN(" + measureNo + "))";
+            //;ALTER TABLE `data_home` ADD PARTITION (PARTITION p" + measureNo + " VALUES LESS THAN("+measureNo+"))
+            //;ALTER TABLE `data_home` ADD PARTITION by range(measureNo)(PARTITION p" + measureNo + " VALUES LESS THAN("+measureNo+"))
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
@@ -44,7 +43,7 @@ namespace LBKJClient.dao
         public bool updatemanageHostDao(bean.manageHose mh)
         {
             int ret = 0;
-            String sql = "update lb_managehost_info set hostName='" + mh.hostName + "',hostAddress='" + mh.hostAddress + "',CommunicationType='" + mh.CommunicationType + "',serialPort='" + mh.serialPort + "',portNumber='" + mh.portNumber + "',storeType='" + mh.storeType + "',houseType='" + mh.houseType + "' where measureCode = '" + mh.measureCode + "'";
+            String sql = "update lb_managehost_info set hostName='" + mh.hostName + "',hostAddress='" + mh.hostAddress + "',CommunicationType='" + mh.CommunicationType + "',serialPort='" + mh.serialPort + "',portNumber='" + mh.portNumber + "',storeType='" + mh.storeType + "',houseType='" + mh.houseType + "',tcp_ip_Port='" + mh.tcp_ip_Port + "',networkType='" + mh.networkType + "' where measureCode = '" + mh.measureCode + "'";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }

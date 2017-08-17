@@ -126,6 +126,9 @@ namespace LBKJClient
             string type = this.dataGridView1.SelectedRows[0].Cells[8].Value.ToString();
             string code = this.dataGridView1.SelectedRows[0].Cells[9].Value.ToString();
             string kflx = this.dataGridView1.SelectedRows[0].Cells[13].Value.ToString();
+            string networkType = this.dataGridView1.SelectedRows[0].Cells[6].Value.ToString(); 
+            string tcp_ip_Port = this.dataGridView1.SelectedRows[0].Cells[5].Value.ToString();
+            string [] result = tcp_ip_Port.Split(':');
             //if (!"LBCC-16".Equals(txxy)) {   
             //    umh.textBox1.Text = name;
             //    umh.numericUpDown1.Value = Convert.ToInt32(cdnum);
@@ -156,9 +159,22 @@ namespace LBKJClient
             umh.textBox2.Text = code;
             umh.textBox3.Text = kflx;
             if (address!=null&&!"".Equals(address)) {
-                umh.checkBox1.Checked = true;
-                umh.numericUpDown2.Value = Convert.ToInt32(address);
-                umh.numericUpDown2.Enabled = true;
+                if (networkType == "串口") { umh.radioButton1.Checked = true; } else if (networkType == "tcp") { umh.radioButton2.Checked = true; };
+                if (umh.radioButton1.Checked)
+                {
+                    umh.numericUpDown2.Value = Convert.ToInt32(address);
+                    umh.comboBox4.Text = txport;
+                    umh.numericUpDown2.Enabled = true;
+                    umh.comboBox4.Enabled = true;
+                } else if (umh.radioButton2.Checked) {
+                    umh.numericUpDown3.Value = Convert.ToInt32(address);
+                    umh.textBox4.Text = result[0];
+                    umh.numericUpDown4.Value = decimal.Parse(result[1]);
+                    umh.numericUpDown3.Enabled = true;
+                    umh.textBox4.Enabled = true;
+                    umh.numericUpDown4.Enabled = true;
+                }
+
             }
             if (umh.ShowDialog() == DialogResult.OK)
             {

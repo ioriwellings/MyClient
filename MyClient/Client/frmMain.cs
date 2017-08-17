@@ -1552,8 +1552,8 @@ namespace LBKJClient
                 if (result == DialogResult.Yes)
                 {
                     //新增退出系统删除无标记记录（断电，报警，库房、车载时间间隔）
-                    service.deleteInvalidDataService did = new service.deleteInvalidDataService();
-                    did.deleteInvalidData();
+                    //service.deleteInvalidDataService did = new service.deleteInvalidDataService();
+                    //did.deleteInvalidData();
 
                     service.loginLogService llse = new service.loginLogService();
                     bean.loginLogBean lb = new bean.loginLogBean();

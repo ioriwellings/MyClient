@@ -41,12 +41,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
+            this.label13 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
@@ -60,16 +62,14 @@
             this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.label13 = new System.Windows.Forms.Label();
-            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -216,8 +216,18 @@
             this.comboBox2.TabIndex = 7;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(41, 31);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(65, 12);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "通信协议：";
+            // 
             // numericUpDown2
             // 
+            this.numericUpDown2.Enabled = false;
             this.numericUpDown2.Location = new System.Drawing.Point(206, 34);
             this.numericUpDown2.Minimum = new decimal(new int[] {
             1,
@@ -232,15 +242,6 @@
             0,
             0,
             0});
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(41, 31);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 12);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "通信协议：";
             // 
             // label3
             // 
@@ -298,6 +299,33 @@
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "通讯设置";
+            // 
+            // numericUpDown5
+            // 
+            this.numericUpDown5.Enabled = false;
+            this.numericUpDown5.Location = new System.Drawing.Point(206, 90);
+            this.numericUpDown5.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown5.Name = "numericUpDown5";
+            this.numericUpDown5.Size = new System.Drawing.Size(84, 21);
+            this.numericUpDown5.TabIndex = 34;
+            this.numericUpDown5.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(106, 93);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(89, 12);
+            this.label13.TabIndex = 33;
+            this.label13.Text = "管理主机地址：";
             // 
             // textBox4
             // 
@@ -357,16 +385,17 @@
             // 
             // textBox3
             // 
+            this.textBox3.Enabled = false;
             this.textBox3.Location = new System.Drawing.Point(206, 128);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(143, 21);
+            this.textBox3.Size = new System.Drawing.Size(129, 21);
             this.textBox3.TabIndex = 27;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label9.Location = new System.Drawing.Point(395, 128);
+            this.label9.Location = new System.Drawing.Point(347, 134);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(53, 12);
             this.label9.TabIndex = 25;
@@ -374,7 +403,7 @@
             // 
             // numericUpDown3
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(465, 125);
+            this.numericUpDown3.Location = new System.Drawing.Point(407, 129);
             this.numericUpDown3.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -410,14 +439,15 @@
             this.radioButton2.Tag = "2";
             this.radioButton2.Text = "Tcp/Ip";
             this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // comboBox5
             // 
-            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox5.Enabled = false;
             this.comboBox5.FormattingEnabled = true;
             this.comboBox5.Location = new System.Drawing.Point(407, 38);
             this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(144, 20);
+            this.comboBox5.Size = new System.Drawing.Size(100, 20);
             this.comboBox5.TabIndex = 8;
             // 
             // label5
@@ -442,38 +472,13 @@
             this.radioButton1.Tag = "1";
             this.radioButton1.Text = "串口通讯";
             this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(106, 93);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(89, 12);
-            this.label13.TabIndex = 33;
-            this.label13.Text = "管理主机地址：";
-            // 
-            // numericUpDown5
-            // 
-            this.numericUpDown5.Location = new System.Drawing.Point(206, 90);
-            this.numericUpDown5.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Size = new System.Drawing.Size(84, 21);
-            this.numericUpDown5.TabIndex = 34;
-            this.numericUpDown5.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // addManageHost
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(661, 429);
+            this.ClientSize = new System.Drawing.Size(661, 435);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -491,9 +496,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
             this.ResumeLayout(false);
 
         }

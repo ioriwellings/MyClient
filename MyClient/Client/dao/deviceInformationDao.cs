@@ -9,6 +9,7 @@ namespace LBKJClient.dao
         public bool addDeviceInformationDao(bean.manageHose hm)
         {
             string id;
+            string id0;
             int flag = 0;
             string wd1 = "35.0";
             string wd2 = "0.0";
@@ -18,6 +19,8 @@ namespace LBKJClient.dao
             string m = null;
             int ret = 0;
             String sql = "insert into lb_device_information (id,measureCode,meterNo,terminalname,house_code,housetype,t_high,t_low,h_high,h_low,powerflag,createtime) values ";
+            String sql0 = "insert into lb_base_data_home (id,measureCode,meterNo,devtime,temperature,humidity,lng,lat,createDate,warnState,sign,measureMeterCode,warningistrue,carinterval,houseinterval,mcc) values ";
+
             int num = Int32.Parse(hm.portNumber); 
             string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             for (int j = 0; j < num; j++) { 
@@ -56,16 +59,22 @@ namespace LBKJClient.dao
                     }
                     cd += hm.hostName + "-" + m;
                 }
-                 id = Result.GetNewId();
+                id = Result.GetNewId();
+                id0 = Result.GetNewId();
                 if (j > 0)
                 {
                     sql += " ,('" + id + "','" + hm.measureCode + "', '" + m + "', '" + cd + "','" + hm.houseType + "', '" + 0 + "', '" + wd1 + "', '" + wd2 + "', '" + sd1 + "', '" + sd2 + "', '" + flag + "', '" + time + "')";
+                    sql0 += " , ('" + id0 + "','" + hm.measureCode + "', '" + m + "','" + time + "','" + 0.0 + "','" + 0.0 + "','','','" + time + "','','','" + hm.measureCode + "'||'_'||'" + m + "','','','','0')";
                 }
                 else {
                     sql += "('" + id + "','" + hm.measureCode + "', '" + m + "', '" + cd + "','" + hm.houseType + "', '" + 0 + "', '" + wd1 + "', '" + wd2 + "', '" + sd1 + "', '" + sd2 + "', '" + flag + "', '" + time + "')";
+                    sql0 += "('" + id0 + "','" + hm.measureCode + "', '" + m + "','" + time + "','" + 0.0 + "','" + 0.0 + "','','','" + time + "','','','" + hm.measureCode + "'||'_'||'" + m + "','','','','0')";
+
                 }
-               cd = null;
+                cd = null;
+                //'" + hm.measureCode + "'||'_'||'" + m + "'
             }
+            DbHelperMySQL.ExecuteSql(sql0);
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }

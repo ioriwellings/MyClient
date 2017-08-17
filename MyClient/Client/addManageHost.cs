@@ -177,5 +177,36 @@ namespace LBKJClient
             }
             xmlDoc.Save(path);
         }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.radioButton1.Checked)
+            {
+                this.numericUpDown2.Enabled = true;
+                this.comboBox5.Enabled = true;
+            }
+            if (!this.radioButton1.Checked)
+            {
+                this.numericUpDown2.Enabled = false;
+                this.comboBox5.Enabled = false;
+
+            }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.radioButton2.Checked)
+            {
+                this.numericUpDown5.Enabled = true;
+                this.textBox3.Enabled = true;
+                this.numericUpDown3.Enabled = true;
+            }
+            if (!this.radioButton2.Checked)
+            {
+                this.numericUpDown5.Enabled = false;
+                this.textBox3.Enabled = false;
+                this.numericUpDown3.Enabled = false;
+            }
+        }
     }
 }
