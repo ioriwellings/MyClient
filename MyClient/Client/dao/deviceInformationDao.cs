@@ -19,7 +19,7 @@ namespace LBKJClient.dao
             string m = null;
             int ret = 0;
             String sql = "insert into lb_device_information (id,measureCode,meterNo,terminalname,house_code,housetype,t_high,t_low,h_high,h_low,powerflag,createtime) values ";
-            String sql0 = "insert into lb_base_data_home (id,measureCode,meterNo,devtime,temperature,humidity,lng,lat,createDate,warnState,sign,measureMeterCode,warningistrue,carinterval,houseinterval,mcc) values ";
+            String sql0 = "insert into lb_base_data_home (id,measureCode,meterNo,devtime,temperature,humidity,lng,lat,createDate,warnState,sign,measureMeterCode,warningistrue,carinterval,houseinterval,mcc,measureNo) values ";
 
             int num = Int32.Parse(hm.portNumber); 
             string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -61,21 +61,24 @@ namespace LBKJClient.dao
                 }
                 id = Result.GetNewId();
                 id0 = Result.GetNewId();
+                int measureNo = System.Math.Abs(id.GetHashCode());
+                measureNo = Int32.Parse(measureNo.ToString().Substring(0, 5));
                 if (j > 0)
                 {
                     sql += " ,('" + id + "','" + hm.measureCode + "', '" + m + "', '" + cd + "','" + hm.houseType + "', '" + 0 + "', '" + wd1 + "', '" + wd2 + "', '" + sd1 + "', '" + sd2 + "', '" + flag + "', '" + time + "')";
-                    sql0 += " , ('" + id0 + "','" + hm.measureCode + "', '" + m + "','" + time + "','" + 0.0 + "','" + 0.0 + "','','','" + time + "','','','" + hm.measureCode + "'||'_'||'" + m + "','','','','0')";
+                    sql0 += " , ('" + id0 + "','" + hm.measureCode + "', '" + m + "','" + time + "','0.0','0.0','','','" + time + "','','',CONCAT('" + hm.measureCode + "', '_', '" + m + "'),'','','','0','" + measureNo + "')";
                 }
                 else {
                     sql += "('" + id + "','" + hm.measureCode + "', '" + m + "', '" + cd + "','" + hm.houseType + "', '" + 0 + "', '" + wd1 + "', '" + wd2 + "', '" + sd1 + "', '" + sd2 + "', '" + flag + "', '" + time + "')";
-                    sql0 += "('" + id0 + "','" + hm.measureCode + "', '" + m + "','" + time + "','" + 0.0 + "','" + 0.0 + "','','','" + time + "','','','" + hm.measureCode + "'||'_'||'" + m + "','','','','0')";
+                    sql0 += "('" + id0 + "','" + hm.measureCode + "', '" + m + "','" + time + "','0.0','0.0','','','" + time + "','','',CONCAT('" + hm.measureCode + "', '_', '" + m + "'),'','','','0','" + measureNo + "')";
 
                 }
                 cd = null;
-                //'" + hm.measureCode + "'||'_'||'" + m + "'
             }
-            DbHelperMySQL.ExecuteSql(sql0);
             ret = DbHelperMySQL.ExecuteSql(sql);
+            if (ret > 0) { ret = DbHelperMySQL.ExecuteSql(sql0); }
+           
+            
             return ret == 0 ? false : true;
         }
         public DataTable checkPointInfo(int flag) {
@@ -112,9 +115,9 @@ namespace LBKJClient.dao
                 sql = "update lb_device_information set terminalname='" + di.terminalname + "',t_high='" + di.t_high + "',t_low='" + di.t_low + "',h_high='" + di.h_high + "',h_low='" + di.h_low + "',powerflag='" + di.powerflag + "' where measureCode='" + di.measureCode + "' and meterNo='" + di.meterNo + "'";
             }
             else {
-                sql = "update lb_device_information set terminalname='" + di.terminalname + "',house_code='" + di.housecode + "',t_high='" + di.t_high + "',t_low='" + di.t_low + "',h_high='" + di.h_high + "',h_low='" + di.h_low + "',powerflag='" + di.powerflag + "' where measureCode='" + di.measureCode + "' and meterNo='" + di.meterNo + "'";
-            }           
-             ret = DbHelperMySQL.ExecuteSql(sql);
+                sql = "update lb_device_information set terminalname='" + di.terminalname + "',house_code='" + di.housecode + "',housetype ='0',t_high='" + di.t_high + "',t_low='" + di.t_low + "',h_high='" + di.h_high + "',h_low='" + di.h_low + "',powerflag='" + di.powerflag + "' where measureCode='" + di.measureCode + "' and meterNo='" + di.meterNo + "'";
+            }
+            ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
         public bool insertDeviceInformation(bean.deviceInformation di)

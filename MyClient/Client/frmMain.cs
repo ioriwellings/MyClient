@@ -3161,6 +3161,7 @@ namespace LBKJClient
         private void 库房管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             houseManage hm = new houseManage();
+            hm.RefreshEvent += this.NeedRefresh;//注册事件
             hm.ShowDialog();
         }
 
