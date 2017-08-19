@@ -2891,7 +2891,7 @@ namespace LBKJClient
                 {
                     //if (istrueport)
                     //{
-                        initPort(result[1]);
+                        if(initPort(result[1]))
                         //port.Open();
                         doGetDeviceInfo();
                     //}
@@ -3516,6 +3516,12 @@ namespace LBKJClient
         {
             this.toolStripLabel7.BackgroundImage = null;
         }
+
+        private void lbtitle_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
         int djs = 1800;
         private void timer1_Tick(object sender, EventArgs e)
         {
