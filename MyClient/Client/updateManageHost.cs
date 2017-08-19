@@ -49,6 +49,13 @@ namespace LBKJClient
                     mh.serialPort = "";
                     mh.networkType = "tcp";
                 }
+                else
+                {
+                    mh.hostAddress = "";
+                    mh.serialPort = "";
+                    mh.tcp_ip_Port = "";
+                    mh.networkType = "";
+                }
                 istrue = mhs.updateManageHost(mh);
                 this.DialogResult = DialogResult.OK;
 
@@ -116,6 +123,22 @@ namespace LBKJClient
                 this.numericUpDown3.Enabled = false;
                 this.textBox4.Enabled = false;
                 this.numericUpDown4.Enabled = false;
+            }
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.comboBox2.SelectedItem.ToString() != "[管理主机]LB863RSB_N1(LBGZ-02)")
+            {
+                this.radioButton1.Checked = false;
+                this.radioButton2.Checked = false;
+                this.radioButton1.Enabled = false;
+                this.radioButton2.Enabled = false;
+            }
+            else
+            {
+                this.radioButton1.Enabled = true;
+                this.radioButton2.Enabled = true;
             }
         }
     }

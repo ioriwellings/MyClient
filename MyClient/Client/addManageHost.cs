@@ -42,13 +42,21 @@ namespace LBKJClient
                 {
                     mh.hostAddress = this.numericUpDown2.Value.ToString();
                     mh.serialPort = this.comboBox5.SelectedItem.ToString();
+                    mh.tcp_ip_Port = "";
                     mh.networkType = "串口";
                 }
                 else if (this.radioButton2.Checked)
                 {
                     mh.hostAddress = this.numericUpDown5.Value.ToString();
+                    mh.serialPort = "";
                     mh.tcp_ip_Port = this.textBox1.Text + ":" + this.numericUpDown3.Value.ToString();
                     mh.networkType = "tcp";
+                }
+                else {
+                    mh.hostAddress = "";
+                    mh.serialPort = "";
+                    mh.tcp_ip_Port = "";
+                    mh.networkType = "";
                 }
 
                 if (this.textBox2.Text != null && !"".Equals(this.textBox2.Text))
@@ -97,25 +105,18 @@ namespace LBKJClient
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //if (this.comboBox2.SelectedItem.ToString() == "LBCC-16")
-            //{
-            //    this.label7.Visible = true;
-            //    this.textBox2.Visible = true;
-            //    this.radioButton1.Visible = false;
-            //    this.label5.Visible = false;
-            //    this.comboBox1.Visible = false;
-            //    this.label3.Visible = false;
-            //    this.numericUpDown2.Visible = false;
-            //}
-            //else {
-            //    this.label7.Visible = false;
-            //    this.textBox2.Visible = false;
-            //    this.radioButton1.Visible = true;
-            //    this.label5.Visible = true;
-            //    this.comboBox1.Visible = true;
-            //    this.label3.Visible = true;
-            //    this.numericUpDown2.Visible = true;
-            //}
+            if (this.comboBox2.SelectedItem.ToString() != "[管理主机]LB863RSB_N1(LBGZ-02)")
+            {
+                this.radioButton1.Checked = false;
+                this.radioButton2.Checked = false;
+                this.radioButton1.Enabled = false;
+                this.radioButton2.Enabled = false;
+            }
+            else {
+                this.radioButton1.Enabled = true;
+                this.radioButton2.Enabled = true;
+            }
+
         }
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -148,17 +149,6 @@ namespace LBKJClient
             }
         }
 
-        private void checkBox1_Click(object sender, EventArgs e)
-        {
-            if (this.radioButton1.Checked) {
-                this.numericUpDown2.Enabled = true;
-            }
-            if (!this.radioButton1.Checked)
-            {
-                this.numericUpDown2.Enabled = false;
-            }
-        }
-
         private void saveToXmlsStoptime(string communication)
         {
             XmlDocument xmlDoc = new XmlDocument();
@@ -180,6 +170,7 @@ namespace LBKJClient
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
+            
             if (this.radioButton1.Checked)
             {
                 this.numericUpDown2.Enabled = true;
