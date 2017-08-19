@@ -24,5 +24,9 @@ namespace LBKJClient.bean
         public string storeType { get; set; }
         //库房类别
         public string houseType { get; set; }
+        //tcp通信ip地址Port端口号
+        public string tcp_ip_Port { get; set; }
+        //GPRS通信
+        public string networkType { get; set; }
     }
 }

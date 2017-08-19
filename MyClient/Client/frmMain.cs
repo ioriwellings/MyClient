@@ -156,8 +156,6 @@ namespace LBKJClient
              }
           }
             privateFonts.AddFontFile(@str + @"/fonts/SIMYOU.TTF");//加载路径的字体
-           // this.menuStrip1.BackColor = Color.FromArgb(181, 220, 255);
-            //this.toolStrip1.BackColor = Color.FromArgb(200, 233, 253);
             getFromXml();
             rect = Screen.GetWorkingArea(this);
             initPointsInfo();
@@ -169,8 +167,6 @@ namespace LBKJClient
             dtcdinfo1 = dis.checkPointInfo(1);
             if (getresults != null && !"".Equals(getresults))
             {
-
-
                 //自动读取历史数据占用主线程
                 if (autosave02 == 1)
                 {
@@ -1160,10 +1156,10 @@ namespace LBKJClient
                     lls.addReport(rb);
                     return false;
                 }
-        }catch(Exception ee) {
+        }catch{
                 port.Close();
                 rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                rb.eventInfo = "串口连接失败了！"+ee.Message;
+                rb.eventInfo = "串口连接失败了！";
                 rb.type = "0";
                 lls.addReport(rb);
                 return false;
@@ -1556,15 +1552,15 @@ namespace LBKJClient
                 if (result == DialogResult.Yes)
                 {
                     //新增退出系统删除无标记记录（断电，报警，库房、车载时间间隔）
-                    service.deleteInvalidDataService did = new service.deleteInvalidDataService();
-                    did.deleteInvalidData();
+                    //service.deleteInvalidDataService did = new service.deleteInvalidDataService();
+                    //did.deleteInvalidData();
 
-                    service.loginLogService lls = new service.loginLogService();
+                    service.loginLogService llse = new service.loginLogService();
                     bean.loginLogBean lb = new bean.loginLogBean();
                     lb.name = frmLogin.name;
                     lb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     lb.eventInfo = "退出系统！";
-                    lls.addCheckLog(lb);
+                    llse.addCheckLog(lb);
                     saveToXmlsStoptime(DateTime.Now.ToString("yyMMddHHmmss"));
                     if (port.IsOpen)
                     {
@@ -3165,6 +3161,7 @@ namespace LBKJClient
         private void 库房管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             houseManage hm = new houseManage();
+            hm.RefreshEvent += this.NeedRefresh;//注册事件
             hm.ShowDialog();
         }
 

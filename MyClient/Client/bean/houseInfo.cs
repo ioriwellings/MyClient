@@ -8,7 +8,7 @@ namespace LBKJClient.bean
 {
     class houseInfo
     {
-        public int id { get; set; }
+        public string  id { get; set; }
         public string name { get; set; }
         
         public float t_high { get; set; }

@@ -21,7 +21,11 @@ namespace LBKJClient
         string TarStr = "yyyyMMddHHmmss";
         IFormatProvider format = new System.Globalization.CultureInfo("zh-CN");
         DataTable dt= new DataTable();
+        DataTable dtcount = new DataTable();
         service.warningCheckService wcs = new service.warningCheckService();
+        string time1 = null;
+        string time2 = null;
+        string cd = null;
         public warningForm()
         {
             InitializeComponent();
@@ -62,172 +66,102 @@ namespace LBKJClient
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.button1.Enabled = false;
             this.dataGridView1.DataSource = null;
-            string time1 = this.dateTimePicker1.Text.ToString();
-            string time2 = this.dateTimePicker2.Text.ToString();
-            string cd = this.comboBox1.SelectedValue.ToString();
+            time1 = this.dateTimePicker1.Text.ToString();
+            time2 = this.dateTimePicker2.Text.ToString();
+            cd = this.comboBox1.SelectedValue.ToString();
 
             if (cd != "" && !"".Equals(cd))
             {
-                dt = wcs.warningcheck(time1, time2, cd);
-                if (dt != null && dt.Rows.Count > 0)
-                {
-                    int num = dt.Rows.Count;
-
-                    double wd;
-                    double sd;
-                    double wdsx;
-                    double wdxx;
-                    double sdsx;
-                    double sdxx;
-                    string warningTime;
-                    int powerwarn = 0;
-
-                    DataView dv = dt.DefaultView;//虚拟视图
-                    dv.Sort = "measureCode,meterNo,devtime asc";
-                    DataTable dts = dv.ToTable(true);
-                    this.dataGridView1.DataSource = dts.DefaultView;
-
-                    this.dataGridView1.Columns[0].HeaderCell.Value = "数据采集时间";
-                    this.dataGridView1.Columns[1].HeaderCell.Value = "设备标识名称";
-                    this.dataGridView1.Columns[2].HeaderCell.Value = "管理主机编号";
-                    this.dataGridView1.Columns[3].HeaderCell.Value = "仪表编号";
-                    this.dataGridView1.Columns[4].HeaderCell.Value = "温度";
-                    this.dataGridView1.Columns[5].HeaderCell.Value = "湿度";
-                    this.dataGridView1.Columns[6].HeaderCell.Value = "报警事件";
-                    this.dataGridView1.Columns[7].Visible = false;
-                    this.dataGridView1.Columns[8].Visible = false;
-                    this.dataGridView1.Columns[9].Visible = false;
-                    this.dataGridView1.Columns[10].Visible = false;
-                    this.dataGridView1.Columns[11].HeaderCell.Value = "报警处理";
-                    this.dataGridView1.Columns[12].HeaderCell.Value = "温度超标差值";
-                    this.dataGridView1.Columns[13].HeaderCell.Value = "湿度超标差值";
-                    this.dataGridView1.Columns[0].Width = 150;
-                    this.dataGridView1.Columns[1].Width = 170;
-                    this.dataGridView1.Columns[2].Width = 150;
-                    this.dataGridView1.Columns[3].Width = 100;
-                    this.dataGridView1.Columns[4].Width = 100;
-                    this.dataGridView1.Columns[5].Width = 100;
-                    this.dataGridView1.Columns[6].Width = 250;
-                    this.dataGridView1.Columns[11].Width = 120;
-                    this.dataGridView1.Columns[4].DefaultCellStyle.Format = "0.0";
-                    this.dataGridView1.Columns[5].DefaultCellStyle.Format = "0.0";
-                    this.dataGridView1.Columns[12].DefaultCellStyle.Format = "0.0";
-                    this.dataGridView1.Columns[13].DefaultCellStyle.Format = "0.0";
-                    this.dataGridView1.RowsDefaultCellStyle.ForeColor = Color.Black;
-
-                    this.dataGridView1.AllowUserToAddRows = false;
-
-                    int row = this.dataGridView1.Rows.Count;//得到总行数 
-                    for (int i = 0; i < row; i++)
-                    {
-                        string warningEvent = "";
-                        wd = double.Parse(this.dataGridView1.Rows[i].Cells[4].Value.ToString());
-                        sd = double.Parse(this.dataGridView1.Rows[i].Cells[5].Value.ToString());
-                        string pw = this.dataGridView1.Rows[i].Cells[6].Value.ToString();
-                        if (pw != null && !"".Equals(pw))
-                        {
-                            powerwarn = Int32.Parse(pw);
-                            if (powerwarn == 1)
-                            {
-                                warningEvent = "断电报警 ";
-                            }
-                        }
-                        wdsx = double.Parse(this.dataGridView1.Rows[i].Cells[7].Value.ToString());
-                        wdxx = double.Parse(this.dataGridView1.Rows[i].Cells[8].Value.ToString());
-                        sdsx = double.Parse(this.dataGridView1.Rows[i].Cells[9].Value.ToString());
-                        sdxx = double.Parse(this.dataGridView1.Rows[i].Cells[10].Value.ToString());
-                        warningTime = dt.Rows[i][11].ToString();
-                        //if (warningTime != null && !"".Equals(warningTime))
-                        //{
-                        //    this.dataGridView1.Rows[i].Cells[11].Value = "已处理";
-                        //}
-                        //else
-                        //{
-                        //    this.dataGridView1.Rows[i].Cells[11].Value = "未处理";
-                        //    this.dataGridView1.Rows[i].Cells[11].Style.ForeColor = Color.Red;
-                        //}
-                        if (wd > wdsx)
-                        {
-                            this.dataGridView1.Rows[i].Cells[12].Value = Math.Round(wd - wdsx, 1).ToString("0.0");
-                            this.dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.Red;
-                            warningEvent += "温度上限报警 ";
-                        }
-                        else if (wd < wdxx)
-                        {
-                            this.dataGridView1.Rows[i].Cells[12].Value = Math.Round(wd - wdxx, 1).ToString("0.0");
-                            this.dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.Red;
-                            warningEvent += "温度下限报警 ";
-                        }
-                        else
-                        {
-                            this.dataGridView1.Rows[i].Cells[12].Value = "0.0";
-                        }
-
-                        if (sd > sdsx)
-                        {
-                            this.dataGridView1.Rows[i].Cells[13].Value = Math.Round(sd - sdsx, 1).ToString("0.0");
-                            this.dataGridView1.Rows[i].Cells[5].Style.ForeColor = Color.Red;
-                            warningEvent += "湿度上限报警 ";
-                        }
-                        else if (sd < sdxx)
-                        {
-                            this.dataGridView1.Rows[i].Cells[13].Value = Math.Round(sd - sdxx, 1).ToString("0.0");
-                            this.dataGridView1.Rows[i].Cells[5].Style.ForeColor = Color.Red;
-                            warningEvent += "湿度下限报警 ";
-                        }
-                        else
-                        {
-                            dt.Rows[i][13] = "0.0";
-                        }
-
-                        if (warningEvent == "")
-                        {
-                            warningEvent = "解除报警 ";
-                            this.dataGridView1.Rows[i].Cells[11].Value = "";
-                        }
-                        else
-                        {
-                            this.dataGridView1.Rows[i].Cells[6].Style.ForeColor = Color.Red;
-                        }
-                        this.dataGridView1.Rows[i].Cells[6].Value = warningEvent;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("当前测点无数据，请重新查询！");
-                };
+                pagerControl1.OnPageChanged += new EventHandler(pagerControl1_OnPageChanged);
+                dtcount = wcs.warningcheck(time1, time2, cd);
+                LoadData();
 
             }
-            this.button1.Enabled = true;
         }
         private void label1_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count > 0)
+            //if (dataGridView1.Rows.Count > 0)
+            if (dtcount!=null&&dtcount.Rows.Count > 0)
             {
-                DataTable dt1 = new DataTable();
-
-                // 列强制转换
-                for (int count = 0; count < dataGridView1.Columns.Count; count++)
+                double wd;
+                double sd;
+                double wdsx;
+                double wdxx;
+                double sdsx;
+                double sdxx;
+                string warningTime;
+                int powerwarn = 0;
+                int row = this.dtcount.Rows.Count;//得到总行数 
+                for (int i = 0; i < row; i++)
                 {
-                    DataColumn dc = new DataColumn(dataGridView1.Columns[count].Name.ToString());
-                    dt1.Columns.Add(dc);
-                }
-
-                // 循环行
-                for (int count = 0; count < dataGridView1.Rows.Count; count++)
-                {
-                    DataRow dr = dt1.NewRow();
-                    for (int countsub = 0; countsub < dataGridView1.Columns.Count; countsub++)
+                    string warningEvent = "";
+                    wd = double.Parse(this.dtcount.Rows[i][4].ToString());
+                    sd = double.Parse(this.dtcount.Rows[i][5].ToString());
+                    string pw = this.dtcount.Rows[i][6].ToString();
+                    if (pw != null && !"".Equals(pw))
                     {
-                        dr[countsub] = Convert.ToString(dataGridView1.Rows[count].Cells[countsub].Value);
+                        powerwarn = Int32.Parse(pw);
+                        if (powerwarn == 1)
+                        {
+                            warningEvent = "断电报警 ";
+                        }
                     }
-                    dt1.Rows.Add(dr);
-                }
+                    wdsx = double.Parse(this.dtcount.Rows[i][7].ToString());
+                    wdxx = double.Parse(this.dtcount.Rows[i][8].ToString());
+                    sdsx = double.Parse(this.dtcount.Rows[i][9].ToString());
+                    sdxx = double.Parse(this.dtcount.Rows[i][10].ToString());
+                    warningTime = dtcount.Rows[i][11].ToString();
+                    //if (warningTime != null && !"".Equals(warningTime))
+                    //{
+                    //    this.dataGridView1.Rows[i].Cells[11].Value = "已处理";
+                    //}
+                    //else
+                    //{
+                    //    this.dataGridView1.Rows[i].Cells[11].Value = "未处理";
+                    //}
+                    if (wd > wdsx)
+                    {
+                        this.dtcount.Rows[i][12] = Math.Round(wd - wdsx, 1).ToString("0.0");
+                        warningEvent += "温度上限报警 ";
+                    }
+                    else if (wd < wdxx)
+                    {
+                        this.dtcount.Rows[i][12] = Math.Round(wd - wdxx, 1).ToString("0.0");
+                        warningEvent += "温度下限报警 ";
+                    }
+                    else
+                    {
+                        this.dtcount.Rows[i][12] = "0.0";
+                    }
 
-                if (dt1 != null && !"".Equals(dt1))
-                {
+                    if (sd > sdsx)
+                    {
+                        this.dtcount.Rows[i][13] = Math.Round(sd - sdsx, 1).ToString("0.0");
+                        warningEvent += "湿度上限报警 ";
+                    }
+                    else if (sd < sdxx)
+                    {
+                        this.dtcount.Rows[i][13] = Math.Round(sd - sdxx, 1).ToString("0.0");
+                        warningEvent += "湿度下限报警 ";
+                    }
+                    else
+                    {
+                        dtcount.Rows[i][13] = "0.0";
+                    }
+
+                    if (warningEvent == "")
+                    {
+                        warningEvent = "解除报警 ";
+                        this.dtcount.Rows[i][11] = "";
+                    }
+                    else
+                    {
+
+                    }
+                    this.dtcount.Rows[i][6] = warningEvent;
+                }
+               
                     string localFilePath = String.Empty;
                     SaveFileDialog fileDialog = new SaveFileDialog();
 
@@ -245,15 +179,13 @@ namespace LBKJClient
 
                     {   //获得文件路径
                         localFilePath = fileDialog.FileName.ToString();
-                        CreateTable(dt1, localFilePath);
+                        CreateTable(dtcount, localFilePath);
                         MessageBox.Show("恭喜，PDF文件生产成功!");
                     }
-
-                }
-                else
-                {
-                    MessageBox.Show("无报警数据，请先查询报警数据后再生成PDF文件!");
-                }
+            }
+            else
+            {
+                MessageBox.Show("无报警数据，请先查询报警数据后再生成PDF文件!");
             }
         }
         private void CreateTable(DataTable dts,string path)
@@ -432,6 +364,143 @@ namespace LBKJClient
                 MessageBox.Show("报警未处理！请先处理报警信息。");
             }
             
+        }
+
+      private void pagerControl1_OnPageChanged(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+      private void LoadData()
+        {
+            this.dataGridView1.DataSource = null;
+            pagerControl1.DrawControl(dtcount.Rows.Count);//数据总条数
+            dt = wcs.warningcheckfenye(time1, time2, cd,pagerControl1.PageIndex,pagerControl1.PageSize);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                int num = dt.Rows.Count;
+                double wd;
+                double sd;
+                double wdsx;
+                double wdxx;
+                double sdsx;
+                double sdxx;
+                string warningTime;
+                int powerwarn = 0;
+
+                DataView dv = dt.DefaultView;//虚拟视图
+                dv.Sort = "measureCode,meterNo,devtime asc";
+                DataTable dts = dv.ToTable(true);
+                this.dataGridView1.DataSource = dts.DefaultView;
+
+                this.dataGridView1.Columns[0].HeaderCell.Value = "数据采集时间";
+                this.dataGridView1.Columns[1].HeaderCell.Value = "设备标识名称";
+                this.dataGridView1.Columns[2].HeaderCell.Value = "管理主机编号";
+                this.dataGridView1.Columns[3].HeaderCell.Value = "仪表编号";
+                this.dataGridView1.Columns[4].HeaderCell.Value = "温度";
+                this.dataGridView1.Columns[5].HeaderCell.Value = "湿度";
+                this.dataGridView1.Columns[6].HeaderCell.Value = "报警事件";
+                this.dataGridView1.Columns[7].Visible = false;
+                this.dataGridView1.Columns[8].Visible = false;
+                this.dataGridView1.Columns[9].Visible = false;
+                this.dataGridView1.Columns[10].Visible = false;
+                this.dataGridView1.Columns[11].HeaderCell.Value = "报警处理";
+                this.dataGridView1.Columns[12].HeaderCell.Value = "温度超标差值";
+                this.dataGridView1.Columns[13].HeaderCell.Value = "湿度超标差值";
+                this.dataGridView1.Columns[0].Width = 150;
+                this.dataGridView1.Columns[1].Width = 170;
+                this.dataGridView1.Columns[2].Width = 150;
+                this.dataGridView1.Columns[3].Width = 100;
+                this.dataGridView1.Columns[4].Width = 100;
+                this.dataGridView1.Columns[5].Width = 100;
+                this.dataGridView1.Columns[6].Width = 250;
+                this.dataGridView1.Columns[11].Width = 120;
+                this.dataGridView1.Columns[4].DefaultCellStyle.Format = "0.0";
+                this.dataGridView1.Columns[5].DefaultCellStyle.Format = "0.0";
+                this.dataGridView1.Columns[12].DefaultCellStyle.Format = "0.0";
+                this.dataGridView1.Columns[13].DefaultCellStyle.Format = "0.0";
+                this.dataGridView1.RowsDefaultCellStyle.ForeColor = Color.Black;
+
+                this.dataGridView1.AllowUserToAddRows = false;
+
+                int row = this.dataGridView1.Rows.Count;//得到总行数 
+                for (int i = 0; i < row; i++)
+                {
+                    string warningEvent = "";
+                    wd = double.Parse(this.dataGridView1.Rows[i].Cells[4].Value.ToString());
+                    sd = double.Parse(this.dataGridView1.Rows[i].Cells[5].Value.ToString());
+                    string pw = this.dataGridView1.Rows[i].Cells[6].Value.ToString();
+                    if (pw != null && !"".Equals(pw))
+                    {
+                        powerwarn = Int32.Parse(pw);
+                        if (powerwarn == 1)
+                        {
+                            warningEvent = "断电报警 ";
+                        }
+                    }
+                    wdsx = double.Parse(this.dataGridView1.Rows[i].Cells[7].Value.ToString());
+                    wdxx = double.Parse(this.dataGridView1.Rows[i].Cells[8].Value.ToString());
+                    sdsx = double.Parse(this.dataGridView1.Rows[i].Cells[9].Value.ToString());
+                    sdxx = double.Parse(this.dataGridView1.Rows[i].Cells[10].Value.ToString());
+                    warningTime = dt.Rows[i][11].ToString();
+                    //if (warningTime != null && !"".Equals(warningTime))
+                    //{
+                    //    this.dataGridView1.Rows[i].Cells[11].Value = "已处理";
+                    //}
+                    //else
+                    //{
+                    //    this.dataGridView1.Rows[i].Cells[11].Value = "未处理";
+                    //    this.dataGridView1.Rows[i].Cells[11].Style.ForeColor = Color.Red;
+                    //}
+                    if (wd > wdsx)
+                    {
+                        this.dataGridView1.Rows[i].Cells[12].Value = Math.Round(wd - wdsx, 1).ToString("0.0");
+                        this.dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.Red;
+                        warningEvent += "温度上限报警 ";
+                    }
+                    else if (wd < wdxx)
+                    {
+                        this.dataGridView1.Rows[i].Cells[12].Value = Math.Round(wd - wdxx, 1).ToString("0.0");
+                        this.dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.Red;
+                        warningEvent += "温度下限报警 ";
+                    }
+                    else
+                    {
+                        this.dataGridView1.Rows[i].Cells[12].Value = "0.0";
+                    }
+
+                    if (sd > sdsx)
+                    {
+                        this.dataGridView1.Rows[i].Cells[13].Value = Math.Round(sd - sdsx, 1).ToString("0.0");
+                        this.dataGridView1.Rows[i].Cells[5].Style.ForeColor = Color.Red;
+                        warningEvent += "湿度上限报警 ";
+                    }
+                    else if (sd < sdxx)
+                    {
+                        this.dataGridView1.Rows[i].Cells[13].Value = Math.Round(sd - sdxx, 1).ToString("0.0");
+                        this.dataGridView1.Rows[i].Cells[5].Style.ForeColor = Color.Red;
+                        warningEvent += "湿度下限报警 ";
+                    }
+                    else
+                    {
+                        dt.Rows[i][13] = "0.0";
+                    }
+
+                    if (warningEvent == "")
+                    {
+                        warningEvent = "解除报警 ";
+                        this.dataGridView1.Rows[i].Cells[11].Value = "";
+                    }
+                    else
+                    {
+                        this.dataGridView1.Rows[i].Cells[6].Style.ForeColor = Color.Red;
+                    }
+                    this.dataGridView1.Rows[i].Cells[6].Value = warningEvent;
+                }
+            }
+            else
+            {
+                MessageBox.Show("当前测点无数据，请重新查询！");
+            };
         }
     }
 }

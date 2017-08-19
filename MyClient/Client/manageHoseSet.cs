@@ -54,16 +54,23 @@ namespace LBKJClient
                 this.dataGridView1.Columns[2].Visible = false;
                 this.dataGridView1.Columns[3].HeaderCell.Value = "通信协议";
                 this.dataGridView1.Columns[4].Visible = false;
-                this.dataGridView1.Columns[5].HeaderCell.Value = "测点数量";
-                this.dataGridView1.Columns[6].HeaderCell.Value = "存储类型";
-                this.dataGridView1.Columns[7].HeaderCell.Value = "管理主机编号";
-                this.dataGridView1.Columns[8].Visible = false;
-                this.dataGridView1.Columns[9].Visible = false;
-                this.dataGridView1.Columns[10].HeaderCell.Value = "所属库房";
+
+                this.dataGridView1.Columns[5].Visible = false;
+                this.dataGridView1.Columns[6].Visible = false;
+
+                this.dataGridView1.Columns[7].HeaderCell.Value = "测点数量";
+                this.dataGridView1.Columns[8].HeaderCell.Value = "存储类型";
+                this.dataGridView1.Columns[9].HeaderCell.Value = "管理主机编号";
+                this.dataGridView1.Columns[10].Visible = false;
+                this.dataGridView1.Columns[11].Visible = false;
+
+                this.dataGridView1.Columns[12].Visible = false;
+
+                this.dataGridView1.Columns[13].HeaderCell.Value = "所属库房";
                 this.dataGridView1.Columns[1].Width = 200;
                 this.dataGridView1.Columns[3].Width = 200;
-                this.dataGridView1.Columns[5].Width = 80;
-                this.dataGridView1.Columns[7].Width = 200;
+                this.dataGridView1.Columns[7].Width = 80;
+                this.dataGridView1.Columns[9].Width = 200;
                 this.dataGridView1.RowsDefaultCellStyle.ForeColor = Color.Black;
                 //for (int count = 0; (count <= (this.dataGridView1.Rows.Count - 2)); count++) 
                 //{
@@ -80,7 +87,7 @@ namespace LBKJClient
         {
             bool istrue = false;
             string id=this.dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-            string code = this.dataGridView1.SelectedRows[0].Cells[7].Value.ToString();
+            string code = this.dataGridView1.SelectedRows[0].Cells[9].Value.ToString();
             if (id != null)
             {
                 DialogResult rr=MessageBox.Show("确定要删除管理主机数据吗？", "管理主机数据删除提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
@@ -115,10 +122,13 @@ namespace LBKJClient
             string address = this.dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
             string txxy = this.dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
             string txport = this.dataGridView1.SelectedRows[0].Cells[4].Value.ToString();
-            string cdnum = this.dataGridView1.SelectedRows[0].Cells[5].Value.ToString();
-            string type = this.dataGridView1.SelectedRows[0].Cells[6].Value.ToString();
-            string code = this.dataGridView1.SelectedRows[0].Cells[7].Value.ToString();
-            string kflx = this.dataGridView1.SelectedRows[0].Cells[10].Value.ToString();
+            string cdnum = this.dataGridView1.SelectedRows[0].Cells[7].Value.ToString();
+            string type = this.dataGridView1.SelectedRows[0].Cells[8].Value.ToString();
+            string code = this.dataGridView1.SelectedRows[0].Cells[9].Value.ToString();
+            string kflx = this.dataGridView1.SelectedRows[0].Cells[13].Value.ToString();
+            string networkType = this.dataGridView1.SelectedRows[0].Cells[6].Value.ToString(); 
+            string tcp_ip_Port = this.dataGridView1.SelectedRows[0].Cells[5].Value.ToString();
+            string [] result = tcp_ip_Port.Split(':');
             //if (!"LBCC-16".Equals(txxy)) {   
             //    umh.textBox1.Text = name;
             //    umh.numericUpDown1.Value = Convert.ToInt32(cdnum);
@@ -149,9 +159,22 @@ namespace LBKJClient
             umh.textBox2.Text = code;
             umh.textBox3.Text = kflx;
             if (address!=null&&!"".Equals(address)) {
-                umh.checkBox1.Checked = true;
-                umh.numericUpDown2.Value = Convert.ToInt32(address);
-                umh.numericUpDown2.Enabled = true;
+                if (networkType == "串口") { umh.radioButton1.Checked = true; } else if (networkType == "tcp") { umh.radioButton2.Checked = true; };
+                if (umh.radioButton1.Checked)
+                {
+                    umh.numericUpDown2.Value = Convert.ToInt32(address);
+                    umh.comboBox4.Text = txport;
+                    umh.numericUpDown2.Enabled = true;
+                    umh.comboBox4.Enabled = true;
+                } else if (umh.radioButton2.Checked) {
+                    umh.numericUpDown3.Value = Convert.ToInt32(address);
+                    umh.textBox4.Text = result[0];
+                    umh.numericUpDown4.Value = decimal.Parse(result[1]);
+                    umh.numericUpDown3.Enabled = true;
+                    umh.textBox4.Enabled = true;
+                    umh.numericUpDown4.Enabled = true;
+                }
+
             }
             if (umh.ShowDialog() == DialogResult.OK)
             {
@@ -169,7 +192,7 @@ namespace LBKJClient
         {
             string name = this.dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
             string address = this.dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
-            string code = this.dataGridView1.SelectedRows[0].Cells[7].Value.ToString();
+            string code = this.dataGridView1.SelectedRows[0].Cells[9].Value.ToString();
             if (address!=""&&!"".Equals(address)&&Int32.Parse(address) > 0)
             {
                 readHistoryData rhd = new readHistoryData();

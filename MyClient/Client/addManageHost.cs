@@ -25,11 +25,10 @@ namespace LBKJClient
            string name = this.textBox1.Text;
            string cdnum= this.numericUpDown1.Value.ToString();
            string cktype = this.comboBox3.SelectedItem.ToString();
-           string address= this.numericUpDown2.Value.ToString();
            string txxy= this.comboBox2.SelectedItem.ToString();
            string kflx = this.comboBox1.SelectedValue.ToString();
 
-            if (name!=null&&!"".Equals(name)&&cdnum!=null&& cktype!=null&& address!=null&& txxy!=null&& kflx!=null) {
+            if (name!=null&&!"".Equals(name)&&cdnum!=null&& cktype!=null&& txxy!=null&& kflx!=null) {
                 mh = new bean.manageHose();
                 service.manageHostService mhs = new service.manageHostService();
                 bool istrue = false;
@@ -38,9 +37,20 @@ namespace LBKJClient
                 mh.portNumber = cdnum;
                 mh.storeType = cktype;
                 mh.houseType = kflx;
-                if (this.checkBox1.Checked) {
-                    mh.hostAddress= this.numericUpDown2.Value.ToString(); 
+
+                if (this.radioButton1.Checked)
+                {
+                    mh.hostAddress = this.numericUpDown2.Value.ToString();
+                    mh.serialPort = this.comboBox5.SelectedItem.ToString();
+                    mh.networkType = "串口";
                 }
+                else if (this.radioButton2.Checked)
+                {
+                    mh.hostAddress = this.numericUpDown5.Value.ToString();
+                    mh.tcp_ip_Port = this.textBox1.Text + ":" + this.numericUpDown3.Value.ToString();
+                    mh.networkType = "tcp";
+                }
+
                 if (this.textBox2.Text != null && !"".Equals(this.textBox2.Text))
                     {
                         mh.measureCode = this.textBox2.Text;
@@ -48,7 +58,7 @@ namespace LBKJClient
                     }
                     else
                     {
-                        MessageBox.Show("车载管理主机编号为空，请输入...");
+                        MessageBox.Show("管理主机编号为空，请输入...");
                     }
                 if (istrue)
                     {
@@ -140,10 +150,10 @@ namespace LBKJClient
 
         private void checkBox1_Click(object sender, EventArgs e)
         {
-            if (this.checkBox1.Checked) {
+            if (this.radioButton1.Checked) {
                 this.numericUpDown2.Enabled = true;
             }
-            if (!this.checkBox1.Checked)
+            if (!this.radioButton1.Checked)
             {
                 this.numericUpDown2.Enabled = false;
             }
@@ -166,6 +176,37 @@ namespace LBKJClient
                 node.InnerText = communication;
             }
             xmlDoc.Save(path);
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.radioButton1.Checked)
+            {
+                this.numericUpDown2.Enabled = true;
+                this.comboBox5.Enabled = true;
+            }
+            if (!this.radioButton1.Checked)
+            {
+                this.numericUpDown2.Enabled = false;
+                this.comboBox5.Enabled = false;
+
+            }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.radioButton2.Checked)
+            {
+                this.numericUpDown5.Enabled = true;
+                this.textBox3.Enabled = true;
+                this.numericUpDown3.Enabled = true;
+            }
+            if (!this.radioButton2.Checked)
+            {
+                this.numericUpDown5.Enabled = false;
+                this.textBox3.Enabled = false;
+                this.numericUpDown3.Enabled = false;
+            }
         }
     }
 }
