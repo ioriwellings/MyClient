@@ -56,6 +56,7 @@ namespace LBKJClient
                     ui.UserName = name;
                     ui.Pwd = MemoryPassword.MyEncrypt.EncryptDES(pwd);
                     ui.Power = power;
+                    ui.Enable = 1;
                     service.UserService us = new service.UserService();
                     bool istrue = us.addUser(ui);
                     if (istrue)
