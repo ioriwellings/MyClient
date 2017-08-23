@@ -47,7 +47,7 @@ namespace LBKJClient
             this.button2.BackgroundImage = Image.FromFile(@str + "/images/clear.png");
             this.button3.BackgroundImage = Image.FromFile(@str + "/images/close.png");
             service.deviceInformationService dis = new service.deviceInformationService();
-            int flag = 1;
+            int flag = 0;
             dtcdinfo = dis.checkPointInfo(flag);
         }
         private void mySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)

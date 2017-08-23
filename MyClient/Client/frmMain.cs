@@ -155,7 +155,7 @@ namespace LBKJClient
             getFromXmlcommunication();
             this.timer3.Interval = Int32.Parse(datarefreshtime) * 1000;
             this.timer3.Start();
-            dtcdinfo1 = dis.checkPointInfo(1);
+            dtcdinfo1 = dis.checkPointInfo(0);
             if (getresults != null && !"".Equals(getresults))
             {
                 //自动读取历史数据占用主线程
@@ -227,7 +227,7 @@ namespace LBKJClient
         private void insertHYStopData()
         {
             service.deviceInformationService dis = new service.deviceInformationService();
-            dtcdinfoHY = dis.checkPointInfo(1);
+            dtcdinfoHY = dis.checkPointInfo(0);
             //1获取端口号,设置端口信息
             int baudRate = 9600;
             portHY.BaudRate = baudRate;
@@ -516,7 +516,7 @@ namespace LBKJClient
         {
             //获取设备监测历史数据接口(因服务器关机等没有保存的监测信息在服务器开启时既用户再次开机登录时同步到数据库)
             //获取参数 mids,上面方法queryMeterIds()已赋值"measureCode-meterNo:";
-            dtcdinfo = dis.checkPointInfo(0);
+            dtcdinfo = dis.checkPointInfo(3);
             xmlDoc.Load(path);
             XmlNode node;
             node = xmlDoc.SelectSingleNode("config/stoptime");
@@ -1058,7 +1058,7 @@ namespace LBKJClient
         private void queryMeterIds()
         {
             string ids = null;
-            int flag = 0;
+            int flag = 3;
             dtcdinfo = dis.checkPointInfo(flag);
             if (dtcdinfo.Rows.Count>0) {
                 for (int i=0; i< dtcdinfo.Rows.Count; i++) {
@@ -1807,7 +1807,7 @@ namespace LBKJClient
             warningSetup ws = new warningSetup();
             if (ws.ShowDialog() == DialogResult.OK)
             {
-                dtcdinfo1 = dis.checkPointInfo(1);
+                dtcdinfo1 = dis.checkPointInfo(0);
                 this.timer2.Stop();
                 timer2_Tick(null, null);
                 this.timer2.Start();
@@ -2886,7 +2886,7 @@ namespace LBKJClient
         }
         private void NeedRefresh(object sender, EventArgs e)
         {
-            dtcdinfo1 = dis.checkPointInfo(1);
+            dtcdinfo1 = dis.checkPointInfo(0);
             this.timer2.Stop();
             queryMeterIds();
             this.timer2.Start();
@@ -2910,7 +2910,7 @@ namespace LBKJClient
             if (sender != null&&!"".Equals(sender)) { 
             if (Int32.Parse(sender.ToString()) == 1)
             {
-                dtcdinfo1 = dis.checkPointInfo(1);
+                dtcdinfo1 = dis.checkPointInfo(0);
                 //重新加载本页面
                 this.timer2.Stop();
                 queryMeterIds();
@@ -2987,13 +2987,13 @@ namespace LBKJClient
                         System.IO.Directory.CreateDirectory(filepath);
                     try
                     {
-                        utils.DataBaseUtil.backupDatabase(@"new.baw", @filepath + @"Datas" + @time + @".baw");
+                        DoBackup("192.168.5.8", "3306", "root", "root", "test16", filepath);
                         textFile(@str + "/manualBackupTimes.txt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                        MessageBox.Show("数据备份成功！备份到：" + @filepath + "的路径下");
+                        //MessageBox.Show("数据备份成功！备份到：" + @filepath + "的路径下");
                     }
                     catch (Exception exc)
                     {
-                      
+                        MessageBox.Show("数据备份失败！");
                     }
                 }
             }
@@ -3157,7 +3157,7 @@ namespace LBKJClient
                 if (cs.ShowDialog() == DialogResult.OK)
                 {
                     MessageBox.Show("测点信息修改成功！");
-                    dtcdinfo1 = dis.checkPointInfo(1);
+                    dtcdinfo1 = dis.checkPointInfo(0);
                     this.timer2.Stop();
                     timer2_Tick(null, null);
                     this.timer2.Start();
@@ -3490,6 +3490,48 @@ namespace LBKJClient
             {
                 MessageBox.Show(e.Message);
             }
+        }
+        // mysql数据库备份
+        public void DoBackup(string host, string port, string user, string password, string database, string filepath)
+        {
+            string backfile = filepath + database + "_bak_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".sql";
+            string cmdStr = "mysqldump -h" + host + " -P" + port + " -u" + user + " -p" + password + " " + database + " > " + backfile;
+
+            try
+            {
+                string reslut = RunCmd(str + "\\Lib", cmdStr);
+                if (!string.IsNullOrEmpty(reslut))
+                {
+                    using (System.IO.StreamWriter sw = new System.IO.StreamWriter("C:/Users/lb/Desktop/log.txt", true))
+                    {
+                        sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + reslut);
+                    }
+                    MessageBox.Show(reslut + "备份成功>" + backfile);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        public string RunCmd(string workingDirectory, string command)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = "cmd.exe"; //确定程序名
+            //p.StartInfo.Arguments = "/c " + command; //确定程式命令行
+            p.StartInfo.WorkingDirectory = workingDirectory;
+            p.StartInfo.UseShellExecute = false; //Shell的使用
+            p.StartInfo.RedirectStandardInput = true; //重定向输入
+            p.StartInfo.RedirectStandardOutput = true; //重定向输出
+            p.StartInfo.RedirectStandardError = true; //重定向输出错误
+            p.StartInfo.CreateNoWindow = true; //设置置不显示示窗口
+            p.Start();
+            p.StandardInput.WriteLine(command); //也可以用这种方式输入入要行的命令 
+            p.StandardInput.WriteLine("exit"); //要得加上Exit要不然下一行程式
+            //p.WaitForExit();
+            //p.Close();
+            //return p.StandardOutput.ReadToEnd(); //输出出流取得命令行结果果
+            return p.StandardError.ReadToEnd();
         }
     }
 }

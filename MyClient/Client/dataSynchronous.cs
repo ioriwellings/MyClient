@@ -68,7 +68,7 @@ namespace LBKJClient
                 }
             }
 
-            int flag = 0;
+            int flag = 3;
             dtcdinfo = dis.checkPointInfo(flag);
         }
         private void cbk_Click(object sender, EventArgs e)
