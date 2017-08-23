@@ -9,39 +9,75 @@ namespace LBKJClient.dao
     {
         public DataSet changguicheck(String time1, String time2, String cd)
         {
+            string cds1 = null;
             String sql = "select aa.* from (select a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,b.t_high,b.t_low,b.h_high,b.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc  from lb_base_data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "' order by a.devtime) aa";
             if (cd!=null) {
                 sql += "  where  ";
                 string[] cds = cd.Split(',');
-                sql += "aa.measureMeterCode='" + cds[0] + "' ";
-                for (int i = 1; i < cds.Count(); i++)
+                //sql += "aa.measureMeterCode='" + cds[0] + "' ";
+                for (int i = 0; i < cds.Count(); i++)
                 {
-                    sql += " or aa.measureMeterCode='" + cds[i] + "' ";
+                    cds1 += "," + cds[i];
+                    //sql += " or aa.measureMeterCode='" + cds[i] + "' ";
                 }
+                cds1 = cds1.Substring(1);
+                sql += "aa.measureMeterCode in ('" + cds1 + "')";
             }
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);
             return ds;
         }
+        public DataTable changguicheckFenye(String time1, String time2, String cd, int PageIndex, int PageSize)
+        {
+            string cds1 = null;
+            PageIndex = (PageIndex - 1) * PageSize;
+            String sql = "select aa.* from (select a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,b.t_high,b.t_low,b.h_high,b.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc  from lb_base_data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "' order by a.devtime) aa";
+            if (cd != null)
+            {
+                sql += "  where  ";
+                string[] cds = cd.Split(',');
+                //sql += "aa.measureMeterCode='" + cds[0] + "' ";
+                for (int i = 0; i < cds.Count(); i++)
+                {
+                    cds1 += "," + cds[i];
+                    //sql += " or aa.measureMeterCode='" + cds[i] + "' ";
+                }
+                cds1 = cds1.Substring(1);
+                sql += "aa.measureMeterCode in ('" + cds1 + "') limit " + PageIndex + "," + PageSize + "";
+            }
+
+            DataSet ds = new DataSet();
+            ds.Clear();
+            ds = DbHelperMySQL.Query(sql);
+            return ds.Tables[0];
+        }
         public DataSet changguicheckGlzj(String time1, String time2, String glzj)
         {
             String sql = "select aa.* from (select a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,b.t_high,b.t_low,b.h_high,b.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc from lb_base_data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "' order by a.devtime) aa";
             if (glzj != null)
             {
-                sql += "  where  ";
-                string[] cds = glzj.Split(',');
-                sql += "aa.measureCode='" + cds[0] + "' ";
-                for (int i = 1; i < cds.Count(); i++)
-                {
-                    sql += "or aa.measureCode='" + cds[i] + "' ";
-                }
+                sql += "  where aa.measureCode='"+ glzj + "'";
             }
            
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);          
             return ds;
+        }
+        public DataTable changguicheckGlzjFenye(String time1, String time2, String glzj, int PageIndex, int PageSize)
+        {
+            PageIndex = (PageIndex - 1) * PageSize;
+            String sql = "select aa.* from (select a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,b.t_high,b.t_low,b.h_high,b.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc from lb_base_data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "' order by a.devtime) aa";
+            if (glzj != null)
+            {
+                sql += "  where aa.measureCode='" + glzj + "' limit " + PageIndex + "," + PageSize + "";
+            }
+
+            DataSet ds = new DataSet();
+            ds.Clear();
+            ds = DbHelperMySQL.Query(sql);
+            return ds.Tables[0];
         }
         public DataSet checkcedian(string code)
         {

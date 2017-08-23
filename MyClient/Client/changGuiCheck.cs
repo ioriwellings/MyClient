@@ -13,16 +13,18 @@ namespace LBKJClient
 {
     public partial class changGuiCheck : Form
     {
-        
         public DataTable dt=null;
         public string cdlist=null;
         public string time1 = null;
         public string time2 = null;
+        public int pageNo = -1;
+        public int houseorcartime = 0;
         service.changGuicheckService cgs = new service.changGuicheckService();
         service.manageHostService mhs = new service.manageHostService();
         private string path = @"config.xml";
         private int cartime = 0;
         private int databasetimer = 0;
+        public int flag = 0;//判断是否是历史数据功能请求的
         public changGuiCheck()
         {
             InitializeComponent();
@@ -130,6 +132,15 @@ namespace LBKJClient
                 if (cd != null)
                 {
                     cd = cd.Substring(1);
+                    //历史数据查询分页准备参数
+                    if (flag==1) {
+                        cdlist = cd;
+                        pageNo = 0;
+                        houseorcartime = cartime;
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                        return;
+                    }
                     dts = cgs.changguicheck(time1, time2, cd).Tables[0];
                     
                     if (dts.Rows.Count > 0) {
@@ -216,6 +227,15 @@ namespace LBKJClient
                 if (cd != null)
                 {
                     cd = cd.Substring(1);
+                    if (flag == 1)
+                    {
+                        cdlist = cd;
+                        pageNo = 1;
+                        houseorcartime = cartime;
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                        return;
+                    }
                     DataTable dts1 = cgs.changguicheckGlzj(time1, time2, cd).Tables[0];
                     if (dts1.Rows.Count > 0)
                     {

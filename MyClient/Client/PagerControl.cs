@@ -34,7 +34,7 @@ namespace LBKJClient
             set { pageIndex = value; }
         }
 
-        private int pageSize = 100;
+        private int pageSize = 1000;
         /// <summary>
         /// 每页记录数
         /// </summary>
@@ -216,8 +216,8 @@ namespace LBKJClient
             int num = 0;
             if (!int.TryParse(txtPageSize.Text.Trim(), out num) || num <= 0)
             {
-                num = 100;
-                txtPageSize.Text = "100";
+                num = 1000;
+                txtPageSize.Text = "1000";
             }
             else
             {

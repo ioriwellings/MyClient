@@ -16,16 +16,18 @@ using System.Threading;
 
 namespace LBKJClient
 {
-    public partial class historydata : Form
-         
+    public partial class historydata : Form    
     {
         changGuiCheck changeguicheck;
+        service.changGuicheckService cgs = new service.changGuicheckService();
         DataTable dd = null;
+        DataTable dtcount = null;
         int flag = 0;
         public historydata()
         {
             InitializeComponent();
             this.groupBox2.Visible = false;
+            this.groupBox1.Size = new Size(1347, 710);
         }
 
         private void historydata_Load(object sender, EventArgs e)
@@ -35,147 +37,69 @@ namespace LBKJClient
 
         private void label1_Click(object sender, EventArgs e)
         {
+            changeguicheck.flag = 1;
+            DataTable dts = null;
             if (this.groupBox2.Visible) {
                 if (this.checkBox1.Checked) {
             this.checkBox1.Checked = false;
                          }
             this.groupBox2.Visible = false;
-            //this.groupBox1.Size = new Size(1245, 644);
-            this.groupBox1.Size = new Size(1347, 653);
+            //this.groupBox1.Size = new Size(1347, 653);
+            this.groupBox1.Size = new Size(1347, 710);
             }
             //常规查询数据展现
             if (changeguicheck.ShowDialog() == DialogResult.OK)
             {
-                if (changeguicheck.dt != null)
+                this.dataGridView1.DataSource = null;
+                pagerControl1.OnPageChanged += new EventHandler(pagerControl_OnPageChanged);
+                if (changeguicheck.pageNo==0) {
+                    dts = cgs.changguicheck(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist).Tables[0];
+                } else {
+                    dts = cgs.changguicheckGlzj(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist).Tables[0];
+                }
+                if (dts.Rows.Count > 0)
                 {
-                    DataTable dtt = changeguicheck.dt.Copy();
-                    dtt.Columns.Remove("warnState");
-                    dtt.Columns.Remove("mcc");
-                    double hwd = 0;
-                    double lwd = 0;
-                    double hsd = 0;
-                    double lsd = 0;
-                    double avgwd = 0;
-                    double avgsd = 0;
-                    for (int i = 0; i < dtt.Rows.Count; i++)
+                    DataRow[] dr1 = dts.Select("warningistrue='2' or warningistrue = '1' or warningistrue='3' or warnState = '3' or warnState = '1'");
+                    DataRow[] dr2 = null;
+                    if (changeguicheck.houseorcartime == 30)
                     {
-                        avgwd += Convert.ToDouble(dtt.Rows[i][2].ToString());
-                        avgsd += Convert.ToDouble(dtt.Rows[i][3].ToString());
-                        if (i == 0)
+                        dr2 = dts.Select("houseinterval='30'");
+                    }
+                    else if (changeguicheck.houseorcartime == 5)
+                    {
+                        dr2 = dts.Select("carinterval='5'");
+                    }
+                    if (dr1.Count() > 0)
+                    {
+                        dtcount = dr1[0].Table.Clone();
+                        foreach (DataRow row in dr1)
                         {
-                            hwd = Convert.ToDouble(dtt.Rows[i][2].ToString());
-                            lwd = Convert.ToDouble(dtt.Rows[i][2].ToString());
-                            hsd = Convert.ToDouble(dtt.Rows[i][3].ToString());
-                            lsd = Convert.ToDouble(dtt.Rows[i][3].ToString());
-                        }
-                        if (hwd < Convert.ToDouble(dtt.Rows[i][2].ToString()))
-                        {
-                            hwd = Convert.ToDouble(dtt.Rows[i][2].ToString());
-                        }
-                        if (lwd > Convert.ToDouble(dtt.Rows[i][2].ToString()))
-                        {
-                            lwd = Convert.ToDouble(dtt.Rows[i][2].ToString());
-                        }
-                        if (hsd < Convert.ToDouble(dtt.Rows[i][3].ToString()))
-                        {
-                            hsd = Convert.ToDouble(dtt.Rows[i][3].ToString());
-                        }
-                        if (lsd > Convert.ToDouble(dtt.Rows[i][3].ToString()))
-                        {
-                            lsd = Convert.ToDouble(dtt.Rows[i][3].ToString());
+
+                            dtcount.ImportRow(row); // 将DataRow添加到DataTable中
                         }
                     }
-                    DataTable dtd = new DataTable();
-                    dtd.Columns.Add("title", typeof(string));
-                    dtd.Columns.Add("wdcz", typeof(double));
-                    dtd.Columns.Add("sdcz", typeof(double));
-                    DataRow newRow;
-                    newRow = dtd.NewRow();
-                    newRow["title"] = "最大值";
-                    newRow["wdcz"] = Math.Round(hwd, 1);
-                    newRow["sdcz"] = Math.Round(hsd, 1);
-                    dtd.Rows.Add(newRow);
-                    newRow = dtd.NewRow();
-                    newRow["title"] = "最小值";
-                    newRow["wdcz"] = Math.Round(lwd, 1);
-                    newRow["sdcz"] = Math.Round(lsd, 1);
-                    dtd.Rows.Add(newRow);
-                    newRow = dtd.NewRow();
-                    newRow["title"] = "平均值";
-                    newRow["wdcz"] = Math.Round(avgwd / dtt.Rows.Count, 1);
-                    newRow["sdcz"] = Math.Round(avgsd / dtt.Rows.Count, 1);
-                    dtd.Rows.Add(newRow);
-                    this.dataGridView3.DataSource = dtd;
-                    this.dataGridView3.Columns[0].HeaderCell.Value = "类型";
-                    this.dataGridView3.Columns[1].HeaderCell.Value = "温度";
-                    this.dataGridView3.Columns[2].HeaderCell.Value = "湿度";
-                    this.dataGridView3.Columns[0].Width = 100;
-                    this.dataGridView3.Columns[1].Width = 75;
-                    this.dataGridView3.Columns[2].Width = 75;
-                    this.dataGridView3.Columns[1].DefaultCellStyle.Format = "0.0";
-                    this.dataGridView3.Columns[2].DefaultCellStyle.Format = "0.0";
-                    this.dataGridView3.RowHeadersVisible = false;
-                    this.dataGridView3.AllowUserToAddRows = false;
-                    //this.dataGridView3.ColumnHeadersVisible = false;
-                    //调整列顺序 ，列排序从0开始  
-                    dtt.Columns["devtime"].SetOrdinal(0);
-                    dtt.Columns["terminalname"].SetOrdinal(1);
-                    this.dataGridView1.DataSource = dtt.Copy();
-                    this.dataGridView1.Columns[0].HeaderCell.Value = "数据采集时间";
-                    this.dataGridView1.Columns[1].HeaderCell.Value = "设备标识名称";
-                    this.dataGridView1.Columns[2].HeaderCell.Value = "管理主机编号";
-                    this.dataGridView1.Columns[3].HeaderCell.Value = "仪表编号";
-                    this.dataGridView1.Columns[4].HeaderCell.Value = "温度";
-                    this.dataGridView1.Columns[5].HeaderCell.Value = "湿度";
-                    this.dataGridView1.Columns[6].HeaderCell.Value = "温度上限";
-                    this.dataGridView1.Columns[7].HeaderCell.Value = "温度下限";
-                    this.dataGridView1.Columns[8].HeaderCell.Value = "湿度上限";
-                    this.dataGridView1.Columns[9].HeaderCell.Value = "湿度下限";
-                    this.dataGridView1.Columns[10].Visible = false;
-                    this.dataGridView1.Columns[11].Visible = false;
-                    this.dataGridView1.Columns[12].HeaderCell.Value = "是否为空库";
-                    this.dataGridView1.Columns[0].Width = 150;
-                    this.dataGridView1.Columns[1].Width = 170;
-                    this.dataGridView1.Columns[2].Width = 150;
-                    this.dataGridView1.Columns[3].Width = 80;
-                    this.dataGridView1.Columns[4].Width = 80;
-                    this.dataGridView1.Columns[5].Width = 80;
-                    this.dataGridView1.Columns[6].Width = 80;
-                    this.dataGridView1.Columns[7].Width = 80;
-                    this.dataGridView1.Columns[8].Width = 80;
-                    this.dataGridView1.Columns[9].Width = 80;
-                    
-                    this.dataGridView1.Columns[4].DefaultCellStyle.Format = "0.0";
-                    this.dataGridView1.Columns[5].DefaultCellStyle.Format = "0.0";
-                    this.dataGridView1.Columns[6].DefaultCellStyle.Format = "0.0";
-                    this.dataGridView1.Columns[7].DefaultCellStyle.Format = "0.0";
-                    this.dataGridView1.Columns[8].DefaultCellStyle.Format = "0.0";
-                    this.dataGridView1.Columns[9].DefaultCellStyle.Format = "0.0";
-                    //for (int count = 0; (count <= (this.dataGridView1.Rows.Count - 2)); count++)
-                    //{
-                    //    this.dataGridView1.Rows[count].HeaderCell.Value = String.Format("{0}", count + 1);
-                    //}
-                    this.dataGridView1.AllowUserToAddRows = false;
-                    this.dataGridView1.RowsDefaultCellStyle.ForeColor = Color.Black;
-
-                    int row = this.dataGridView1.Rows.Count;//得到总行数    
-                    for (int i = 0; i < row; i++)//得到总行数并在之内循环    
+                    if (dr2 != null && dr2.Count() > 0)
                     {
-                        double ww = double.Parse(this.dataGridView1.Rows[i].Cells[4].Value.ToString());
-                        double w1 = double.Parse(this.dataGridView1.Rows[i].Cells[6].Value.ToString());
-                        double w2 = double.Parse(this.dataGridView1.Rows[i].Cells[7].Value.ToString());
-                        double hh = double.Parse(this.dataGridView1.Rows[i].Cells[5].Value.ToString());
-                        double h1 = double.Parse(this.dataGridView1.Rows[i].Cells[8].Value.ToString());
-                        double h2 = double.Parse(this.dataGridView1.Rows[i].Cells[9].Value.ToString());
-                        if (ww>w1||ww<w2) {
-                            this.dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.Red;
-                        }
-                        if (hh>h1||hh<h2)
+                        if (dr1.Count() < 1)
                         {
-                            this.dataGridView1.Rows[i].Cells[5].Style.ForeColor = Color.Red;
+                            dtcount = dr2[0].Table.Clone();
+                        }
+                        foreach (DataRow row in dr2)
+                        {
+                            dtcount.ImportRow(row); // 将DataRow添加到DataTable中
                         }
                     }
-
+                    dtcount.Columns.Remove("carinterval");
+                    dtcount.Columns.Remove("houseinterval");
+                    this.label3.Text = "总数据量：" + dtcount.Rows.Count.ToString()+" 条";
+                    DataTable dd1 = dtcount.Copy();
+                    DataRow[] drr = dd1.Select("mcc = '0'and warningistrue='2' or warningistrue='3' or warnState='1' or warnState='3'");
+                    this.label4.Text = "报警数据：" + drr.Length.ToString() + " 条";
+                    LoadData();
+                }
+                else {
+                    pagerControl1.DrawControl(0);
+                    MessageBox.Show("当前时段未查询出数据！");
                 }
             }
         }
@@ -188,23 +112,24 @@ namespace LBKJClient
             if (check != true)
             {      
                 this.groupBox2.Visible = false;
-                this.groupBox1.Size = new Size(1507,653);
-                //this.groupBox2.Enabled = false;
+                //this.groupBox1.Size = new Size(1507,653);
+                this.groupBox1.Size = new Size(1507, 710);
             }
             else {
                 showWarning();
-                this.groupBox1.Size = new Size(1507,480);
+                //this.groupBox1.Size = new Size(1507,480)
+                this.groupBox1.Size = new Size(1507, 543);
                 this.groupBox2.Visible = true;
-                //this.groupBox2.Enabled = true;
             }
             
         }
         public void showWarning() {
             //******处理报警数据信息********
-            if (changeguicheck.dt != null)
+            if (dtcount != null)
             {
-                DataTable dd1 = changeguicheck.dt.Copy();
+                DataTable dd1 = dtcount.Copy();
                 DataRow[] dr1 = dd1.Select("mcc = '0'and warningistrue='2' or warningistrue='3' or warnState='1' or warnState='3'");
+
                 if (dr1.Length > 0)
                 {
                     dd = dr1[0].Table.Clone();
@@ -324,11 +249,11 @@ namespace LBKJClient
         }
         private void label2_Click(object sender, EventArgs e)
         {
-            DataTable dts= changeguicheck.dt.Copy();
-            if (dts != null&&dts.Rows.Count>0)
+            DataTable dtss= dtcount.Copy();
+            if (dtss != null&& dtcount.Rows.Count>0)
             {
-                dts.Columns.Remove("warnState");
-                dts.Columns.Remove("mcc");
+                dtss.Columns.Remove("warnState");
+                dtss.Columns.Remove("mcc");
                 string localFilePath = String.Empty;
                 SaveFileDialog fileDialog = new SaveFileDialog();
 
@@ -346,7 +271,7 @@ namespace LBKJClient
 
                 {   //获得文件路径
                     localFilePath = fileDialog.FileName.ToString();
-                    CreateTable(dts.Copy(), localFilePath);
+                    CreateTable(dtss.Copy(), localFilePath);
                     MessageBox.Show("恭喜，历史数据PDF文件生成成功!");
                     warningPdf();
                 }
@@ -553,17 +478,191 @@ namespace LBKJClient
             SolidBrush solidBrush = new SolidBrush(this.dataGridView2.RowHeadersDefaultCellStyle.ForeColor);
             int xh = e.RowIndex + 1;
             e.Graphics.DrawString(xh.ToString(), e.InheritedRowStyle.Font, solidBrush, e.RowBounds.Location.X + 15, e.RowBounds.Location.Y + 4);
-            //自动编号，与数据无关
-            //Rectangle rectangle = new Rectangle(e.RowBounds.Location.X,
-            //   e.RowBounds.Location.Y,
-            //   this.dataGridView2.RowHeadersWidth,
-            //   e.RowBounds.Height);
-            //      TextRenderer.DrawText(e.Graphics,
-            //      (e.RowIndex + 1).ToString(),
-            //       this.dataGridView2.RowHeadersDefaultCellStyle.Font,
-            //       rectangle,
-            //       this.dataGridView2.RowHeadersDefaultCellStyle.ForeColor,
-            //       TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
+        }
+        private void pagerControl_OnPageChanged(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+        private void LoadData()
+        {
+            DataTable dtt = null;
+            DataTable dts = null;
+            this.dataGridView1.DataSource = null;
+            pagerControl1.DrawControl(dtcount.Rows.Count);//数据总条数
+            if (changeguicheck.pageNo == 0)
+            {
+                dts = cgs.changguicheckFenye(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist, pagerControl1.PageIndex, pagerControl1.PageSize);
+            }
+            else {
+                dts = cgs.changguicheckGlzjFenye(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist, pagerControl1.PageIndex, pagerControl1.PageSize);
+            }
+            if (dts.Rows.Count > 0)
+            {
+                DataRow[] dr1 = dts.Select("warningistrue='2' or warningistrue = '1' or warningistrue='3' or warnState = '3' or warnState = '1'");
+                DataRow[] dr2 = null;
+                if (changeguicheck.houseorcartime == 30)
+                {
+                    dr2 = dts.Select("houseinterval='30'");
+                }
+                else if (changeguicheck.houseorcartime == 5)
+                {
+                    dr2 = dts.Select("carinterval='5'");
+                }
+                if (dr1.Count() > 0)
+                {
+                    dtt = dr1[0].Table.Clone();
+                    foreach (DataRow row in dr1)
+                    {
+
+                        dtt.ImportRow(row); // 将DataRow添加到DataTable中
+                    }
+                }
+                if (dr2 != null && dr2.Count() > 0)
+                {
+                    if (dr1.Count() < 1)
+                    {
+                        dtt = dr2[0].Table.Clone();
+                    }
+                    foreach (DataRow row in dr2)
+                    {
+                        dtt.ImportRow(row); // 将DataRow添加到DataTable中
+                    }
+                }
+            }
+            
+            if (dtt != null)
+            {
+                dtt.Columns.Remove("houseinterval");
+                dtt.Columns.Remove("carinterval");
+                dtt.Columns.Remove("warnState");
+                dtt.Columns.Remove("mcc");
+                double hwd = 0;
+                double lwd = 0;
+                double hsd = 0;
+                double lsd = 0;
+                double avgwd = 0;
+                double avgsd = 0;
+                for (int i = 0; i < dtt.Rows.Count; i++)
+                {
+                    avgwd += Convert.ToDouble(dtt.Rows[i][2].ToString());
+                    avgsd += Convert.ToDouble(dtt.Rows[i][3].ToString());
+                    if (i == 0)
+                    {
+                        hwd = Convert.ToDouble(dtt.Rows[i][2].ToString());
+                        lwd = Convert.ToDouble(dtt.Rows[i][2].ToString());
+                        hsd = Convert.ToDouble(dtt.Rows[i][3].ToString());
+                        lsd = Convert.ToDouble(dtt.Rows[i][3].ToString());
+                    }
+                    if (hwd < Convert.ToDouble(dtt.Rows[i][2].ToString()))
+                    {
+                        hwd = Convert.ToDouble(dtt.Rows[i][2].ToString());
+                    }
+                    if (lwd > Convert.ToDouble(dtt.Rows[i][2].ToString()))
+                    {
+                        lwd = Convert.ToDouble(dtt.Rows[i][2].ToString());
+                    }
+                    if (hsd < Convert.ToDouble(dtt.Rows[i][3].ToString()))
+                    {
+                        hsd = Convert.ToDouble(dtt.Rows[i][3].ToString());
+                    }
+                    if (lsd > Convert.ToDouble(dtt.Rows[i][3].ToString()))
+                    {
+                        lsd = Convert.ToDouble(dtt.Rows[i][3].ToString());
+                    }
+                }
+                DataTable dtd = new DataTable();
+                dtd.Columns.Add("title", typeof(string));
+                dtd.Columns.Add("wdcz", typeof(double));
+                dtd.Columns.Add("sdcz", typeof(double));
+                DataRow newRow;
+                newRow = dtd.NewRow();
+                newRow["title"] = "最大值";
+                newRow["wdcz"] = Math.Round(hwd, 1);
+                newRow["sdcz"] = Math.Round(hsd, 1);
+                dtd.Rows.Add(newRow);
+                newRow = dtd.NewRow();
+                newRow["title"] = "最小值";
+                newRow["wdcz"] = Math.Round(lwd, 1);
+                newRow["sdcz"] = Math.Round(lsd, 1);
+                dtd.Rows.Add(newRow);
+                newRow = dtd.NewRow();
+                newRow["title"] = "平均值";
+                newRow["wdcz"] = Math.Round(avgwd / dtt.Rows.Count, 1);
+                newRow["sdcz"] = Math.Round(avgsd / dtt.Rows.Count, 1);
+                dtd.Rows.Add(newRow);
+                this.dataGridView3.DataSource = dtd;
+                this.dataGridView3.Columns[0].HeaderCell.Value = "类型";
+                this.dataGridView3.Columns[1].HeaderCell.Value = "温度";
+                this.dataGridView3.Columns[2].HeaderCell.Value = "湿度";
+                this.dataGridView3.Columns[0].Width = 100;
+                this.dataGridView3.Columns[1].Width = 75;
+                this.dataGridView3.Columns[2].Width = 75;
+                this.dataGridView3.Columns[1].DefaultCellStyle.Format = "0.0";
+                this.dataGridView3.Columns[2].DefaultCellStyle.Format = "0.0";
+                this.dataGridView3.RowHeadersVisible = false;
+                this.dataGridView3.AllowUserToAddRows = false;
+                //this.dataGridView3.ColumnHeadersVisible = false;
+                //调整列顺序 ，列排序从0开始  
+                dtt.Columns["devtime"].SetOrdinal(0);
+                dtt.Columns["terminalname"].SetOrdinal(1);
+                this.dataGridView1.DataSource = dtt.Copy();
+                this.dataGridView1.Columns[0].HeaderCell.Value = "数据采集时间";
+                this.dataGridView1.Columns[1].HeaderCell.Value = "设备标识名称";
+                this.dataGridView1.Columns[2].HeaderCell.Value = "管理主机编号";
+                this.dataGridView1.Columns[3].HeaderCell.Value = "仪表编号";
+                this.dataGridView1.Columns[4].HeaderCell.Value = "温度";
+                this.dataGridView1.Columns[5].HeaderCell.Value = "湿度";
+                this.dataGridView1.Columns[6].HeaderCell.Value = "温度上限";
+                this.dataGridView1.Columns[7].HeaderCell.Value = "温度下限";
+                this.dataGridView1.Columns[8].HeaderCell.Value = "湿度上限";
+                this.dataGridView1.Columns[9].HeaderCell.Value = "湿度下限";
+                this.dataGridView1.Columns[10].Visible = false;
+                this.dataGridView1.Columns[11].Visible = false;
+                this.dataGridView1.Columns[12].HeaderCell.Value = "是否为空库";
+                this.dataGridView1.Columns[0].Width = 150;
+                this.dataGridView1.Columns[1].Width = 170;
+                this.dataGridView1.Columns[2].Width = 150;
+                this.dataGridView1.Columns[3].Width = 80;
+                this.dataGridView1.Columns[4].Width = 80;
+                this.dataGridView1.Columns[5].Width = 80;
+                this.dataGridView1.Columns[6].Width = 80;
+                this.dataGridView1.Columns[7].Width = 80;
+                this.dataGridView1.Columns[8].Width = 80;
+                this.dataGridView1.Columns[9].Width = 80;
+
+                this.dataGridView1.Columns[4].DefaultCellStyle.Format = "0.0";
+                this.dataGridView1.Columns[5].DefaultCellStyle.Format = "0.0";
+                this.dataGridView1.Columns[6].DefaultCellStyle.Format = "0.0";
+                this.dataGridView1.Columns[7].DefaultCellStyle.Format = "0.0";
+                this.dataGridView1.Columns[8].DefaultCellStyle.Format = "0.0";
+                this.dataGridView1.Columns[9].DefaultCellStyle.Format = "0.0";
+                //for (int count = 0; (count <= (this.dataGridView1.Rows.Count - 2)); count++)
+                //{
+                //    this.dataGridView1.Rows[count].HeaderCell.Value = String.Format("{0}", count + 1);
+                //}
+                this.dataGridView1.AllowUserToAddRows = false;
+                this.dataGridView1.RowsDefaultCellStyle.ForeColor = Color.Black;
+
+                int row = this.dataGridView1.Rows.Count;//得到总行数    
+                for (int i = 0; i < row; i++)//得到总行数并在之内循环    
+                {
+                    double ww = double.Parse(this.dataGridView1.Rows[i].Cells[4].Value.ToString());
+                    double w1 = double.Parse(this.dataGridView1.Rows[i].Cells[6].Value.ToString());
+                    double w2 = double.Parse(this.dataGridView1.Rows[i].Cells[7].Value.ToString());
+                    double hh = double.Parse(this.dataGridView1.Rows[i].Cells[5].Value.ToString());
+                    double h1 = double.Parse(this.dataGridView1.Rows[i].Cells[8].Value.ToString());
+                    double h2 = double.Parse(this.dataGridView1.Rows[i].Cells[9].Value.ToString());
+
+                    if (ww > w1 || ww < w2)
+                    {
+                        this.dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.Red;
+                    }
+                    if (hh > h1 || hh < h2)
+                    {
+                        this.dataGridView1.Rows[i].Cells[5].Style.ForeColor = Color.Red;
+                    }
+                }
+            }
         }
     }
 }

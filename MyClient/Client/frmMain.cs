@@ -1,5 +1,4 @@
-﻿//using SQLitePCL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -10,13 +9,9 @@ using System.Threading;
 using System.Web.Script.Serialization;
 using System.IO.Ports;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Xml;
 using System.Drawing.Text;
 using System.Diagnostics;
-using NT88Test;
-using SmartX1Demo;
-using System.Collections;
 using System.Net;
 using System.Net.Sockets;
 namespace LBKJClient
@@ -30,11 +25,8 @@ namespace LBKJClient
         public static bool istrueport = true;
         public int hulie = 1;
         private string rcids = null;
-        private int totalReceivedBytes = 0;
-        private int totalSendBytes = 0;
         private int logrizhi = 0;
         private int socketserver = 0;
-        private bool needWrite = false;
         public delegate void UpdateAcceptTextBoxTextHandler(string text);
         public UpdateAcceptTextBoxTextHandler UpdateTextHandler;
         public delegate void SendDeviceInfoHandler(string text);
@@ -478,7 +470,6 @@ namespace LBKJClient
             }
             catch (Exception ee)
             {
-                //MessageBox.Show(ee.StackTrace);
             }
 
         }
@@ -520,7 +511,6 @@ namespace LBKJClient
             return byteSends;
         }
         string json = "";
-        Thread multiH;
         DataTable dtH;
         public string ipportH = null;
         private void insertHStopData()
@@ -528,7 +518,6 @@ namespace LBKJClient
             //获取设备监测历史数据接口(因服务器关机等没有保存的监测信息在服务器开启时既用户再次开机登录时同步到数据库)
             //获取参数 mids,上面方法queryMeterIds()已赋值"measureCode-meterNo:";
             dtcdinfo = dis.checkPointInfo(0);
-            //xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
             XmlNode node;
             node = xmlDoc.SelectSingleNode("config/stoptime");
@@ -610,7 +599,6 @@ namespace LBKJClient
                 }
                 if (datas.devicedate != null && datas.devicedate.Length > 0)
                 {
-                    //datas.devicedate = GetTime(datas.devicedate);
                     MyDate = DateTime.ParseExact(datas.devicedate, TarStr, formatH);
                     datas.devicedate = MyDate.ToString(TarStr1);
                     int mm = MyDate.Minute;
@@ -766,7 +754,7 @@ namespace LBKJClient
         List<bean.dataSerialization> lds = null;
         private void mySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            Thread.Sleep(240);
+            //Thread.Sleep(240);
             try
             {
                 string time111 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ");
@@ -781,7 +769,6 @@ namespace LBKJClient
                 sp.Read(byteRead, 0, byteRead.Length);
                 sp.DiscardInBuffer();
                 sp.DiscardOutBuffer();
-                //totalReceivedBytes += size;
                 totalByteRead = totalByteRead.Concat(byteRead).ToArray();
                 text = ToHexString(totalByteRead);
                 if (totalByteRead.Length > 10)
@@ -964,7 +951,6 @@ namespace LBKJClient
                     }
                     
                     if (lds.Count>0) {
-                        //adddatas.addData(lds);//把x86管理主机的数据插入数据库
                         Thread multiAdd = new Thread(new ThreadStart(addData));
                         multiAdd.IsBackground = true;
                         multiAdd.Start();
@@ -1107,7 +1093,6 @@ namespace LBKJClient
         }
         private void getFromXmlcommunication()
         {
-            //xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
             XmlNode node;
             node = xmlDoc.SelectSingleNode("config/communicationType");
@@ -1190,7 +1175,6 @@ namespace LBKJClient
         StringFormat format;
         private void querywenshidu()
         {
-            //xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
             XmlNode node;
             node = xmlDoc.SelectSingleNode("config/autoSizeX");
@@ -1210,7 +1194,6 @@ namespace LBKJClient
             string timeHouse = DateTime.Now.ToString("yyyy-MM-dd HH") + ":00:00";
             da =monitoringservice.rtmonitoring(timeHouse);
             DataTable dts1 =da.Tables[0];
-            //num = dt.Rows.Count;
             DataRow[] dr1 = dts1.Select("powerflag='0'");
             if (dr1.Count() > 0)
             {
@@ -1599,10 +1582,6 @@ namespace LBKJClient
                 tsmi.CheckState = CheckState.Unchecked;
             else
             {
-               
-                ////autoSizeX = 220;
-                ////autoSizeY = 185;
-                //xmlDoc = new XmlDocument();
                 xmlDoc.Load(path);
                 XmlNode node;
                 node = xmlDoc.SelectSingleNode("config/autoSizeX");
@@ -1654,9 +1633,6 @@ namespace LBKJClient
                 tsmi.CheckState = CheckState.Unchecked;
             else
             {
-                ////autoSizeX = 280;
-                ////autoSizeY = 230;
-
                 xmlDoc.Load(path);
                 XmlNode node;
                 node = xmlDoc.SelectSingleNode("config/autoSizeX");
@@ -1681,9 +1657,6 @@ namespace LBKJClient
                 tsmi.CheckState = CheckState.Unchecked;
             else
             {
-                //autoSizeX = 160;
-                //autoSizeY = 140;
-
                 xmlDoc.Load(path);
                 XmlNode node;
                 node = xmlDoc.SelectSingleNode("config/autoSizeX");
@@ -1736,9 +1709,6 @@ namespace LBKJClient
                 tsmi.CheckState = CheckState.Unchecked;
             else
             {
-                //autoSizeX = 240;
-                //autoSizeY = 200;
-
                 xmlDoc.Load(path);
                 XmlNode node;
                 node = xmlDoc.SelectSingleNode("config/autoSizeX");

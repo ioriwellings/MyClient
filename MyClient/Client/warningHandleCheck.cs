@@ -1,14 +1,10 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -37,6 +33,7 @@ namespace LBKJClient
             dt = wcs.warningHandlecheck(time1,time2);
             service.deviceInformationService ds = new service.deviceInformationService();
             DataTable dts= ds.selectHouseTypeK();
+
             if (dts.Rows.Count>0) {
                 for (int i=0;i<dts.Rows.Count;i++) {
                     for (int j = 0; j < dt.Rows.Count; j++) {
@@ -49,22 +46,25 @@ namespace LBKJClient
             }
             if (dt.Rows.Count > 0)
             {
+                dt.Columns["warningTime"].SetOrdinal(6);
                 this.dataGridView1.DataSource = dt;
                 this.dataGridView1.Columns[0].Visible = false;
                 this.dataGridView1.Columns[1].HeaderCell.Value = "处理人员";
-                this.dataGridView1.Columns[2].HeaderCell.Value = "报警时间";
-                this.dataGridView1.Columns[3].HeaderCell.Value = "处理时间";
-                this.dataGridView1.Columns[4].HeaderCell.Value = "处理方式";
-                this.dataGridView1.Columns[5].HeaderCell.Value = "处理结果";
-                this.dataGridView1.Columns[6].HeaderCell.Value = "详细描述";
+                this.dataGridView1.Columns[2].HeaderCell.Value = "处理时间";
+                this.dataGridView1.Columns[3].HeaderCell.Value = "处理方式";
+                this.dataGridView1.Columns[4].HeaderCell.Value = "处理结果";
+                this.dataGridView1.Columns[5].HeaderCell.Value = "详细描述";
+                this.dataGridView1.Columns[6].HeaderCell.Value = "报警时间";
                 this.dataGridView1.Columns[7].Visible = false;
                 this.dataGridView1.Columns[8].Visible = false;
+                this.dataGridView1.Columns[9].HeaderCell.Value = "测点名称";
                 this.dataGridView1.Columns[1].Width = 80;
                 this.dataGridView1.Columns[2].Width = 120;
-                this.dataGridView1.Columns[3].Width = 120;
+                this.dataGridView1.Columns[3].Width = 150;
                 this.dataGridView1.Columns[4].Width = 150;
-                this.dataGridView1.Columns[5].Width = 150;
-                this.dataGridView1.Columns[6].Width = 300;
+                this.dataGridView1.Columns[5].Width = 270;
+                this.dataGridView1.Columns[6].Width = 120;
+                this.dataGridView1.Columns[9].Width = 120;
                 this.dataGridView1.RowsDefaultCellStyle.ForeColor = Color.Black;
                 for (int count = 0; (count <= (this.dataGridView1.Rows.Count - 2)); count++)
                 {
@@ -85,6 +85,8 @@ namespace LBKJClient
         {
             if (dt!=null&&dt.Rows.Count > 0)
             {
+                dt.Columns.Remove("measureMeterCode");
+                dt.Columns.Remove("createTime");
                 string localFilePath = String.Empty;
                 SaveFileDialog fileDialog = new SaveFileDialog();
 
@@ -137,13 +139,13 @@ namespace LBKJClient
                 Paragraph null1 = new Paragraph("  ", fonttitle);
                 null1.Leading = 10;
                 doc.Add(null1);
-
-                PdfPTable table = new PdfPTable(7);
+                dts.Columns["warningTime"].SetOrdinal(6);
+                PdfPTable table = new PdfPTable(8);
                 table.WidthPercentage = 100;//table占宽度百分比 100%
-                table.SetWidths(new int[] { 5, 9, 20, 20, 13, 13, 20 });
+                table.SetWidths(new int[] { 5, 9, 15, 13, 13, 20, 15, 12 });
                 PdfPCell cell;
                 //   , "温度上限", "温度下限", "湿度上限", "湿度下限"
-                string[] columnsnames = { "序号", "处理人员", "报警时间", "处理时间", "处理方式", "处理结果", "详情描述" };
+                string[] columnsnames = { "序号", "处理人员", "处理时间", "处理方式", "处理结果", "详情描述", "报警时间", "测点名称" };
                 for (int i = 0; i < columnsnames.Length; i++)
                 {
                     cell = new PdfPCell(new Phrase(columnsnames[i], font));

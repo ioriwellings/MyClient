@@ -66,13 +66,13 @@ namespace LBKJClient
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.dataGridView1.DataSource = null;
             time1 = this.dateTimePicker1.Text.ToString();
             time2 = this.dateTimePicker2.Text.ToString();
             cd = this.comboBox1.SelectedValue.ToString();
 
             if (cd != "" && !"".Equals(cd))
             {
+                this.dataGridView1.DataSource = null;
                 pagerControl1.OnPageChanged += new EventHandler(pagerControl1_OnPageChanged);
                 dtcount = wcs.warningcheck(time1, time2, cd);
                 LoadData();

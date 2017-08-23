@@ -204,10 +204,10 @@
             // pagerControl1
             // 
             this.pagerControl1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.pagerControl1.Location = new System.Drawing.Point(644, 538);
+            this.pagerControl1.Location = new System.Drawing.Point(641, 538);
             this.pagerControl1.Name = "pagerControl1";
             this.pagerControl1.PageIndex = 1;
-            this.pagerControl1.PageSize = 100;
+            this.pagerControl1.PageSize = 1000;
             this.pagerControl1.RecordCount = 0;
             this.pagerControl1.Size = new System.Drawing.Size(769, 40);
             this.pagerControl1.TabIndex = 1;
