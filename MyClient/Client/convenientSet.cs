@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.IO.Ports;
@@ -9,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -17,8 +13,6 @@ namespace LBKJClient
     public partial class convenientSet : Form
     {
         SerialPort port=new SerialPort();
-        //private System.IO.StreamWriter sw;
-        private int totalReceivedBytes = 0;
         public delegate void UpdateAcceptTextBoxTextHandler(string text);
         public UpdateAcceptTextBoxTextHandler UpdateTextHandler;
         public delegate void SendDeviceInfoHandler(string text);
@@ -33,18 +27,12 @@ namespace LBKJClient
         string TarStr = "yyMMddHHmmss";
         IFormatProvider format = new System.Globalization.CultureInfo("zh-CN");
         DateTime MyDate;
-        //private frmMain frmMain;
 
         public convenientSet()
         {
             InitializeComponent();
             this.port.DataReceived += new SerialDataReceivedEventHandler(this.mySerialPort_DataReceived);
         }
-
-        //public convenientSet(frmMain frmMain)
-        //{
-        //    this.frmMain = frmMain;
-        //}
 
         private void convenientSet_Load(object sender, EventArgs e) 
         {
@@ -54,7 +42,6 @@ namespace LBKJClient
 
             id = this.textBox4.Text.Split('-').Last();
             address = this.textBox5.Text;
-            //frmMain.timerGetdeviceinfo.Stop();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -184,7 +171,6 @@ namespace LBKJClient
                 sp.Read(byteRead, 0, size);
                 sp.DiscardOutBuffer();
                 sp.DiscardInBuffer();
-                //totalReceivedBytes += size;
                 totalByteRead = totalByteRead.Concat(byteRead).ToArray();
                 text = ToHexString(totalByteRead);
                 if (totalByteRead.Length > 10)
@@ -216,7 +202,6 @@ namespace LBKJClient
                 }
                 if (isCRC)
                 {
-                    //byte[] byte_temper = totalByteRead.Skip(8).Take(4).ToArray();
                     byte[] up_temper = totalByteRead.Skip(8).Take(2).ToArray();
                     string cc = ((up_temper[0] << 8 | up_temper[1])).ToString();
                     string t_high = getFloat(cc);
@@ -311,7 +296,7 @@ namespace LBKJClient
             }
             catch (Exception ee)
             {
-                //MessageBox.Show(ee.Message);
+              
             }
             
         }

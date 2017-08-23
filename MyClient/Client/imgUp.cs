@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -79,7 +74,6 @@ namespace LBKJClient
                 for (int x = 0; x < num; x++)
                 {
                     label[x] = new Label();
-                    //label[x].AutoSize = true;
                     label[x].Size = new Size(70, 45);//大小
                     string ss=dat.Rows[x]["terminalname"].ToString();
                     b = Double.Parse(dat.Rows[x]["t_high"].ToString());
@@ -194,7 +188,6 @@ namespace LBKJClient
                         {
                             label[x].Text = "- - ℃" + "\n" + "- -%RH";
                             label[x].Image = Image.FromFile(@str + "/images/cd2.png");
-                            //label[x].BackColor = Color.LightGray;//控件的背景颜色
                         }
                         else
                         {
@@ -311,14 +304,6 @@ namespace LBKJClient
                 using (System.IO.Stream stream = ofd.OpenFile())
                 {
                     this.pictureBox1.Controls.Clear();
-                    //创建一个流，用来写入得到的文件流（注意：创建一个名为“Images”的文件夹，如果是用相对路径，必须在这个程序的Degug目录下创建    
-                    //如果是绝对路径，放在那里都行，我用的是相对路径）  
-                    //String file_Path = @str + "/Images/" + fileName;
-                    //if (System.IO.File.Exists(file_Path))
-                    //{ System.IO.File.Delete(file_Path) }
-
-                    // Random random = new Random();
-                    //fileName = random.Next(10000, 99999) + fileName;
                     try {
                     using (System.IO.FileStream fs = new System.IO.FileStream(@str + "/Images/" + fileName, System.IO.FileMode.Create))
                     {
@@ -338,12 +323,6 @@ namespace LBKJClient
                             System.Environment.Exit(0);
                         }
                     }
-                    //PictrueBOx 显示该图片，此时这个图片已经被复制了一份在Images文件夹下，就相当于上传    
-                    //至于上传到别的地方你再更改思路就行，这里只是演示过程    
-                    //pbShow.ImageLocation = @"./Images/" + fileName;
-
-                    //this.pictureBox1.Width = Image.FromFile(@str + "/images/" + fileName).Height;
-                    //this.pictureBox1.Height = Image.FromFile(@str + "/images/" + fileName).Width; 
 
                     //把图片路径保存数据库
                     string id = this.comboBox1.SelectedValue.ToString();
@@ -388,7 +367,6 @@ namespace LBKJClient
                     labels[x].Name = dt.Rows[x]["measureCode"].ToString()+"_"+ dt.Rows[x]["meterNo"].ToString();
                     labels[x].Text = dt.Rows[x]["terminalname"].ToString();
                     labels[x].BorderStyle = BorderStyle.None;
-                    //labels[x].BackColor = Color.White;//控件的背景颜色
                     labels[x].Font = new Font(privateFonts.Families[0], 10.0F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134)));
                     if (pointx != null && !"".Equals(pointx) && pointy != null && !"".Equals(pointy))
                     {
@@ -396,8 +374,6 @@ namespace LBKJClient
                     }
                     else
                     {
-                        //labels[x].Location = new Point(10, p);
-                        //p += 45;
                         if (x < 20)
                         {
                             labels[x].Location = new Point(10, p);
@@ -502,10 +478,6 @@ namespace LBKJClient
                     MessageBox.Show("图片保存失败，请重新保存！");
                 }
             }
-            //保存控件DataGridView到图片搜索
-            //Bitmap controlBitmap = new Bitmap(this.dataGridView1.Width, this.dataGridView1.Height);
-            //this.dataGridView1.DrawToBitmap(controlBitmap, new Rectangle(0, 0, this.dataGridView1.Width, this.dataGridView1.Height));
-            //controlBitmap.Save(@"D:\form.jpg", System.Drawing.Imaging.ImageFormat.Bmp);
         }
 
         private void imgUp_FormClosed(object sender, FormClosedEventArgs e)
@@ -601,10 +573,8 @@ namespace LBKJClient
                     {
                         d = 0;
                     }
-                    //a = Double.Parse(temperature);
                     b = Double.Parse(dat.Rows[i]["t_high"].ToString());
                     c = Double.Parse(dat.Rows[i]["t_low"].ToString());
-                    //d = Double.Parse(humidity);
                     e1 = Double.Parse(dat.Rows[i]["h_high"].ToString());
                     f = Double.Parse(dat.Rows[i]["h_low"].ToString());
                     string kkk = dat.Rows[i]["housetype"].ToString();
@@ -618,8 +588,7 @@ namespace LBKJClient
                     }
                     if (a > b || a < c || d > e1 || d < f)
                     {
-                        // ((Label)this.pictureBox1.Controls.Find(codemeter, false)[0]).BackColor = Color.OrangeRed;//控件的背景颜色
-                        ((Label)this.pictureBox1.Controls.Find(codemeter, false)[0]).Image = Image.FromFile(@str + "/images/cd3.png");
+                       ((Label)this.pictureBox1.Controls.Find(codemeter, false)[0]).Image = Image.FromFile(@str + "/images/cd3.png");
                     }
                     DateTime dt1 = Convert.ToDateTime(dat.Rows[i]["devtime"].ToString());
                     DateTime dt2 = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
@@ -627,7 +596,6 @@ namespace LBKJClient
                     if (ts.TotalMinutes >= double.Parse(overtime))
                     {
                         ((Label)this.pictureBox1.Controls.Find(codemeter, false)[0]).Text = "- - ℃" + "\n" + "- -%RH";
-                        //((Label)this.pictureBox1.Controls.Find(codemeter, false)[0]).BackColor = Color.LightGray;//控件的背景颜色
                         ((Label)this.pictureBox1.Controls.Find(codemeter, false)[0]).Image = Image.FromFile(@str + "/images/cd2.png");
                     }
                     else

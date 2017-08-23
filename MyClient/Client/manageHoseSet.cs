@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -129,29 +124,7 @@ namespace LBKJClient
             string networkType = this.dataGridView1.SelectedRows[0].Cells[6].Value.ToString(); 
             string tcp_ip_Port = this.dataGridView1.SelectedRows[0].Cells[5].Value.ToString();
             string [] result = tcp_ip_Port.Split(':');
-            //if (!"LBCC-16".Equals(txxy)) {   
-            //    umh.textBox1.Text = name;
-            //    umh.numericUpDown1.Value = Convert.ToInt32(cdnum);
-            //    umh.numericUpDown2.Value = Convert.ToInt32(address);
-            //    umh.comboBox2.SelectedItem = txxy;
-            //    umh.comboBox1.SelectedItem = txport;
-            //    umh.comboBox3.SelectedItem = type;
-            //    umh.textBox2.Text = code;
-            //}
-            //else
-            //{
-            //    umh.textBox1.Text = name;
-            //    umh.numericUpDown1.Value = Convert.ToInt32(cdnum);
-            //    umh.comboBox2.SelectedItem = txxy;
-            //    umh.textBox2.Text = code;
-            //    umh.label7.Visible = true;
-            //    umh.textBox2.Visible = true;
-            //    umh.radioButton1.Visible = false;
-            //    umh.label5.Visible = false;
-            //    umh.comboBox1.Visible = false;
-            //    umh.label3.Visible = false;
-            //    umh.numericUpDown2.Visible = false;
-            //}
+            
             umh.textBox1.Text = name;
             umh.numericUpDown1.Value = Convert.ToInt32(cdnum);
             umh.comboBox2.SelectedItem = txxy;

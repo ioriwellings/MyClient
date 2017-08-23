@@ -27,7 +27,7 @@ namespace LBKJClient.dao
         }
         public DataTable listUser()  
         {
-            String sql = "select id,name,pwd,enable,createTime,power from userinfo where 1=1 and name != 'admin'";
+            String sql = "select id,name,pwd,case when enable = 1 then '启用' else '禁用' end,createTime,power from userinfo where 1=1 and name != 'admin'";
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);
@@ -36,7 +36,7 @@ namespace LBKJClient.dao
         public bool deleteUser(string id)
         {
             int ret = 0;
-            String sql = "delete from userinfo where id = '" + id + "'";
+            String sql = "update userinfo set enable = 0 where id = '" + id + "'";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }

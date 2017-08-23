@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -108,8 +103,6 @@ namespace LBKJClient
             //显示背景间隔带，效果如下图：
             chart1.ChartAreas[0].AxisY.IsInterlaced = true; 
             chart1.ChartAreas[0].AxisY.InterlacedColor = System.Drawing.Color.FromArgb(239, 242, 245);
-            //chart1.Series.Add(series1);
-            //chart1.Series.Add(series2);.
         }
         //鼠标滚轮事件(移动/缩放)
         private void chart_MouseWheel(object sender, MouseEventArgs e)
@@ -238,7 +231,7 @@ namespace LBKJClient
             service.chartsCheck cc = new service.chartsCheck();
             time1 = this.dateTimePicker1.Text.ToString();
             time2 = this.dateTimePicker2.Text.ToString();
-            //string inter = this.comboBox2.SelectedItem.ToString();
+
             if (!"--请选择--".Equals(this.comboBox1.Text))
             {
                 if (comboBox1.SelectedValue!=null) {
@@ -258,11 +251,6 @@ namespace LBKJClient
                 chart1.Titles[0].ForeColor = Color.Green;
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                        //if (inter != "0")
-                        //{
-                        //    this.chart1.ChartAreas[0].AxisX.Interval = double.Parse(inter);
-                        //}
-                        
                         tubiaoshow(dt);
                 }
                 else

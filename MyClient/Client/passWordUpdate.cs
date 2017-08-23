@@ -24,7 +24,7 @@ namespace LBKJClient
             this.button1.BackgroundImage= Image.FromFile(@str + "/images/save.png");
             this.button2.BackgroundImage= Image.FromFile(@str + "/images/cancel.png");
             this.Text += "  " + frmLogin.name;
-            //this.txtName.Text= frmLogin.passw;
+
         }
 
         private void button2_Click(object sender, EventArgs e)

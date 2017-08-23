@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -49,6 +43,13 @@ namespace LBKJClient
                     mh.serialPort = "";
                     mh.networkType = "tcp";
                 }
+                else
+                {
+                    mh.hostAddress = "";
+                    mh.serialPort = "";
+                    mh.tcp_ip_Port = "";
+                    mh.networkType = "";
+                }
                 istrue = mhs.updateManageHost(mh);
                 this.DialogResult = DialogResult.OK;
 
@@ -75,7 +76,6 @@ namespace LBKJClient
             string hcode = this.textBox3.Text;
             if (hcode != null && !"".Equals(hcode))
             {
-                //this.comboBox3.SelectedIndex = Int32.Parse(hcode)-1;
                 this.comboBox1.Text = hcode;
             }
             string[] ArryPort = System.IO.Ports.SerialPort.GetPortNames();
@@ -116,6 +116,22 @@ namespace LBKJClient
                 this.numericUpDown3.Enabled = false;
                 this.textBox4.Enabled = false;
                 this.numericUpDown4.Enabled = false;
+            }
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.comboBox2.SelectedItem.ToString() != "[管理主机]LB863RSB_N1(LBGZ-02)")
+            {
+                this.radioButton1.Checked = false;
+                this.radioButton2.Checked = false;
+                this.radioButton1.Enabled = false;
+                this.radioButton2.Enabled = false;
+            }
+            else
+            {
+                this.radioButton1.Enabled = true;
+                this.radioButton2.Enabled = true;
             }
         }
     }

@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.IO;
 using System.Diagnostics;
-using System.Threading;
 
 
 namespace LBKJClient
@@ -66,13 +60,13 @@ namespace LBKJClient
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.dataGridView1.DataSource = null;
             time1 = this.dateTimePicker1.Text.ToString();
             time2 = this.dateTimePicker2.Text.ToString();
             cd = this.comboBox1.SelectedValue.ToString();
 
             if (cd != "" && !"".Equals(cd))
             {
+                this.dataGridView1.DataSource = null;
                 pagerControl1.OnPageChanged += new EventHandler(pagerControl1_OnPageChanged);
                 dtcount = wcs.warningcheck(time1, time2, cd);
                 LoadData();
@@ -81,7 +75,6 @@ namespace LBKJClient
         }
         private void label1_Click(object sender, EventArgs e)
         {
-            //if (dataGridView1.Rows.Count > 0)
             if (dtcount!=null&&dtcount.Rows.Count > 0)
             {
                 double wd;

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -20,7 +14,6 @@ namespace LBKJClient
         private void About_Load(object sender, EventArgs e)
         {
             string str = Application.StartupPath;//项目路径
-            //this.button1.BackgroundImage = Image.FromFile(@str + "/images/assign.png");
             this.pictureBox1.BackgroundImage= Image.FromFile(@str + "/images/about.png");
             string aa = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             string bb = Environment.Version.ToString().Substring(0, 9);

@@ -403,6 +403,7 @@
             // 
             // numericUpDown3
             // 
+            this.numericUpDown3.Enabled = false;
             this.numericUpDown3.Location = new System.Drawing.Point(407, 129);
             this.numericUpDown3.Maximum = new decimal(new int[] {
             9999,

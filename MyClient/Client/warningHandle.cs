@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -34,7 +28,6 @@ namespace LBKJClient
                 bean.warningHandleBean whb = new bean.warningHandleBean();
                 whb.handleUser = this.label2.Text;
                 whb.warningTime = this.textBox1.Text;
-                //whb.handleTime = this.textBox2.Text;
                 whb.handleTime = this.dateTimePicker1.Text.ToString();
                 whb.handleType = this.textBox3.Text;
                 whb.handleResult = this.textBox4.Text;

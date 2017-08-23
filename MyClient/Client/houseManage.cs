@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -36,7 +31,6 @@ namespace LBKJClient
             if (dt != null)
             {
                 this.dataGridView1.DataSource = dt;
-                //this.dataGridView1.Columns[0].HeaderCell.Value = "库房类型编号";
                 this.dataGridView1.Columns[0].Visible = false;
                 this.dataGridView1.Columns[1].HeaderCell.Value = "库房名称";
                 this.dataGridView1.Columns[2].HeaderCell.Value = "库房温度上限℃";

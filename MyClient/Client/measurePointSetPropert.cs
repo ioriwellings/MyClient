@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -42,7 +36,6 @@ namespace LBKJClient
                 di.t_low = float.Parse(t_low);
                 di.h_high = float.Parse(h_high);
                 di.h_low = float.Parse(h_low);
-                //di.housecode = Int32.Parse(type);
                 di.housecode = type;
                 if (this.checkBox2.Checked) {
                     di.powerflag = Int32.Parse(this.checkBox2.Tag.ToString());
@@ -75,7 +68,6 @@ namespace LBKJClient
             string hcode=this.textBox2.Text;
             if (hcode != null && !"".Equals(hcode))
             {
-            //this.comboBox3.SelectedIndex = Int32.Parse(hcode)-1;
             this.comboBox3.Text =hcode;
             }      
         }

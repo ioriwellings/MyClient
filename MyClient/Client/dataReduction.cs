@@ -55,8 +55,7 @@ namespace LBKJClient
                     }
                     catch (Exception exc)
                     {
-                        //MessageBox.Show(exc.Message);
-                        //throw new Exception(exc.Message);
+                        
                     }
                 }
             }

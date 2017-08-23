@@ -58,6 +58,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -86,6 +87,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.checkBox5);
             this.groupBox2.Controls.Add(this.button4);
             this.groupBox2.Controls.Add(this.checkBox27);
             this.groupBox2.Controls.Add(this.button3);
@@ -409,6 +411,17 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "用户名：";
             // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBox5.Location = new System.Drawing.Point(388, 123);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(72, 16);
+            this.checkBox5.TabIndex = 38;
+            this.checkBox5.Text = "显示报告";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
             // updateUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -461,5 +474,6 @@
         public System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label3;
         public System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.CheckBox checkBox5;
     }
 }

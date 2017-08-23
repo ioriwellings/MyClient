@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -13,16 +9,18 @@ namespace LBKJClient
 {
     public partial class changGuiCheck : Form
     {
-        
         public DataTable dt=null;
         public string cdlist=null;
         public string time1 = null;
         public string time2 = null;
+        public int pageNo = -1;
+        public int houseorcartime = 0;
         service.changGuicheckService cgs = new service.changGuicheckService();
         service.manageHostService mhs = new service.manageHostService();
         private string path = @"config.xml";
         private int cartime = 0;
         private int databasetimer = 0;
+        public int flag = 0;//判断是否是历史数据功能请求的
         public changGuiCheck()
         {
             InitializeComponent();
@@ -130,6 +128,15 @@ namespace LBKJClient
                 if (cd != null)
                 {
                     cd = cd.Substring(1);
+                    //历史数据查询分页准备参数
+                    if (flag==1) {
+                        cdlist = cd;
+                        pageNo = 0;
+                        houseorcartime = cartime;
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                        return;
+                    }
                     dts = cgs.changguicheck(time1, time2, cd).Tables[0];
                     
                     if (dts.Rows.Count > 0) {
@@ -169,15 +176,7 @@ namespace LBKJClient
                             dv.Sort = "devtime asc";
                             dt = dv.ToTable(true);
                             dt.Columns.Remove("carinterval");
-                            //dt.Columns.Remove("warningistrue");
                             dt.Columns.Remove("houseinterval");
-                            //DataTable dt1 = dv.ToTable(true, "measureMeterCode");
-                            //for (int i = 0; i < dt1.Rows.Count; i++)
-                            //{
-                            //    cd1 += "," + dt1.Rows[i]["measureMeterCode"];
-                            //}
-
-                            //cd1 = cd1.Substring(1);
                             cdlist = cd;
                         }
                     }
@@ -216,6 +215,15 @@ namespace LBKJClient
                 if (cd != null)
                 {
                     cd = cd.Substring(1);
+                    if (flag == 1)
+                    {
+                        cdlist = cd;
+                        pageNo = 1;
+                        houseorcartime = cartime;
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                        return;
+                    }
                     DataTable dts1 = cgs.changguicheckGlzj(time1, time2, cd).Tables[0];
                     if (dts1.Rows.Count > 0)
                     {
@@ -264,7 +272,6 @@ namespace LBKJClient
                             dv.Sort = "devtime asc";
                             dt = dv.ToTable(true);
                             dt.Columns.Remove("carinterval");
-                            //dt.Columns.Remove("warningistrue");
                             dt.Columns.Remove("houseinterval");
                             DataTable dt1 = dv.ToTable(true, "measureMeterCode");
                             for (int i = 0; i < dt1.Rows.Count; i++)
@@ -344,40 +351,7 @@ namespace LBKJClient
 
                     }
                 }
-
             }
-            //else if (page == 1)
-            //{
-            //    //判断该控件是不是CheckBox
-            //    if (this.checkBox1.Checked)
-            //    {
-            //        foreach (Control ctr1 in this.tabControl1.TabPages[1].Controls)
-            //        {
-            //            //判断该控件是不是CheckBox
-            //            if (ctr1 is CheckBox)
-            //            {
-            //                //将ctr转换成CheckBox并赋值给ck
-            //                CheckBox ck = ctr1 as CheckBox;
-            //                ck.Checked = true;
-            //            }
-            //        }
-
-            //    }
-            //    else
-            //    {
-            //        foreach (Control ctr1 in this.tabControl1.TabPages[1].Controls)
-            //        {
-            //            //判断该控件是不是CheckBox
-            //            if (ctr1 is CheckBox)
-            //            {
-            //                //将ctr转换成CheckBox并赋值给ck
-            //                CheckBox ck = ctr1 as CheckBox;
-            //                ck.Checked = false;
-            //            }
-
-            //        }
-            //    }
-            //}
         }
 
         private void tabControl1_Selected(object sender, TabControlEventArgs e)
@@ -399,7 +373,6 @@ namespace LBKJClient
                 if (ctr1 is CheckBox)
                 {
                     //将ctr转换成CheckBox并赋值给ck
-                    //CheckBox ck = ctr1 as CheckBox;
                     (ctr1 as CheckBox).Checked= ctr1 == sender ? true : false;
                 }
             }

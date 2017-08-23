@@ -48,7 +48,7 @@ namespace LBKJClient.dao
         public DataTable warningHandlecheck(String time1, String time2)
         {
             string bs = "_"; 
-            String sql = "select a.*,h.terminalname from lb_warning_handle a join lb_device_information h on a.measureMeterCode = h.measureCode || '"+bs+"' || h.meterNo and a.handleTime > '" + time1 + "' and a.handleTime < '" + time2 + "'";
+            String sql = "select a.*,h.terminalname from lb_warning_handle a join lb_device_information h on a.measureMeterCode = concat(h.measureCode,'" + bs+"',h.meterNo) and a.handleTime > '" + time1 + "' and a.handleTime < '" + time2 + "'";
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);
