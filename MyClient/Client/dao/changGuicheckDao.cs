@@ -14,11 +14,9 @@ namespace LBKJClient.dao
             if (cd!=null) {
                 sql += "  where  ";
                 string[] cds = cd.Split(',');
-                //sql += "aa.measureMeterCode='" + cds[0] + "' ";
                 for (int i = 0; i < cds.Count(); i++)
                 {
                     cds1 += "," + cds[i];
-                    //sql += " or aa.measureMeterCode='" + cds[i] + "' ";
                 }
                 cds1 = cds1.Substring(1);
                 sql += "aa.measureMeterCode in ('" + cds1 + "')";
@@ -37,11 +35,9 @@ namespace LBKJClient.dao
             {
                 sql += "  where  ";
                 string[] cds = cd.Split(',');
-                //sql += "aa.measureMeterCode='" + cds[0] + "' ";
                 for (int i = 0; i < cds.Count(); i++)
                 {
                     cds1 += "," + cds[i];
-                    //sql += " or aa.measureMeterCode='" + cds[i] + "' ";
                 }
                 cds1 = cds1.Substring(1);
                 sql += "aa.measureMeterCode in ('" + cds1 + "') limit " + PageIndex + "," + PageSize + "";

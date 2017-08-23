@@ -36,7 +36,6 @@ namespace LBKJClient.dao
         public bool deleteUser(string id)
         {
             int ret = 0;
-            //String sql = "delete from userinfo where id = '" + id + "'";
             String sql = "update userinfo set enable = 0 where id = '" + id + "'";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;

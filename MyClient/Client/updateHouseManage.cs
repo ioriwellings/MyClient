@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -39,7 +33,6 @@ namespace LBKJClient
                 di.t_low = float.Parse(t_low);
                 di.h_high = float.Parse(h_high);
                 di.h_low = float.Parse(h_low);
-                //di.id = Int32.Parse(id);
                 di.id = id;
                 if (this.checkBox2.Checked)
                 {

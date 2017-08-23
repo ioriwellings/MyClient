@@ -30,7 +30,6 @@ namespace LBKJClient
         public delegate void UpdateAcceptTextBoxTextHandler(string text);
         public UpdateAcceptTextBoxTextHandler UpdateTextHandler;
         public delegate void SendDeviceInfoHandler(string text);
-        public SendDeviceInfoHandler SendInfotHandler;
         public SerialPort port = new SerialPort();
         Byte[] totalByteRead = new Byte[0];
         string text = string.Empty;
@@ -1607,8 +1606,6 @@ namespace LBKJClient
                 tsmi.CheckState = CheckState.Unchecked;
             else
             {
-                //autoSizeX =180;
-                //autoSizeY =155;
                 xmlDoc.Load(path);
                 XmlNode node;
                 node = xmlDoc.SelectSingleNode("config/autoSizeX");
@@ -1682,9 +1679,6 @@ namespace LBKJClient
                 tsmi.CheckState = CheckState.Unchecked;
             else
             {
-                //autoSizeX = 260;
-                //autoSizeY = 215;
-
                 xmlDoc.Load(path);
                 XmlNode node;
                 node = xmlDoc.SelectSingleNode("config/autoSizeX");
@@ -2186,10 +2180,8 @@ namespace LBKJClient
                             continue;
                         }
 
-                        //a = Double.Parse(temperature);
                         b = Double.Parse(t_high);
                         c = Double.Parse(t_low);
-                        //d = Double.Parse(humidity);
                         e1 = Double.Parse(h_high);
                         f = Double.Parse(h_low);
                         string kkk = dt.Rows[i]["housetype"].ToString();
@@ -2201,11 +2193,6 @@ namespace LBKJClient
                         {
                             kk = 0;
                         }
-
-                        //dtime = dt.Rows[i]["devtime"].ToString();
-
-                        //((PictureBox)this.flowLayoutPanel1.Controls.Find(code + "_" + meter, false)[0]).Tag = terminalname + "," + dtime + "," + code + "," + meter;
-
                         font = new Font("微软雅黑", Convert.ToSingle((double)10 * 5.0));
                         size = TextRenderer.MeasureText(b.ToString("0.0"), font);
                         r = new Rectangle(680, 170, size.Width, size.Height);
@@ -2810,25 +2797,12 @@ namespace LBKJClient
         //}
         private void doGetDeviceInfo()
         {
-            //byte[] byteSend3 = { 0x1B, 0x06, 0x00, 0x03, 0x03, 0x00, 0x22, 0x00, 0x00, 0xFF, 0x39 };//地址03主机请求
-            //byte[] byteSend2 = { 0x1B, 0x06, 0x00, 0x02, 0x03, 0x00, 0x22, 0x00, 0x00, 0xFE, 0xE8 };//地址02主机请求
-            //byte[] byteSend1 = { 0x1B, 0x06, 0x00, 0x01, 0x03, 0x00, 0x22, 0x00, 0x00, 0xFE, 0xDB };//地址01主机请求
-
             if (port.IsOpen)
             {
                 try
                 {
                     if (dtCom != null && dtCom.Rows.Count > 0)
                     {
-                        //for (int i = 0; i < dtCom.Rows.Count; i++)
-                        //{
-                        //    string address = dtCom.Rows[i][2].ToString();
-                        //    byte[] byteSend = getCRC(address);
-                        //    measureCode = dtCom.Rows[i][7].ToString();
-                        //    totalByteRead = new Byte[0];
-                        //    port.Write(byteSend, 0, byteSend.Length);
-                        //    Thread.Sleep(2500);
-                        //}
                         if (comnum < dtCom.Rows.Count)
                         {
                             string address = dtCom.Rows[comnum][2].ToString();
@@ -2847,8 +2821,7 @@ namespace LBKJClient
                 }
                 catch (Exception e)
                 {
-                    //Thread.Sleep(500);
-                    //doGetDeviceInfo();
+                    
                 }
             }
             else
@@ -2858,7 +2831,6 @@ namespace LBKJClient
                     //if (istrueport)
                     //{
                         if(initPort(result[1]))
-                        //port.Open();
                         doGetDeviceInfo();
                     //}
                 }
@@ -2882,7 +2854,6 @@ namespace LBKJClient
             byteSends[3] = (byte)Convert.ToInt32("0x" + text, 16);
             byteSends[9] = (byte)Convert.ToInt32("0x" + xx.Substring(0, 2), 16);
             byteSends[10] = (byte)Convert.ToInt32("0x" + xx.Substring(2), 16);
-            //string aaa = CRC.ByteArrayToHexString(byteSends);
             return byteSends;
         }
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -2890,14 +2861,11 @@ namespace LBKJClient
             if (port.IsOpen)
             {
                 port.Close();
-                //MessageBox.Show("Closed");
+               
             }  
         }
         private void timerGetdeviceinfo_Tick(object sender, EventArgs e)
         {
-            //Thread multidoGetDev = new Thread(new ThreadStart(doGetDeviceInfo));
-            //multidoGetDev.IsBackground = true;
-            //multidoGetDev.Start();
             doGetDeviceInfo();
         }
 
@@ -2960,7 +2928,6 @@ namespace LBKJClient
             else
             {
                 this.timer2.Stop();
-                //timer2_Tick(null, null); 
                 queryMeterIds();
                 this.timer2.Start();
             }
@@ -3026,8 +2993,7 @@ namespace LBKJClient
                     }
                     catch (Exception exc)
                     {
-                       // MessageBox.Show(exc.Message);
-                        //throw new Exception(exc.Message);
+                      
                     }
                 }
             }
@@ -3067,12 +3033,10 @@ namespace LBKJClient
                         utils.DataBaseUtil.backupDatabase(@"new.baw", @filepath + @"Datas" + @time + @".baw");
                     }
                     textFile(@str + "/automateBackupTimes.txt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                    //MessageBox.Show("数据备份成功！备份到：" + @filepath + "的路径下");
                 }
                 catch (Exception exc)
                 {
-                    //MessageBox.Show(exc.Message);
-                    //throw new Exception(exc.Message);
+                    
                 }
             }
             if (filepath != null && !"".Equals(filepath))
@@ -3096,15 +3060,13 @@ namespace LBKJClient
                 }
                 catch (Exception exc)
                 {
-                    //MessageBox.Show(exc.Message);
-                    //throw new Exception(exc.Message);
+                    
                 }
             }
             //}
         }
         private void saveToXmldatabasetimer(string jtime)
         {
-            //xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
             XmlNode node;
             node = xmlDoc.SelectSingleNode("config/databasetimer");
@@ -3121,10 +3083,7 @@ namespace LBKJClient
                 this.timer2.Stop();
                 this.timer3.Stop();
                 frmMain_Load(sender, e);
-                //this.Close();
-                //new System.Threading.Mutex(true, Application.ProductName).ReleaseMutex();
-                //Application.Restart();
-                //System.Diagnostics.Process.Start(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                
             }
         }
 
@@ -3156,9 +3115,7 @@ namespace LBKJClient
 
             if (this.WindowState == FormWindowState.Minimized)
             {
-                //this.ShowInTaskbar = false;
-                //this.Hide();
-                //this.notifyIcon1.Visible = true;
+                
             }
         }
         private void picb_DouClick(object sender, EventArgs e)
@@ -3238,17 +3195,6 @@ namespace LBKJClient
         {
             e.Cancel = true;
             toolStripLabel7_Click(sender, e);
-            //DialogResult result = MessageBox.Show("软件系统将最小化到右下角的图标托盘中？", "操作提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            //if (result == DialogResult.Yes)
-            //{
-            //    //System.Environment.Exit(0);
-            //    e.Cancel = true;
-            //    this.notifyIcon1.Visible = true;
-            //    this.Hide();
-            //}设备1
-            //else {
-            //    e.Cancel = true;
-            //}
         }
         //加密狗定时程序
         private void timer5_Tick(object sender, EventArgs e)
@@ -3282,7 +3228,6 @@ namespace LBKJClient
         //#region 从xml获得数据，并加载
         private void getFromXml()
         {
-            //xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
             XmlNode node;
             node = xmlDoc.SelectSingleNode("config/username");
@@ -3311,14 +3256,12 @@ namespace LBKJClient
                 }
                 catch (Exception exc)
                 {
-                    //MessageBox.Show(exc.Message);
-                    //throw new Exception(exc.Message);
+                    
                 }
             }
         }
         private void saveToXmlsStoptime(string stoptime)
         {
-            //xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
             XmlNode node;
             node = xmlDoc.SelectSingleNode("config/stoptime");
@@ -3337,7 +3280,6 @@ namespace LBKJClient
         }
         private void autogetServiceData()
         {
-            //xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
             XmlNode node;
             node = xmlDoc.SelectSingleNode("config/stoptime");

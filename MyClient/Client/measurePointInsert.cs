@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -29,7 +24,7 @@ namespace LBKJClient
                 this.comboBox1.DataSource = dt1;//绑定数据源
                 this.comboBox1.DisplayMember = "hostName";//显示给用户的数据集表项
                 this.comboBox1.ValueMember = "measureCode";//操作时获取的值 
-                //this.comboBox1.Text = "--请选择--";
+                
             }
             service.houseTypeService hts = new service.houseTypeService();
             this.comboBox3.DataSource = hts.queryhouseType();//绑定数据源
@@ -66,7 +61,6 @@ namespace LBKJClient
                         di.terminalname = cdname;
                         di.measureCode = mcode;
                         di.meterNo = cdnum;
-                        //di.housecode = Int32.Parse(type);
                         di.housecode = type;
 
 

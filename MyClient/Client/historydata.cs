@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.IO;
-using System.Drawing.Imaging;
-using System.Threading;
 
 namespace LBKJClient
 {
@@ -44,7 +38,6 @@ namespace LBKJClient
             this.checkBox1.Checked = false;
                          }
             this.groupBox2.Visible = false;
-            //this.groupBox1.Size = new Size(1347, 653);
             this.groupBox1.Size = new Size(1347, 710);
             }
             //常规查询数据展现
@@ -106,9 +99,7 @@ namespace LBKJClient
     
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         { //******调用处理报警数据信息********
-           
-            //******显示报警信息**********************************************************************
-            bool check=this.checkBox1.Checked;
+           bool check=this.checkBox1.Checked;
             if (check != true)
             {      
                 this.groupBox2.Visible = false;
@@ -368,7 +359,6 @@ namespace LBKJClient
 
                 PdfPTable table = null;
                
-                //   , "温度上限", "温度下限", "湿度上限", "湿度下限"
                 string[] columnsnames = { "序号", "采集时间", "设备标识", "管理主机编号", "仪表编号", "温度", "湿度", "是否为空库" };
                 //标题
                 if (flag == 1)
@@ -443,16 +433,10 @@ namespace LBKJClient
                         table1.AddCell(new Phrase(dtd.Rows[rowNum][columNum].ToString(), font));
                     }
                 }
-                //cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell.UseAscender = (true);
-                //cell.UseDescender = (true);
-                //cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                //cell.HorizontalAlignment = Element.ALIGN_CENTER;
                 doc.Add(table);
                 doc.Add(null1);
                 doc.Add(null1);
                 doc.Add(table1);
-                //doc.Add(new Paragraph("您好1， PDF !", font));
                 //关闭document 
                 doc.Close();
                 //打开PDF，看效果 
@@ -465,12 +449,10 @@ namespace LBKJClient
             catch (DocumentException de)
             {
                 Console.WriteLine(de.Message);
-                //Console.ReadKey();
             }
             catch (IOException io)
             {
                 Console.WriteLine(io.Message);
-                //Console.ReadKey();
             }
          }
     private void dataGridView2_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)

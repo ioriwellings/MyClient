@@ -4,7 +4,6 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -160,11 +159,7 @@ namespace LBKJClient
                         table.AddCell(new Phrase(dts.Rows[rowNum][columNum].ToString(), font));
                     }
                 }
-                //cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell.UseAscender = (true);
-                //cell.UseDescender = (true);
-                //cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                //cell.HorizontalAlignment = Element.ALIGN_CENTER;
+              
                 doc.Add(table);
                 //关闭document 
                 doc.Close();

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -180,15 +176,7 @@ namespace LBKJClient
                             dv.Sort = "devtime asc";
                             dt = dv.ToTable(true);
                             dt.Columns.Remove("carinterval");
-                            //dt.Columns.Remove("warningistrue");
                             dt.Columns.Remove("houseinterval");
-                            //DataTable dt1 = dv.ToTable(true, "measureMeterCode");
-                            //for (int i = 0; i < dt1.Rows.Count; i++)
-                            //{
-                            //    cd1 += "," + dt1.Rows[i]["measureMeterCode"];
-                            //}
-
-                            //cd1 = cd1.Substring(1);
                             cdlist = cd;
                         }
                     }
@@ -284,7 +272,6 @@ namespace LBKJClient
                             dv.Sort = "devtime asc";
                             dt = dv.ToTable(true);
                             dt.Columns.Remove("carinterval");
-                            //dt.Columns.Remove("warningistrue");
                             dt.Columns.Remove("houseinterval");
                             DataTable dt1 = dv.ToTable(true, "measureMeterCode");
                             for (int i = 0; i < dt1.Rows.Count; i++)
@@ -364,40 +351,7 @@ namespace LBKJClient
 
                     }
                 }
-
             }
-            //else if (page == 1)
-            //{
-            //    //判断该控件是不是CheckBox
-            //    if (this.checkBox1.Checked)
-            //    {
-            //        foreach (Control ctr1 in this.tabControl1.TabPages[1].Controls)
-            //        {
-            //            //判断该控件是不是CheckBox
-            //            if (ctr1 is CheckBox)
-            //            {
-            //                //将ctr转换成CheckBox并赋值给ck
-            //                CheckBox ck = ctr1 as CheckBox;
-            //                ck.Checked = true;
-            //            }
-            //        }
-
-            //    }
-            //    else
-            //    {
-            //        foreach (Control ctr1 in this.tabControl1.TabPages[1].Controls)
-            //        {
-            //            //判断该控件是不是CheckBox
-            //            if (ctr1 is CheckBox)
-            //            {
-            //                //将ctr转换成CheckBox并赋值给ck
-            //                CheckBox ck = ctr1 as CheckBox;
-            //                ck.Checked = false;
-            //            }
-
-            //        }
-            //    }
-            //}
         }
 
         private void tabControl1_Selected(object sender, TabControlEventArgs e)
@@ -419,7 +373,6 @@ namespace LBKJClient
                 if (ctr1 is CheckBox)
                 {
                     //将ctr转换成CheckBox并赋值给ck
-                    //CheckBox ck = ctr1 as CheckBox;
                     (ctr1 as CheckBox).Checked= ctr1 == sender ? true : false;
                 }
             }

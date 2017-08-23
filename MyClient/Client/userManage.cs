@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -22,7 +19,6 @@ namespace LBKJClient
         {
             string str = Application.StartupPath;//项目路径
             this.button1.BackgroundImage = Image.FromFile(@str + "/images/insert.png");
-            //this.button2.BackgroundImage = Image.FromFile(@str + "/images/delete.png");
             this.button2.BackgroundImage = Image.FromFile(@str + "/images/forbid.png");
             this.button3.BackgroundImage = Image.FromFile(@str + "/images/update.png");
             this.button4.BackgroundImage = Image.FromFile(@str + "/images/close.png");

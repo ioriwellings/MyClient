@@ -1,21 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Threading;
-using System.Web.Script.Serialization;
 using System.IO.Ports;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Xml;
-using System.Drawing.Text;
-using System.Diagnostics;
-using NT88Test;
-using SmartX1Demo;
-using System.Collections;
 
 namespace LBKJClient
 {

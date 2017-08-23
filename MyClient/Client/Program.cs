@@ -75,8 +75,7 @@ namespace LBKJClient
 
                 // 启动  开始动画
                 SplashScreen.ShowSplashScreen();
-                System.Threading.Thread.Sleep(1500);
-                //Application.SetCompatibleTextRenderingDefault(false);   
+                System.Threading.Thread.Sleep(1500); 
                 Application.Run(new frmLogin());
 
                 //Main   为你程序的主窗体，如果是控制台程序不用这句   
@@ -89,9 +88,6 @@ namespace LBKJClient
                 Application.Exit();//退出程序
             }
          }
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new frmLogin());
         }
     }
 }

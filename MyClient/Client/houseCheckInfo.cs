@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -52,8 +47,7 @@ namespace LBKJClient
             this.label1.BringToFront();
             getFromXmldatarefreshtime();
             houseTypeInfo();
-            //this.timer2.Interval = Int32.Parse(datarefreshtime) * 1000;
-            //this.timer2.Start();
+
         }
 
         int flag = 0;
@@ -884,7 +878,6 @@ namespace LBKJClient
                 wh.label2.Text = frmLogin.name;
                 wh.textBox1.Text = tagg[1];
                 string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                //wh.textBox2.Text = time;
                 wh.dateTimePicker1.Value = Convert.ToDateTime(time);
                 wh.textBox5.Text = name;
                 wh.ShowDialog();

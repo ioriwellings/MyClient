@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -17,8 +15,6 @@ namespace LBKJClient
     {
         SerialPort port =new SerialPort();
         private string path = @"config.xml";
-        //private System.IO.StreamWriter sw;
-        private int totalReceivedBytes = 0;
         public delegate void UpdateAcceptTextBoxTextHandler(string text);
         public UpdateAcceptTextBoxTextHandler UpdateTextHandler;
         public delegate void SendDeviceInfoHandler(string text);
@@ -40,7 +36,6 @@ namespace LBKJClient
         public readHistoryData()
         {
             InitializeComponent();
-            //getFromXml();
             this.port.DataReceived += new SerialDataReceivedEventHandler(this.mySerialPort_DataReceived);
         }
 
@@ -68,7 +63,6 @@ namespace LBKJClient
                 sp.Read(byteRead, 0, byteRead.Length);
                 sp.DiscardInBuffer();
                 sp.DiscardOutBuffer();
-                //totalReceivedBytes += size;
                 totalByteRead = totalByteRead.Concat(byteRead).ToArray();
                 if (totalByteRead.Length > 10)
                 {
@@ -411,40 +405,6 @@ namespace LBKJClient
             this.timer1.Stop();
             this.button4.Enabled = false;
             frmMain.istrueport = true;
-        }
-        private void button2_Click_1(object sender, EventArgs e)
-        {
-
-        }
-        DataTable dts = null;
-        public void readHistory()
-        {
-            service.manageHostService mh = new service.manageHostService();
-            dts= mh.queryManageHostCom();
-            service.deviceInformationService dis = new service.deviceInformationService();
-            int flag = 1;
-            dtcdinfo = dis.checkPointInfo(flag);
-            if (dts != null&&dts.Rows.Count>0) {
-                multi = new Thread(new ThreadStart(readHistorys));
-                multi.IsBackground = true;
-                multi.Start();
-            }
-            initPort();
-            requestData();
-            this.timer1.Start();
-        }
-        private void readHistorys()
-        {
-            //address = "3";
-            
-        }
-        private void getFromXml()
-        {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(path);
-            XmlNode node;
-            node = xmlDoc.SelectSingleNode("config/communicationType");
-            comCode = node.InnerText.Split('-')[1].ToString();
         }
 
         private void readHistoryData_FormClosing(object sender, FormClosingEventArgs e)

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LBKJClient
@@ -82,7 +76,6 @@ namespace LBKJClient
             string hcode = this.textBox3.Text;
             if (hcode != null && !"".Equals(hcode))
             {
-                //this.comboBox3.SelectedIndex = Int32.Parse(hcode)-1;
                 this.comboBox1.Text = hcode;
             }
             string[] ArryPort = System.IO.Ports.SerialPort.GetPortNames();
