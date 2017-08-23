@@ -13,6 +13,8 @@ namespace LBKJClient
     public partial class houseManage : Form
     {
         service.houseTypeService hts = new service.houseTypeService();
+        public event EventHandler RefreshEvent;
+
         public houseManage()
         {
             InitializeComponent();
@@ -142,6 +144,11 @@ namespace LBKJClient
                     //刷新库房页面
                     queryhouseManage();
                     MessageBox.Show("库房信息修改成功！");
+                    //刷新首页    
+                    if (this.RefreshEvent != null)
+                    {
+                        RefreshEvent(null, null);
+                    }
                 }
             }
         }

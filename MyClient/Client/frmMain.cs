@@ -1535,8 +1535,8 @@ namespace LBKJClient
                 if (result == DialogResult.Yes)
                 {
                     //新增退出系统删除无标记记录（断电，报警，库房、车载时间间隔）
-                    service.deleteInvalidDataService did = new service.deleteInvalidDataService();
-                    did.deleteInvalidData();
+                    //service.deleteInvalidDataService did = new service.deleteInvalidDataService();
+                    //did.deleteInvalidData();
 
                     service.loginLogService llse = new service.loginLogService();
                     bean.loginLogBean lb = new bean.loginLogBean();
@@ -3131,6 +3131,7 @@ namespace LBKJClient
         private void 库房管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             houseManage hm = new houseManage();
+            hm.RefreshEvent += this.NeedRefresh;//注册事件
             hm.ShowDialog();
         }
 
@@ -3482,6 +3483,12 @@ namespace LBKJClient
         {
             this.toolStripLabel7.BackgroundImage = null;
         }
+
+        private void lbtitle_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
         int djs = 1800;
         private void timer1_Tick(object sender, EventArgs e)
         {

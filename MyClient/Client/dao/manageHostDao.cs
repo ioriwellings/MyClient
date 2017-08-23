@@ -10,15 +10,16 @@ namespace LBKJClient.dao
         {
             string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string id = Result.GetNewId();
-            int measureNo = id.GetHashCode();
-            int ret = 0;
-            String sql = "insert into lb_managehost_info (id,measureCode,hostName,hostAddress,CommunicationType,serialPort,portNumber,storeType,createTime,houseType,measureNo) values ('" + id + "','" + mh.measureCode + "', '" + mh.hostName + "', '" + mh.hostAddress + "', '" + mh.CommunicationType + "', '" + mh.serialPort + "', '" + mh.portNumber + "', '" + mh.storeType + "', '" + time + "', '" + mh.houseType + "','" + measureNo + "');ALTER TABLE `data_home` ADD PARTITION (PARTITION p"+ measureNo + " VALUES LESS THAN("+measureNo+"))";
+            int measureNo = System.Math.Abs(id.GetHashCode());
+            measureNo = Int32.Parse(measureNo.ToString().Substring(0, 5));
+            int ret = 0;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            String sql = "insert into lb_managehost_info (id,measureCode,hostName,hostAddress,CommunicationType,serialPort,portNumber,storeType,createTime,houseType,measureNo,tcp_ip_Port,networkType) values ('" + id + "','" + mh.measureCode + "', '" + mh.hostName + "', '" + mh.hostAddress + "', '" + mh.CommunicationType + "', '" + mh.serialPort + "', '" + mh.portNumber + "', '" + mh.storeType + "', '" + time + "', '" + mh.houseType + "','" + measureNo + "','" + mh.tcp_ip_Port + "','" + mh.networkType + "');ALTER TABLE data_home PARTITION by range(measureNo)(PARTITION p" + measureNo + " VALUES LESS THAN(" + measureNo + "))";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
         public DataTable querymanageHostDao()
         {
-            String sql = "SELECT m.*,h.name FROM lb_managehost_info m join lb_house_type h on m.houseType=h.id";
+            String sql = "SELECT m.id,m.hostName,m.hostAddress,m.CommunicationType,m.serialPort,m.tcp_ip_Port,m.networkType,m.portNumber,m.storeType,m.measureCode,m.createTime,m.houseType,m.measureNo,h.name FROM lb_managehost_info m join lb_house_type h on m.houseType=h.id";
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);
@@ -40,7 +41,7 @@ namespace LBKJClient.dao
         public bool updatemanageHostDao(bean.manageHose mh)
         {
             int ret = 0;
-            String sql = "update lb_managehost_info set hostName='" + mh.hostName + "',hostAddress='" + mh.hostAddress + "',CommunicationType='" + mh.CommunicationType + "',serialPort='" + mh.serialPort + "',portNumber='" + mh.portNumber + "',storeType='" + mh.storeType + "',houseType='" + mh.houseType + "' where measureCode = '" + mh.measureCode + "'";
+            String sql = "update lb_managehost_info set hostName='" + mh.hostName + "',hostAddress='" + mh.hostAddress + "',CommunicationType='" + mh.CommunicationType + "',serialPort='" + mh.serialPort + "',portNumber='" + mh.portNumber + "',storeType='" + mh.storeType + "',houseType='" + mh.houseType + "',tcp_ip_Port='" + mh.tcp_ip_Port + "',networkType='" + mh.networkType + "' where measureCode = '" + mh.measureCode + "'";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
