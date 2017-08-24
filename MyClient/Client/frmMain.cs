@@ -2285,7 +2285,7 @@ namespace LBKJClient
         bean.showReportBean rb = new bean.showReportBean();
         private void yunpingtaiDatas()
         {
-            //string ids = "862609000079371-00:862609000078639-00:862609000078845-00:862609000079462-00:862609000081609-00:862609000081518-00:862609000081500-00:862609000081617-00:862609000081625-00:862609000081443-00:862609000081716-00:862609000081567-00:862609000081369-00:862609000081559-00:862609000081682-00:862609000081419-00:862609000081484-00:862609000081476-00:862609000081351-00:862609000081740-00:862609000081773-00:862609000081492-00:862609000081401-00:862609000081831-00";
+            string ids = "862609000079371-00:862609000078639-00:862609000078845-00:862609000079462-00:862609000081609-00:862609000081518-00:862609000081500-00:862609000081617-00:862609000081625-00:862609000081443-00:862609000081716-00:862609000081567-00:862609000081369-00:862609000081559-00:862609000081682-00:862609000081419-00:862609000081484-00:862609000081476-00:862609000081351-00:862609000081740-00:862609000081773-00:862609000081492-00:862609000081401-00:862609000081831-00";
             if (mids != null && !"".Equals(mids))
             {
                 string[] midsArray=mids.Split(':');
@@ -2987,7 +2987,8 @@ namespace LBKJClient
                         System.IO.Directory.CreateDirectory(filepath);
                     try
                     {
-                        DoBackup("192.168.5.8", "3306", "root", "root", "test16", filepath);
+                        string []mysqlinfo = Properties.Settings.Default.mysqlInfo.Split(',');
+                        DoBackupNoauto(mysqlinfo[0], mysqlinfo[1], mysqlinfo[2], mysqlinfo[3], mysqlinfo[4], filepath);
                         textFile(@str + "/manualBackupTimes.txt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                         //MessageBox.Show("数据备份成功！备份到：" + @filepath + "的路径下");
                     }
@@ -3022,46 +3023,17 @@ namespace LBKJClient
                 {
                     System.IO.Directory.CreateDirectory(filepath);
                 }
+                string[] mysqlinfo = Properties.Settings.Default.mysqlInfo.Split(',');
                 try
-                {
-                    if (sb.istrue)
-                    {
-                        utils.DataBaseUtil.backupDatabase(@"new.baw", @filepath + @"DatasNews.baw");
-                    }
-                    else
-                    {
-                        utils.DataBaseUtil.backupDatabase(@"new.baw", @filepath + @"Datas" + @time + @".baw");
-                    }
+                {      
+                    DoBackup(mysqlinfo[0], mysqlinfo[1], mysqlinfo[2], mysqlinfo[3], mysqlinfo[4], filepath);
                     textFile(@str + "/automateBackupTimes.txt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                 }
                 catch (Exception exc)
                 {
                     
                 }
-            }
-            if (filepath != null && !"".Equals(filepath))
-            {
-                if (!System.IO.Directory.Exists(filepath))
-                {
-                    System.IO.Directory.CreateDirectory(filepath);
-                }
-                try
-                {
-                    if (sb.istrue)
-                    {
-                        utils.DataBaseUtil.backupDatabase(@"new.baw", @filepath + @"DatasNews.baw");
-                    }
-                    else
-                    {
-                        utils.DataBaseUtil.backupDatabase(@"new.baw", @filepath + @"Datas" + @time + @".baw");
-                    }
-                    textFile(@str + "/automateBackupTimes.txt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-
-                }
-                catch (Exception exc)
-                {
-                    
-                }
+            
             }
             //}
         }
@@ -3079,7 +3051,7 @@ namespace LBKJClient
             dataReduction dr = new dataReduction();
             if (dr.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("恢复数据库成功!");
+                //MessageBox.Show("恢复数据库成功!");
                 this.timer2.Stop();
                 this.timer3.Stop();
                 frmMain_Load(sender, e);
@@ -3491,27 +3463,75 @@ namespace LBKJClient
                 MessageBox.Show(e.Message);
             }
         }
-        // mysql数据库备份
-        public void DoBackup(string host, string port, string user, string password, string database, string filepath)
+        public void DoBackupNoauto(string host, string port, string user, string password, string database, string filepath)
         {
-            string backfile = filepath + database + "_bak_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".sql";
+            string backfile = filepath + database + "_bak_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".sql";
             string cmdStr = "mysqldump -h" + host + " -P" + port + " -u" + user + " -p" + password + " " + database + " > " + backfile;
 
             try
             {
                 string reslut = RunCmd(str + "\\Lib", cmdStr);
-                if (!string.IsNullOrEmpty(reslut))
+                if (reslut.IndexOf("error") == -1 && reslut.IndexOf("命令") == -1)
                 {
-                    using (System.IO.StreamWriter sw = new System.IO.StreamWriter("C:/Users/lb/Desktop/log.txt", true))
-                    {
-                        sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + reslut);
-                    }
-                    MessageBox.Show(reslut + "备份成功>" + backfile);
+                    MessageBox.Show("备份成功>" + backfile);
+                }
+                else
+                {
+                    MessageBox.Show(reslut + "备份失败>" + backfile);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+            }
+        }
+        // mysql数据库备份
+        public void DoBackup(string host, string port, string user, string password, string database, string filepath)
+        {
+            string backfile = "";
+            if (sb.istrue)
+            {
+                backfile = filepath + database + "_bak_newDatas" + ".sql";
+            }
+            else {
+                backfile = filepath + database + "_bak_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".sql";
+            }
+            string cmdStr = "mysqldump -h" + host + " -P" + port + " -u" + user + " -p" + password + " " + database + " > " + backfile;
+
+            try
+            {
+                string reslut = RunCmd(str + "\\Lib", cmdStr);
+                if (reslut.IndexOf("error")==-1 && reslut.IndexOf("命令")==-1)
+                {
+                    MessageBox.Show("备份成功>" + backfile);
+                } else {
+                    MessageBox.Show(reslut + "备份失败>" + backfile);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        // mysql数据库还原
+        public void Recover(string host, string port, string user, string password, string database, string filepath)
+        {
+            string cmdStr = "mysql -h" + host + " -P" + port + " -u" + user + " -p" + password + " " + database + " < " + filepath;
+            try
+            {
+                string reslut = RunCmd(str + "\\Lib", cmdStr);
+                if (reslut.IndexOf("error") == -1 && reslut.IndexOf("命令") == -1)
+                {
+                    MessageBox.Show(reslut + "还原成功>" + database);
+                }
+                else
+                {
+                    MessageBox.Show(reslut + "还原失败>" + database);
+                }
+            }
+            catch (Exception ex)
+            {
+                    MessageBox.Show(ex + "还原失败>" + database);
             }
         }
         public string RunCmd(string workingDirectory, string command)

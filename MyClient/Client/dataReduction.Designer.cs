@@ -56,9 +56,9 @@
             this.label1.ForeColor = System.Drawing.Color.Red;
             this.label1.Location = new System.Drawing.Point(29, 33);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(252, 14);
+            this.label1.Size = new System.Drawing.Size(266, 14);
             this.label1.TabIndex = 4;
-            this.label1.Text = "数据库样式：Datas20161017182005.baw";
+            this.label1.Text = "数据库样式：xx_bak_20170824042425.sql";
             // 
             // btnChoose
             // 
