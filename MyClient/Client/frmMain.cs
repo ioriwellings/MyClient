@@ -3484,6 +3484,7 @@ namespace LBKJClient
                 MessageBox.Show(e.Message);
             }
         }
+        // mysql数据库手动备份
         public void DoBackupNoauto(string host, string port, string user, string password, string database, string filepath)
         {
             string backfile = filepath + database + "_bak_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".sql";
@@ -3506,7 +3507,7 @@ namespace LBKJClient
                 MessageBox.Show(ex.ToString());
             }
         }
-        // mysql数据库备份
+        // mysql数据库自动备份
         public void DoBackup(string host, string port, string user, string password, string database, string filepath)
         {
             string backfile = "";
@@ -3534,27 +3535,7 @@ namespace LBKJClient
                 MessageBox.Show(ex.ToString());
             }
         }
-        // mysql数据库还原
-        public void Recover(string host, string port, string user, string password, string database, string filepath)
-        {
-            string cmdStr = "mysql -h" + host + " -P" + port + " -u" + user + " -p" + password + " " + database + " < " + filepath;
-            try
-            {
-                string reslut = RunCmd(str + "\\Lib", cmdStr);
-                if (reslut.IndexOf("error") == -1 && reslut.IndexOf("命令") == -1)
-                {
-                    MessageBox.Show(reslut + "还原成功>" + database);
-                }
-                else
-                {
-                    MessageBox.Show(reslut + "还原失败>" + database);
-                }
-            }
-            catch (Exception ex)
-            {
-                    MessageBox.Show(ex + "还原失败>" + database);
-            }
-        }
+        
         public string RunCmd(string workingDirectory, string command)
         {
             Process p = new Process();
