@@ -3144,6 +3144,10 @@ namespace LBKJClient
             DataTable dtd = dis.selectBydeviceInfo(tagg[2], tagg[3]);
             if (dtd.Rows.Count > 0)
             {
+                DataTable dd = mhs.queryManageHoststoreType(dtd.Rows[0]["measureCode"].ToString());
+                cs.textBox9.Text = dd.Rows[0]["hostName"].ToString();
+                cs.textBox10.Text = dtd.Rows[0]["meterNo"].ToString();
+
                 cs.textBox3.Text = dtd.Rows[0]["terminalname"].ToString();
                 cs.textBox4.Text = dtd.Rows[0]["measureCode"].ToString() + "-" + dtd.Rows[0]["meterNo"].ToString();
                 string hostaddress = null;
