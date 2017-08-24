@@ -22,9 +22,9 @@ namespace LBKJClient.service
         {
            return add.checkDatasTimes(time1,time2);
         }
-        public DataTable checkLastRecordBIsOr(string measureMeterCode)
+        public DataTable checkLastRecordBIsOr(string measureMeterCode, string devicedate)
         {
-            return add.checkLastRecordBIsOr(measureMeterCode);
+            return add.checkLastRecordBIsOr(measureMeterCode, devicedate);
         }
     }
 }

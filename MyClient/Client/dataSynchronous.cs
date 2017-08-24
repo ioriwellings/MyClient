@@ -272,9 +272,6 @@ namespace LBKJClient
                 }
                 datas.measureMeterCode = datas.managerID + "_" + datas.deviceNum;
 
-                dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode);
-                if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
-                if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
                 DataRow[] drs = dtcdinfo.Select("measureCode='" + datas.managerID + "' and meterNo='" + datas.deviceNum + "'"); ;
                 tt = Double.Parse(datas.temperature);
                 t1 = Double.Parse(drs[0]["t_high"].ToString());
@@ -292,6 +289,7 @@ namespace LBKJClient
                     {
                         datas.sign = "1";
                         datas.warnState = "1";
+                        Whistory = 1;
                     }
                     else if (CommunicationType == "LBGZ-04" && datas.charge != "0" && Whistory == 1)
                     {
@@ -308,6 +306,7 @@ namespace LBKJClient
                     {
                         datas.sign = "1";
                         datas.warnState = "1";
+                        Whistory = 1;
                     }
                     else if (CommunicationType == "RC-8/-10" && datas.charge != "0" && Whistory == 1)
                     {
@@ -325,6 +324,7 @@ namespace LBKJClient
                     if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
                     {
                         datas.warningistrue = "2";
+                        history = 2;
                     }
                     else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
                     {
@@ -344,6 +344,7 @@ namespace LBKJClient
                         if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
                         {
                             datas.warningistrue = "2";
+                            history = 2;
                         }
                         if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
                         {

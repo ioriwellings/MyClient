@@ -16,9 +16,9 @@ namespace LBKJClient.dao
                 string[] cds = cd.Split(',');
                 for (int i = 0; i < cds.Count(); i++)
                 {
-                    cds1 += "," + cds[i];
+                    cds1 += "','" + cds[i];
                 }
-                cds1 = cds1.Substring(1);
+                cds1 = cds1.Substring(3);
                 sql += "aa.measureMeterCode in ('" + cds1 + "')";
             }
             DataSet ds = new DataSet();
@@ -102,6 +102,15 @@ namespace LBKJClient.dao
             else {
                 sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode";
             }
+            ds = DbHelperMySQL.Query(sql);
+            return ds;
+        }
+        public DataSet checkcedianAll0(string code)
+        {
+            DataSet ds = new DataSet();
+            ds.Clear();
+            String sql = "";
+            sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode and a.terminalname like CONCAT('%', '" + code + "','%')";
             ds = DbHelperMySQL.Query(sql);
             return ds;
         }

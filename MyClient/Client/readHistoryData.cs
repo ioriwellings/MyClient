@@ -50,6 +50,8 @@ namespace LBKJClient
             int flag = 0;
             dtcdinfo = dis.checkPointInfo(flag);
         }
+
+        int Hck = 0;
         private void mySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             Thread.Sleep(200);
@@ -195,9 +197,12 @@ namespace LBKJClient
                         info.measureMeterCode = measureCode + "_" + info.deviceNum;
 
                         measureMeterCodeB = info.measureMeterCode;
-                        dtB = adddatas.checkLastRecordBIsOr(info.measureMeterCode);
-                        if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
-                        if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                        if (Hck != 0)
+                        {
+                            dtB = adddatas.checkLastRecordBIsOr(info.measureMeterCode, info.devicedate);
+                            if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
+                            if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                        };
                         if (intervalNum1 == 2)
                         {
                             DataRow[] drs = dtcdinfo.Select("measureCode='" + info.managerID + "' and meterNo='" + info.deviceNum + "'");
@@ -256,6 +261,7 @@ namespace LBKJClient
 
         private void addDataHistory()
         {
+            Hck++;
             adddatas.addData(lds);
         }
 

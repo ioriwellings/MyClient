@@ -38,20 +38,20 @@ namespace LBKJClient
                     mh.hostAddress = this.numericUpDown2.Value.ToString();
                     mh.serialPort = this.comboBox5.SelectedItem.ToString();
                     mh.tcp_ip_Port = "";
-                    mh.networkType = "串口";
+                    mh.networkType = "COM";
                 }
                 else if (this.radioButton2.Checked)
                 {
                     mh.hostAddress = this.numericUpDown5.Value.ToString();
                     mh.serialPort = "";
                     mh.tcp_ip_Port = this.textBox1.Text + ":" + this.numericUpDown3.Value.ToString();
-                    mh.networkType = "tcp";
+                    mh.networkType = "TCP";
                 }
                 else {
                     mh.hostAddress = "";
                     mh.serialPort = "";
                     mh.tcp_ip_Port = "";
-                    mh.networkType = "";
+                    mh.networkType = "YUN";
                 }
 
                 if (this.textBox2.Text != null && !"".Equals(this.textBox2.Text))

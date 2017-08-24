@@ -59,9 +59,9 @@ namespace LBKJClient.dao
             ds = DbHelperMySQL.Query(sql);
             return ds.Tables[0];
         }
-        public DataTable checkLastRecordBIsOr(string measureMeterCode)
+        public DataTable checkLastRecordBIsOr(string measureMeterCode, string devicedate)
         {
-            String sql = "select max(aa.devtime), aa.warnState, aa.warningistrue, aa.devtime from(select id, warnState, warningistrue, devtime from lb_base_data_home where measureMeterCode = '" + measureMeterCode + "') aa where aa.warnState = 1 or aa.warningistrue = 2 or aa.warnState = 3 or aa.warningistrue = 3";
+            String sql = "select max(aa.devtime), aa.warnState, aa.warningistrue, aa.devtime from(select id, warnState, warningistrue, devtime from lb_base_data_home where measureMeterCode = '" + measureMeterCode + "' and devtime < '" + devicedate + "') aa ";
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);
