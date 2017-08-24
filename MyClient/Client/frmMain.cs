@@ -274,6 +274,7 @@ namespace LBKJClient
             }
         }
         List<bean.dataSerialization> ldsHY = null;
+        int Hck = 0;
         private void mySerialPortHY_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             Boolean isCRC = false;
@@ -413,9 +414,12 @@ namespace LBKJClient
                         info.measureMeterCode = measureCodeHY + "_" + info.deviceNum;
 
                         measureMeterCodeB = info.measureMeterCode;
-                        dtB = adddatas.checkLastRecordBIsOr(info.measureMeterCode);
-                        if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
-                        if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                        if (Hck != 0)
+                        {
+                            dtB = adddatas.checkLastRecordBIsOr(info.measureMeterCode, info.devicedate);
+                            if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
+                            if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                        };
 
                         if (intervalNum1 == 2)
                         {
@@ -487,6 +491,7 @@ namespace LBKJClient
 
         private void addDataHistory()
         {
+            Hck++;
             adddatas.addData(ldsHY);
         }
         private byte[] getCRCHY(string text)
@@ -633,9 +638,6 @@ namespace LBKJClient
                 }
                 datas.measureMeterCode = datas.managerID + "_" + datas.deviceNum;
 
-                dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode);
-                if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
-                if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
                 DataRow[] drs = dtcdinfo.Select("measureCode='" + datas.managerID + "' and meterNo='" + datas.deviceNum + "'"); ;
                 tt = Double.Parse(datas.temperature);
                 t1 = Double.Parse(drs[0]["t_high"].ToString());
@@ -653,6 +655,7 @@ namespace LBKJClient
                     {
                         datas.sign = "1";
                         datas.warnState = "1";
+                        Whistory = 1;
                     }
                     else if (CommunicationType == "LBGZ-04" && datas.charge != "0" && Whistory == 1)
                     {
@@ -669,6 +672,7 @@ namespace LBKJClient
                     {
                         datas.sign = "1";
                         datas.warnState = "1";
+                        Whistory = 1;
                     }
                     else if (CommunicationType == "RC-8/-10" && datas.charge != "0" && Whistory == 1)
                     {
@@ -686,6 +690,7 @@ namespace LBKJClient
                     if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
                     {
                         datas.warningistrue = "2";
+                        history = 2;
                     }
                     else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
                     {
@@ -705,6 +710,7 @@ namespace LBKJClient
                         if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
                         {
                             datas.warningistrue = "2";
+                            history = 2;
                         }
                         if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
                         {
@@ -751,6 +757,7 @@ namespace LBKJClient
         }
 
         List<bean.dataSerialization> lds = null;
+        int ck = 0;
         private void mySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             //Thread.Sleep(240);
@@ -903,9 +910,13 @@ namespace LBKJClient
                         info.devicedate = datetime;
                         info.sysdate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         info.measureMeterCode = measureCode + "_" + info.deviceNum;
-                        dtB = adddatas.checkLastRecordBIsOr(info.measureMeterCode);
-                        if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; }; 
-                        if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                        if (ck != 0)
+                        {
+                            dtB = adddatas.checkLastRecordBIsOr(info.measureMeterCode, info.devicedate);
+                            if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
+                            if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                        };
+
                         if (intervalNum1==2)
                         {
                             DataRow[] drs = dtcdinfo1.Select("measureCode='" + info.managerID + "' and meterNo='" + info.deviceNum + "'");
@@ -950,6 +961,7 @@ namespace LBKJClient
                     }
                     
                     if (lds.Count>0) {
+                        ck++;
                         Thread multiAdd = new Thread(new ThreadStart(addData));
                         multiAdd.IsBackground = true;
                         multiAdd.Start();
@@ -2283,6 +2295,7 @@ namespace LBKJClient
         }
 
         bean.showReportBean rb = new bean.showReportBean();
+        int wx = 0;
         private void yunpingtaiDatas()
         {
             //string ids = "862609000079371-00:862609000078639-00:862609000078845-00:862609000079462-00:862609000081609-00:862609000081518-00:862609000081500-00:862609000081617-00:862609000081625-00:862609000081443-00:862609000081716-00:862609000081567-00:862609000081369-00:862609000081559-00:862609000081682-00:862609000081419-00:862609000081484-00:862609000081476-00:862609000081351-00:862609000081740-00:862609000081773-00:862609000081492-00:862609000081401-00:862609000081831-00";
@@ -2393,9 +2406,12 @@ namespace LBKJClient
                                 datas.measureMeterCode = datas.managerID + "_" + datas.deviceNum;
 
 
-                                 dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode);
-                                if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
-                                if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                                if (wx != 0)
+                                {
+                                    dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode, datas.devicedate);
+                                    if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
+                                    if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                                };
 
 
                                 DataRow[] drs = dtcdinfo.Select("measureCode='" + datas.managerID + "' and meterNo='" + datas.deviceNum + "'");
@@ -2482,6 +2498,7 @@ namespace LBKJClient
                                 }
                                 listed.Add(datas);
                             }
+                            wx++;
                             adddatas.addData(listed);
                         }
                     }
@@ -2596,7 +2613,7 @@ namespace LBKJClient
                                         datas.sysdate = MyDate1.ToString(TarStr1);
                                     }
                                     datas.measureMeterCode = datas.managerID + "_" + datas.deviceNum;
-                                    dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode);
+                                    dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode, datas.devicedate);
                                     if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
                                     if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
 
