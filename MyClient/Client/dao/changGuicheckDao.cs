@@ -105,6 +105,15 @@ namespace LBKJClient.dao
             ds = DbHelperMySQL.Query(sql);
             return ds;
         }
+        public DataSet checkcedianAll0(string code)
+        {
+            DataSet ds = new DataSet();
+            ds.Clear();
+            String sql = "";
+            sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode and a.terminalname like CONCAT('%', '" + code + "','%')";
+            ds = DbHelperMySQL.Query(sql);
+            return ds;
+        }
         public DataSet checkCedianCar()//获得车载的所有测点信息
         {
             DataSet ds = new DataSet();
