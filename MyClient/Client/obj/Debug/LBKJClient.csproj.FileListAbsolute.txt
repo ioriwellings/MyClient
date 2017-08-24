@@ -53,3 +53,5 @@ D:\codes\MyClient\Client\bin\Debug\LBKJClient.exe.config
 D:\codes\MyClient\Client\obj\Debug\LBKJClient.exe
 C:\Users\lb\Desktop\newClient\MyClient\Client\bin\Debug\LBKJClient.exe.config
 C:\Users\lb\Desktop\newClient\MyClient\Client\obj\Debug\LBKJClient.exe
+D:\codes1\MyClient\Client\bin\Debug\LBKJClient.exe.config
+D:\codes1\MyClient\Client\obj\Debug\LBKJClient.exe
