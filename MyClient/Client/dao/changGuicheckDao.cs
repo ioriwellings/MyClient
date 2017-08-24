@@ -16,9 +16,9 @@ namespace LBKJClient.dao
                 string[] cds = cd.Split(',');
                 for (int i = 0; i < cds.Count(); i++)
                 {
-                    cds1 += "," + cds[i];
+                    cds1 += "','" + cds[i];
                 }
-                cds1 = cds1.Substring(1);
+                cds1 = cds1.Substring(3);
                 sql += "aa.measureMeterCode in ('" + cds1 + "')";
             }
             DataSet ds = new DataSet();
