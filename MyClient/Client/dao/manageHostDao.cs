@@ -69,7 +69,7 @@ namespace LBKJClient.dao
         }
         public DataTable queryManageHoststoreType(string measureCode)
         {
-            String sql = "select id,measureCode,storeType from lb_managehost_info where measureCode = '" + measureCode + "'";
+            String sql = "select id,measureCode,storeType,hostName from lb_managehost_info where measureCode = '" + measureCode + "'";
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);

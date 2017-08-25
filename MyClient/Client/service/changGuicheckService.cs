@@ -34,6 +34,10 @@ namespace LBKJClient.service
         {
             return checkdao.checkcedianAll(code);
         }
+        public DataSet checkcedianAll0(string code)
+        {
+            return checkdao.checkcedianAll0(code);
+        }
         public DataSet checkCedianCar()
         {
             return checkdao.checkCedianCar();

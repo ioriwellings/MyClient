@@ -11,5 +11,8 @@
     <Setting Name="port" Type="System.String" Scope="User">
       <Value Profile="(Default)">6983</Value>
     </Setting>
+    <Setting Name="mysqlInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.5.8,3306,root,root,test16</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

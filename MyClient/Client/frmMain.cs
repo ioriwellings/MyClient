@@ -155,7 +155,7 @@ namespace LBKJClient
             getFromXmlcommunication();
             this.timer3.Interval = Int32.Parse(datarefreshtime) * 1000;
             this.timer3.Start();
-            dtcdinfo1 = dis.checkPointInfo(1);
+            dtcdinfo1 = dis.checkPointInfo(0);
             if (getresults != null && !"".Equals(getresults))
             {
                 //自动读取历史数据占用主线程
@@ -227,7 +227,7 @@ namespace LBKJClient
         private void insertHYStopData()
         {
             service.deviceInformationService dis = new service.deviceInformationService();
-            dtcdinfoHY = dis.checkPointInfo(1);
+            dtcdinfoHY = dis.checkPointInfo(0);
             //1获取端口号,设置端口信息
             int baudRate = 9600;
             portHY.BaudRate = baudRate;
@@ -274,6 +274,7 @@ namespace LBKJClient
             }
         }
         List<bean.dataSerialization> ldsHY = null;
+        int Hck = 0;
         private void mySerialPortHY_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             Boolean isCRC = false;
@@ -413,9 +414,12 @@ namespace LBKJClient
                         info.measureMeterCode = measureCodeHY + "_" + info.deviceNum;
 
                         measureMeterCodeB = info.measureMeterCode;
-                        dtB = adddatas.checkLastRecordBIsOr(info.measureMeterCode);
-                        if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
-                        if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                        if (Hck != 0)
+                        {
+                            dtB = adddatas.checkLastRecordBIsOr(info.measureMeterCode, info.devicedate);
+                            if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
+                            if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                        };
 
                         if (intervalNum1 == 2)
                         {
@@ -487,6 +491,7 @@ namespace LBKJClient
 
         private void addDataHistory()
         {
+            Hck++;
             adddatas.addData(ldsHY);
         }
         private byte[] getCRCHY(string text)
@@ -516,7 +521,7 @@ namespace LBKJClient
         {
             //获取设备监测历史数据接口(因服务器关机等没有保存的监测信息在服务器开启时既用户再次开机登录时同步到数据库)
             //获取参数 mids,上面方法queryMeterIds()已赋值"measureCode-meterNo:";
-            dtcdinfo = dis.checkPointInfo(0);
+            dtcdinfo = dis.checkPointInfo(3);
             xmlDoc.Load(path);
             XmlNode node;
             node = xmlDoc.SelectSingleNode("config/stoptime");
@@ -633,9 +638,6 @@ namespace LBKJClient
                 }
                 datas.measureMeterCode = datas.managerID + "_" + datas.deviceNum;
 
-                dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode);
-                if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
-                if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
                 DataRow[] drs = dtcdinfo.Select("measureCode='" + datas.managerID + "' and meterNo='" + datas.deviceNum + "'"); ;
                 tt = Double.Parse(datas.temperature);
                 t1 = Double.Parse(drs[0]["t_high"].ToString());
@@ -653,6 +655,7 @@ namespace LBKJClient
                     {
                         datas.sign = "1";
                         datas.warnState = "1";
+                        Whistory = 1;
                     }
                     else if (CommunicationType == "LBGZ-04" && datas.charge != "0" && Whistory == 1)
                     {
@@ -669,6 +672,7 @@ namespace LBKJClient
                     {
                         datas.sign = "1";
                         datas.warnState = "1";
+                        Whistory = 1;
                     }
                     else if (CommunicationType == "RC-8/-10" && datas.charge != "0" && Whistory == 1)
                     {
@@ -686,6 +690,7 @@ namespace LBKJClient
                     if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
                     {
                         datas.warningistrue = "2";
+                        history = 2;
                     }
                     else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
                     {
@@ -705,6 +710,7 @@ namespace LBKJClient
                         if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
                         {
                             datas.warningistrue = "2";
+                            history = 2;
                         }
                         if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
                         {
@@ -751,6 +757,7 @@ namespace LBKJClient
         }
 
         List<bean.dataSerialization> lds = null;
+        int ck = 0;
         private void mySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             //Thread.Sleep(240);
@@ -903,9 +910,13 @@ namespace LBKJClient
                         info.devicedate = datetime;
                         info.sysdate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         info.measureMeterCode = measureCode + "_" + info.deviceNum;
-                        dtB = adddatas.checkLastRecordBIsOr(info.measureMeterCode);
-                        if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; }; 
-                        if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                        if (ck != 0)
+                        {
+                            dtB = adddatas.checkLastRecordBIsOr(info.measureMeterCode, info.devicedate);
+                            if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
+                            if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                        };
+
                         if (intervalNum1==2)
                         {
                             DataRow[] drs = dtcdinfo1.Select("measureCode='" + info.managerID + "' and meterNo='" + info.deviceNum + "'");
@@ -950,6 +961,7 @@ namespace LBKJClient
                     }
                     
                     if (lds.Count>0) {
+                        ck++;
                         Thread multiAdd = new Thread(new ThreadStart(addData));
                         multiAdd.IsBackground = true;
                         multiAdd.Start();
@@ -1058,7 +1070,7 @@ namespace LBKJClient
         private void queryMeterIds()
         {
             string ids = null;
-            int flag = 0;
+            int flag = 3;
             dtcdinfo = dis.checkPointInfo(flag);
             if (dtcdinfo.Rows.Count>0) {
                 for (int i=0; i< dtcdinfo.Rows.Count; i++) {
@@ -1807,7 +1819,7 @@ namespace LBKJClient
             warningSetup ws = new warningSetup();
             if (ws.ShowDialog() == DialogResult.OK)
             {
-                dtcdinfo1 = dis.checkPointInfo(1);
+                dtcdinfo1 = dis.checkPointInfo(0);
                 this.timer2.Stop();
                 timer2_Tick(null, null);
                 this.timer2.Start();
@@ -2283,9 +2295,10 @@ namespace LBKJClient
         }
 
         bean.showReportBean rb = new bean.showReportBean();
+        int wx = 0;
         private void yunpingtaiDatas()
         {
-            //string ids = "862609000079371-00:862609000078639-00:862609000078845-00:862609000079462-00:862609000081609-00:862609000081518-00:862609000081500-00:862609000081617-00:862609000081625-00:862609000081443-00:862609000081716-00:862609000081567-00:862609000081369-00:862609000081559-00:862609000081682-00:862609000081419-00:862609000081484-00:862609000081476-00:862609000081351-00:862609000081740-00:862609000081773-00:862609000081492-00:862609000081401-00:862609000081831-00";
+            string ids = "862609000079371-00:862609000078639-00:862609000078845-00:862609000079462-00:862609000081609-00:862609000081518-00:862609000081500-00:862609000081617-00:862609000081625-00:862609000081443-00:862609000081716-00:862609000081567-00:862609000081369-00:862609000081559-00:862609000081682-00:862609000081419-00:862609000081484-00:862609000081476-00:862609000081351-00:862609000081740-00:862609000081773-00:862609000081492-00:862609000081401-00:862609000081831-00";
             if (mids != null && !"".Equals(mids))
             {
                 string[] midsArray=mids.Split(':');
@@ -2393,9 +2406,12 @@ namespace LBKJClient
                                 datas.measureMeterCode = datas.managerID + "_" + datas.deviceNum;
 
 
-                                 dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode);
-                                if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
-                                if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                                if (wx != 0)
+                                {
+                                    dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode, datas.devicedate);
+                                    if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
+                                    if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
+                                };
 
 
                                 DataRow[] drs = dtcdinfo.Select("measureCode='" + datas.managerID + "' and meterNo='" + datas.deviceNum + "'");
@@ -2482,6 +2498,7 @@ namespace LBKJClient
                                 }
                                 listed.Add(datas);
                             }
+                            wx++;
                             adddatas.addData(listed);
                         }
                     }
@@ -2596,7 +2613,7 @@ namespace LBKJClient
                                         datas.sysdate = MyDate1.ToString(TarStr1);
                                     }
                                     datas.measureMeterCode = datas.managerID + "_" + datas.deviceNum;
-                                    dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode);
+                                    dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode, datas.devicedate);
                                     if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
                                     if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
 
@@ -2886,7 +2903,7 @@ namespace LBKJClient
         }
         private void NeedRefresh(object sender, EventArgs e)
         {
-            dtcdinfo1 = dis.checkPointInfo(1);
+            dtcdinfo1 = dis.checkPointInfo(0);
             this.timer2.Stop();
             queryMeterIds();
             this.timer2.Start();
@@ -2910,7 +2927,7 @@ namespace LBKJClient
             if (sender != null&&!"".Equals(sender)) { 
             if (Int32.Parse(sender.ToString()) == 1)
             {
-                dtcdinfo1 = dis.checkPointInfo(1);
+                dtcdinfo1 = dis.checkPointInfo(0);
                 //重新加载本页面
                 this.timer2.Stop();
                 queryMeterIds();
@@ -2987,13 +3004,14 @@ namespace LBKJClient
                         System.IO.Directory.CreateDirectory(filepath);
                     try
                     {
-                        utils.DataBaseUtil.backupDatabase(@"new.baw", @filepath + @"Datas" + @time + @".baw");
+                        string []mysqlinfo = Properties.Settings.Default.mysqlInfo.Split(',');
+                        DoBackupNoauto(mysqlinfo[0], mysqlinfo[1], mysqlinfo[2], mysqlinfo[3], mysqlinfo[4], filepath);
                         textFile(@str + "/manualBackupTimes.txt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                        MessageBox.Show("数据备份成功！备份到：" + @filepath + "的路径下");
+                        //MessageBox.Show("数据备份成功！备份到：" + @filepath + "的路径下");
                     }
                     catch (Exception exc)
                     {
-                      
+                        MessageBox.Show("数据备份失败！");
                     }
                 }
             }
@@ -3022,46 +3040,17 @@ namespace LBKJClient
                 {
                     System.IO.Directory.CreateDirectory(filepath);
                 }
+                string[] mysqlinfo = Properties.Settings.Default.mysqlInfo.Split(',');
                 try
-                {
-                    if (sb.istrue)
-                    {
-                        utils.DataBaseUtil.backupDatabase(@"new.baw", @filepath + @"DatasNews.baw");
-                    }
-                    else
-                    {
-                        utils.DataBaseUtil.backupDatabase(@"new.baw", @filepath + @"Datas" + @time + @".baw");
-                    }
+                {      
+                    DoBackup(mysqlinfo[0], mysqlinfo[1], mysqlinfo[2], mysqlinfo[3], mysqlinfo[4], filepath);
                     textFile(@str + "/automateBackupTimes.txt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                 }
                 catch (Exception exc)
                 {
                     
                 }
-            }
-            if (filepath != null && !"".Equals(filepath))
-            {
-                if (!System.IO.Directory.Exists(filepath))
-                {
-                    System.IO.Directory.CreateDirectory(filepath);
-                }
-                try
-                {
-                    if (sb.istrue)
-                    {
-                        utils.DataBaseUtil.backupDatabase(@"new.baw", @filepath + @"DatasNews.baw");
-                    }
-                    else
-                    {
-                        utils.DataBaseUtil.backupDatabase(@"new.baw", @filepath + @"Datas" + @time + @".baw");
-                    }
-                    textFile(@str + "/automateBackupTimes.txt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-
-                }
-                catch (Exception exc)
-                {
-                    
-                }
+            
             }
             //}
         }
@@ -3079,7 +3068,7 @@ namespace LBKJClient
             dataReduction dr = new dataReduction();
             if (dr.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("恢复数据库成功!");
+                //MessageBox.Show("恢复数据库成功!");
                 this.timer2.Stop();
                 this.timer3.Stop();
                 frmMain_Load(sender, e);
@@ -3127,6 +3116,10 @@ namespace LBKJClient
             DataTable dtd = dis.selectBydeviceInfo(tagg[2], tagg[3]);
             if (dtd.Rows.Count > 0)
             {
+                DataTable dd = mhs.queryManageHoststoreType(dtd.Rows[0]["measureCode"].ToString());
+                cs.textBox9.Text = dd.Rows[0]["hostName"].ToString();
+                cs.textBox10.Text = dtd.Rows[0]["meterNo"].ToString();
+
                 cs.textBox3.Text = dtd.Rows[0]["terminalname"].ToString();
                 cs.textBox4.Text = dtd.Rows[0]["measureCode"].ToString() + "-" + dtd.Rows[0]["meterNo"].ToString();
                 string hostaddress = null;
@@ -3157,7 +3150,7 @@ namespace LBKJClient
                 if (cs.ShowDialog() == DialogResult.OK)
                 {
                     MessageBox.Show("测点信息修改成功！");
-                    dtcdinfo1 = dis.checkPointInfo(1);
+                    dtcdinfo1 = dis.checkPointInfo(0);
                     this.timer2.Stop();
                     timer2_Tick(null, null);
                     this.timer2.Start();
@@ -3490,6 +3483,77 @@ namespace LBKJClient
             {
                 MessageBox.Show(e.Message);
             }
+        }
+        // mysql数据库手动备份
+        public void DoBackupNoauto(string host, string port, string user, string password, string database, string filepath)
+        {
+            string backfile = filepath + database + "_bak_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".sql";
+            string cmdStr = "mysqldump -h" + host + " -P" + port + " -u" + user + " -p" + password + " " + database + " > " + backfile;
+
+            try
+            {
+                string reslut = RunCmd(str + "\\Lib", cmdStr);
+                if (reslut.IndexOf("error") == -1 && reslut.IndexOf("命令") == -1)
+                {
+                    MessageBox.Show("备份成功>" + backfile);
+                }
+                else
+                {
+                    MessageBox.Show(reslut + "备份失败>" + backfile);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        // mysql数据库自动备份
+        public void DoBackup(string host, string port, string user, string password, string database, string filepath)
+        {
+            string backfile = "";
+            if (sb.istrue)
+            {
+                backfile = filepath + database + "_bak_newDatas" + ".sql";
+            }
+            else {
+                backfile = filepath + database + "_bak_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".sql";
+            }
+            string cmdStr = "mysqldump -h" + host + " -P" + port + " -u" + user + " -p" + password + " " + database + " > " + backfile;
+
+            try
+            {
+                string reslut = RunCmd(str + "\\Lib", cmdStr);
+                if (reslut.IndexOf("error")==-1 && reslut.IndexOf("命令")==-1)
+                {
+                    MessageBox.Show("备份成功>" + backfile);
+                } else {
+                    MessageBox.Show(reslut + "备份失败>" + backfile);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        
+        public string RunCmd(string workingDirectory, string command)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = "cmd.exe"; //确定程序名
+            //p.StartInfo.Arguments = "/c " + command; //确定程式命令行
+            p.StartInfo.WorkingDirectory = workingDirectory;
+            p.StartInfo.UseShellExecute = false; //Shell的使用
+            p.StartInfo.RedirectStandardInput = true; //重定向输入
+            p.StartInfo.RedirectStandardOutput = true; //重定向输出
+            p.StartInfo.RedirectStandardError = true; //重定向输出错误
+            p.StartInfo.CreateNoWindow = true; //设置置不显示示窗口
+            p.Start();
+            p.StandardInput.WriteLine(command); //也可以用这种方式输入入要行的命令 
+            p.StandardInput.WriteLine("exit"); //要得加上Exit要不然下一行程式
+            //p.WaitForExit();
+            //p.Close();
+            //return p.StandardOutput.ReadToEnd(); //输出出流取得命令行结果果
+            return p.StandardError.ReadToEnd();
         }
     }
 }

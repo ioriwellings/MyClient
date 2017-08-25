@@ -58,5 +58,17 @@ namespace LBKJClient.Properties {
                 this["port"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.5.8,3306,root,root,test16")]
+        public string mysqlInfo {
+            get {
+                return ((string)(this["mysqlInfo"]));
+            }
+            set {
+                this["mysqlInfo"] = value;
+            }
+        }
     }
 }

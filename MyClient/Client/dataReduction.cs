@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace LBKJClient
 {
     public partial class dataReduction : Form
     {
+        string str = Application.StartupPath;//项目路径   
         public dataReduction()
         {
             InitializeComponent();
@@ -19,7 +21,6 @@ namespace LBKJClient
 
         private void dataReduction_Load(object sender, EventArgs e)
         {
-            string str = Application.StartupPath;//项目路径   
             this.button1.BackgroundImage = Image.FromFile(@str + "/images/assign.png");
             this.button2.BackgroundImage = Image.FromFile(@str + "/images/close.png");
         }
@@ -47,11 +48,12 @@ namespace LBKJClient
 
                     }
                     string pathfiles  =pathfile.Substring(2);
-                        try
+                    try
                     {
-                        utils.DataBaseUtil.restoreDatabase(@"new.baw", @pathfiles);
-                        Thread.Sleep(200);
-                        this.DialogResult = DialogResult.OK;
+                        //utils.DataBaseUtil.restoreDatabase(@"new.baw", @pathfiles);
+                        //Thread.Sleep(200);
+                        string[] mysqlinfo = Properties.Settings.Default.mysqlInfo.Split(',');
+                        Recover(mysqlinfo[0], mysqlinfo[1], mysqlinfo[2], mysqlinfo[3], mysqlinfo[4], pathfiles);
                     }
                     catch (Exception exc)
                     {
@@ -82,6 +84,48 @@ namespace LBKJClient
                 localFilePath = fileDialog.FileName.ToString();
             }
             this.textBox1.Text = localFilePath;
+        }
+
+        // mysql数据库还原
+        public void Recover(string host, string port, string user, string password, string database, string filepath)
+        {
+            string cmdStr = "mysql -h" + host + " -P" + port + " -u" + user + " -p" + password + " " + database + " < " + filepath;
+            try
+            {
+                string reslut = RunCmd(str + "\\Lib", cmdStr);
+                if (reslut.IndexOf("error") == -1 && reslut.IndexOf("命令") == -1)
+                {
+                    MessageBox.Show("恢复数据库成功>" + database);
+                    this.DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    MessageBox.Show(reslut + "恢复数据库失败>" + database);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex + "恢复数据库失败>" + database);
+            }
+        }
+        public string RunCmd(string workingDirectory, string command)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = "cmd.exe"; //确定程序名
+            //p.StartInfo.Arguments = "/c " + command; //确定程式命令行
+            p.StartInfo.WorkingDirectory = workingDirectory;
+            p.StartInfo.UseShellExecute = false; //Shell的使用
+            p.StartInfo.RedirectStandardInput = true; //重定向输入
+            p.StartInfo.RedirectStandardOutput = true; //重定向输出
+            p.StartInfo.RedirectStandardError = true; //重定向输出错误
+            p.StartInfo.CreateNoWindow = true; //设置置不显示示窗口
+            p.Start();
+            p.StandardInput.WriteLine(command); //也可以用这种方式输入入要行的命令 
+            p.StandardInput.WriteLine("exit"); //要得加上Exit要不然下一行程式
+            //p.WaitForExit();
+            //p.Close();
+            //return p.StandardOutput.ReadToEnd(); //输出出流取得命令行结果果
+            return p.StandardError.ReadToEnd();
         }
     }
 }

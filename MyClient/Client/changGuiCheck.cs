@@ -360,9 +360,15 @@ namespace LBKJClient
             if (page == 1)
             {
                 this.checkBox1.Visible = false;
+                this.label4.Visible = false;
+                this.textBox1.Visible = false;
+                this.button3.Visible = false;
             }
             else {
                 this.checkBox1.Visible = true;
+                this.label4.Visible = true;
+                this.textBox1.Visible = true;
+                this.button3.Visible = true;
             }
         }
         private void Clickchecked(object sender, EventArgs e)
@@ -376,6 +382,34 @@ namespace LBKJClient
                     (ctr1 as CheckBox).Checked= ctr1 == sender ? true : false;
                 }
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+            string terminalname = this.textBox1.Text;
+            if (terminalname != "")
+            {
+                this.tabControl1.TabPages[0].Controls.Clear();
+                DataTable dta = cgs.checkcedianAll0(terminalname).Tables[0];
+                int t = dta.Rows.Count;
+                if (t > 0)
+                {
+                    CheckBox[] checkBox = new CheckBox[t];
+                    int p = 10;
+                    for (int i = 0; i < t; i++)
+                    {
+                        checkBox[i] = new CheckBox();
+                        checkBox[i].AutoSize = true;
+                        checkBox[i].Text = dta.Rows[i]["terminalname"].ToString();
+                        checkBox[i].Tag = dta.Rows[i]["measureCode"] + "_" + dta.Rows[i]["meterNo"];
+                        checkBox[i].Location = new Point(10, p);
+                        this.tabControl1.TabPages[0].Controls.Add(checkBox[i]);
+                        p += 20;
+                    }
+                    checkBox[0].Checked = true;
+                }
+            };
         }
     }
 }

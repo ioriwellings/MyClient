@@ -24,7 +24,7 @@ namespace LBKJClient
         }
         private void checkPointInfo() {
             service.deviceInformationService dis = new service.deviceInformationService();
-            int flag = 1;
+            int flag = 0;
             DataTable dt = dis.checkPointInfo(flag);
             if (dt != null)
             {
