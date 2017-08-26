@@ -197,3 +197,6 @@ D:\codes1\MyClient\Client\obj\x86\Debug\LBKJClient.warningSetup.resources
 D:\codes1\MyClient\Client\obj\x86\Debug\LBKJClient.csproj.GenerateResource.Cache
 D:\codes1\MyClient\Client\obj\x86\Debug\LBKJClient.exe
 D:\codes1\MyClient\Client\obj\x86\Debug\LBKJClient.pdb
+D:\MyClient\MyClient\Client\bin\x86\Debug\LBKJClient.exe.config
+D:\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.exe
+D:\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.pdb
