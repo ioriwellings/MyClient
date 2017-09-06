@@ -46,42 +46,14 @@ namespace LBKJClient
                 this.dataGridView1.DataSource = null;
                 pagerControl1.OnPageChanged += new EventHandler(pagerControl_OnPageChanged);
                 if (changeguicheck.pageNo==0) {
-                    dts = cgs.changguicheck(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist).Tables[0];
-                } else {
-                    dts = cgs.changguicheckGlzj(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist).Tables[0];
+                    dtcount = cgs.changguicheck(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist, changeguicheck.measureNolist).Tables[0];
+                    dtcount.Columns.Remove("measureNo");
                 }
-                if (dts.Rows.Count > 0)
+                else {
+                    dtcount = cgs.changguicheckGlzj(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist).Tables[0];
+                }
+                if (dtcount.Rows.Count > 0)
                 {
-                    DataRow[] dr1 = dts.Select("warningistrue='2' or warningistrue = '1' or warningistrue='3' or warnState = '3' or warnState = '1'");
-                    DataRow[] dr2 = null;
-                    if (changeguicheck.houseorcartime == 30)
-                    {
-                        dr2 = dts.Select("houseinterval='30'");
-                    }
-                    else if (changeguicheck.houseorcartime == 5)
-                    {
-                        dr2 = dts.Select("carinterval='5'");
-                    }
-                    if (dr1.Count() > 0)
-                    {
-                        dtcount = dr1[0].Table.Clone();
-                        foreach (DataRow row in dr1)
-                        {
-
-                            dtcount.ImportRow(row); // 将DataRow添加到DataTable中
-                        }
-                    }
-                    if (dr2 != null && dr2.Count() > 0)
-                    {
-                        if (dr1.Count() < 1)
-                        {
-                            dtcount = dr2[0].Table.Clone();
-                        }
-                        foreach (DataRow row in dr2)
-                        {
-                            dtcount.ImportRow(row); // 将DataRow添加到DataTable中
-                        }
-                    }
                     dtcount.Columns.Remove("carinterval");
                     dtcount.Columns.Remove("houseinterval");
                     this.label3.Text = "总数据量：" + dtcount.Rows.Count.ToString()+" 条";
@@ -132,6 +104,7 @@ namespace LBKJClient
                     dd.Columns.RemoveAt(14);
                     dd.Columns.RemoveAt(13);
                     dd.Columns.RemoveAt(12);
+                    dd.Columns.RemoveAt(11);
 
                     dd.Columns["devtime"].SetOrdinal(0);
                     dd.Columns["terminalname"].SetOrdinal(1);
@@ -151,10 +124,18 @@ namespace LBKJClient
                         string warningEvent = "";
                         wd = double.Parse(dd.Rows[i][4].ToString());
                         sd = double.Parse(dd.Rows[i][5].ToString());
+                        if (dd.Rows[i][6].ToString() != "" && dd.Rows[i][7].ToString() != "" && dd.Rows[i][8].ToString() != "" && dd.Rows[i][9].ToString() != "") { 
                         wdsx = double.Parse(dd.Rows[i][6].ToString());
                         wdxx = double.Parse(dd.Rows[i][7].ToString());
                         sdsx = double.Parse(dd.Rows[i][8].ToString());
                         sdxx = double.Parse(dd.Rows[i][9].ToString());
+                        }
+                        else {
+                            wdsx = 0.0;
+                            wdxx = 0.0;
+                            sdsx = 0.0;
+                            sdxx = 0.0;
+                        };
                         string pw = dd.Rows[i][10].ToString();
                         if (pw != null && !"".Equals(pw))
                         {
@@ -216,7 +197,6 @@ namespace LBKJClient
                     this.dataGridView2.Columns[10].HeaderCell.Value = "报警事件";
                     this.dataGridView2.Columns[11].HeaderCell.Value = "温度超标差值";
                     this.dataGridView2.Columns[12].HeaderCell.Value = "湿度超标差值";
-                    this.dataGridView2.Columns[13].Visible = false;
                     this.dataGridView2.Columns[0].Width = 150;
                     this.dataGridView2.Columns[1].Width = 170;
                     this.dataGridView2.Columns[2].Width = 150;
@@ -229,10 +209,6 @@ namespace LBKJClient
                     this.dataGridView2.Columns[5].DefaultCellStyle.Format = "0.0";
                     this.dataGridView2.Columns[11].DefaultCellStyle.Format = "0.0";
                     this.dataGridView2.Columns[12].DefaultCellStyle.Format = "0.0";
-                    //for (int j = 0; (j <= (this.dataGridView2.Rows.Count - 2)); j++)
-                    //{
-                    //    this.dataGridView2.Rows[j].HeaderCell.Value = String.Format("{0}", j + 1);
-                    //}
                     this.dataGridView2.AllowUserToAddRows = false;
                     
                     }
@@ -468,51 +444,18 @@ namespace LBKJClient
         private void LoadData()
         {
             DataTable dtt = null;
-            DataTable dts = null;
             this.dataGridView1.DataSource = null;
             pagerControl1.DrawControl(dtcount.Rows.Count);//数据总条数
             if (changeguicheck.pageNo == 0)
             {
-                dts = cgs.changguicheckFenye(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist, pagerControl1.PageIndex, pagerControl1.PageSize);
+                dtt = cgs.changguicheckFenye(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist, pagerControl1.PageIndex, pagerControl1.PageSize, changeguicheck.measureNolist);
+                dtt.Columns.Remove("measureNo");
             }
             else {
-                dts = cgs.changguicheckGlzjFenye(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist, pagerControl1.PageIndex, pagerControl1.PageSize);
-            }
-            if (dts.Rows.Count > 0)
-            {
-                DataRow[] dr1 = dts.Select("warningistrue='2' or warningistrue = '1' or warningistrue='3' or warnState = '3' or warnState = '1'");
-                DataRow[] dr2 = null;
-                if (changeguicheck.houseorcartime == 30)
-                {
-                    dr2 = dts.Select("houseinterval='30'");
-                }
-                else if (changeguicheck.houseorcartime == 5)
-                {
-                    dr2 = dts.Select("carinterval='5'");
-                }
-                if (dr1.Count() > 0)
-                {
-                    dtt = dr1[0].Table.Clone();
-                    foreach (DataRow row in dr1)
-                    {
-
-                        dtt.ImportRow(row); // 将DataRow添加到DataTable中
-                    }
-                }
-                if (dr2 != null && dr2.Count() > 0)
-                {
-                    if (dr1.Count() < 1)
-                    {
-                        dtt = dr2[0].Table.Clone();
-                    }
-                    foreach (DataRow row in dr2)
-                    {
-                        dtt.ImportRow(row); // 将DataRow添加到DataTable中
-                    }
-                }
+                dtt = cgs.changguicheckGlzjFenye(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist, pagerControl1.PageIndex, pagerControl1.PageSize);
             }
             
-            if (dtt != null)
+            if (dtt.Rows.Count > 0)
             {
                 dtt.Columns.Remove("houseinterval");
                 dtt.Columns.Remove("carinterval");
@@ -618,32 +561,30 @@ namespace LBKJClient
                 this.dataGridView1.Columns[7].DefaultCellStyle.Format = "0.0";
                 this.dataGridView1.Columns[8].DefaultCellStyle.Format = "0.0";
                 this.dataGridView1.Columns[9].DefaultCellStyle.Format = "0.0";
-                //for (int count = 0; (count <= (this.dataGridView1.Rows.Count - 2)); count++)
-                //{
-                //    this.dataGridView1.Rows[count].HeaderCell.Value = String.Format("{0}", count + 1);
-                //}
+
                 this.dataGridView1.AllowUserToAddRows = false;
                 this.dataGridView1.RowsDefaultCellStyle.ForeColor = Color.Black;
 
                 int row = this.dataGridView1.Rows.Count;//得到总行数    
-                for (int i = 0; i < row; i++)//得到总行数并在之内循环    
-                {
-                    double ww = double.Parse(this.dataGridView1.Rows[i].Cells[4].Value.ToString());
-                    double w1 = double.Parse(this.dataGridView1.Rows[i].Cells[6].Value.ToString());
-                    double w2 = double.Parse(this.dataGridView1.Rows[i].Cells[7].Value.ToString());
-                    double hh = double.Parse(this.dataGridView1.Rows[i].Cells[5].Value.ToString());
-                    double h1 = double.Parse(this.dataGridView1.Rows[i].Cells[8].Value.ToString());
-                    double h2 = double.Parse(this.dataGridView1.Rows[i].Cells[9].Value.ToString());
+                //for (int i = 0; i < row; i++)//得到总行数并在之内循环    
+                //{
+                //    double ww = double.Parse(this.dataGridView1.Rows[i].Cells[4].Value.ToString());
+                //    MessageBox.Show(this.dataGridView1.Rows[i].Cells[6].Value.ToString());
+                //    double w1 = double.Parse(this.dataGridView1.Rows[i].Cells[6].Value.ToString());
+                //    double w2 = double.Parse(this.dataGridView1.Rows[i].Cells[7].Value.ToString());
+                //    double hh = double.Parse(this.dataGridView1.Rows[i].Cells[5].Value.ToString());
+                //    double h1 = double.Parse(this.dataGridView1.Rows[i].Cells[8].Value.ToString());
+                //    double h2 = double.Parse(this.dataGridView1.Rows[i].Cells[9].Value.ToString());
 
-                    if (ww > w1 || ww < w2)
-                    {
-                        this.dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.Red;
-                    }
-                    if (hh > h1 || hh < h2)
-                    {
-                        this.dataGridView1.Rows[i].Cells[5].Style.ForeColor = Color.Red;
-                    }
-                }
+                //    if (ww > w1 || ww < w2)
+                //    {
+                //        this.dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.Red;
+                //    }
+                //    if (hh > h1 || hh < h2)
+                //    {
+                //        this.dataGridView1.Rows[i].Cells[5].Style.ForeColor = Color.Red;
+                //    }
+                //}
             }
         }
     }

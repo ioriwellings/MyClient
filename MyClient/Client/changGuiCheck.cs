@@ -11,6 +11,7 @@ namespace LBKJClient
     {
         public DataTable dt=null;
         public string cdlist=null;
+        public string measureNolist = null;
         public string time1 = null;
         public string time2 = null;
         public int pageNo = -1;
@@ -49,7 +50,7 @@ namespace LBKJClient
                     checkBox[i] = new CheckBox();
                     checkBox[i].AutoSize = true;
                     checkBox[i].Text = dta.Rows[i]["terminalname"].ToString();
-                    checkBox[i].Tag = dta.Rows[i]["measureCode"] + "_" + dta.Rows[i]["meterNo"];
+                    checkBox[i].Tag = dta.Rows[i]["measureCode"] + "_" + dta.Rows[i]["meterNo"] + "-" + dta.Rows[i]["measureNo"];
                     checkBox[i].Location = new Point(10, p);
                     this.tabControl1.TabPages[0].Controls.Add(checkBox[i]);
                     p += 20;
@@ -69,7 +70,8 @@ namespace LBKJClient
                     checkBox[i] = new CheckBox();
                     checkBox[i].AutoSize = true;
                     checkBox[i].Text = dt1.Rows[i]["hostName"].ToString();
-                    checkBox[i].Tag = dt1.Rows[i]["measureCode"].ToString() + "_" + dt1.Rows[i]["storeType"];
+                    //checkBox[i].Tag = dt1.Rows[i]["measureCode"].ToString() + "_" + dt1.Rows[i]["storeType"];
+                    checkBox[i].Tag = dt1.Rows[i]["measureCode"].ToString() + "_" + dt1.Rows[i]["measureNo"];
                     checkBox[i].Location = new Point(10, p1);
                     checkBox[i].Click += new EventHandler(Clickchecked);
                     this.tabControl1.TabPages[1].Controls.Add(checkBox[i]);
@@ -96,6 +98,7 @@ namespace LBKJClient
             
             String cd = null;
             String cd1 = null;
+            String measureNo = null;
             if (page == 0) {
                 foreach (Control ctr in this.tabControl1.TabPages[0].Controls)
                 {
@@ -106,17 +109,12 @@ namespace LBKJClient
                         CheckBox ck = ctr as CheckBox;
                         if (ck.Checked)
                         {
-                            cd += "," + ck.Tag.ToString();
+                            cd += "," + ck.Tag.ToString().Split('-')[0];
+                            measureNo += "," + ck.Tag.ToString().Split('-')[1];
                             string measureCode = "";
-                            string[] ckx = ck.Tag.ToString().Split('_');
-
-                            for (int i = 0;i< ckx.Length -1; i++) {
-                                measureCode += "_" + ck.Tag.ToString().Split('_')[i];
-                            }
+                            measureCode += "_" + ck.Tag.ToString().Split('_')[0];                          
                             measureCode = measureCode.Substring(1);
                             DataTable dd = mhs.queryManageHoststoreType(measureCode);
-
-
 
                             if (!"车载".Equals(dd.Rows[0]["storeType"].ToString()))
                             {
@@ -128,16 +126,18 @@ namespace LBKJClient
                 if (cd != null)
                 {
                     cd = cd.Substring(1);
+                    measureNo = measureNo.Substring(1);
                     //历史数据查询分页准备参数
                     if (flag==1) {
                         cdlist = cd;
+                        measureNolist = measureNo;
                         pageNo = 0;
                         houseorcartime = cartime;
                         this.DialogResult = DialogResult.OK;
                         this.Close();
                         return;
                     }
-                    dts = cgs.changguicheck(time1, time2, cd).Tables[0];
+                    dts = cgs.changguicheck(time1, time2, cd, measureNo).Tables[0];
                     
                     if (dts.Rows.Count > 0) {
                         DataRow[] dr1 = dts.Select("warningistrue='2' or warningistrue = '1' or warningistrue='3' or warnState = '3' or warnState = '1'");
@@ -177,6 +177,7 @@ namespace LBKJClient
                             dt = dv.ToTable(true);
                             dt.Columns.Remove("carinterval");
                             dt.Columns.Remove("houseinterval");
+                            dt.Columns.Remove("measureNo");
                             cdlist = cd;
                         }
                     }
@@ -197,14 +198,9 @@ namespace LBKJClient
                         if (ck1.Checked)
                         {
                            string [] ck2= ck1.Tag.ToString().Split('_');
-                           string measureCode = "";
-                            for (int i = 0; i < ck2.Length - 1; i++)
-                            {
-                                measureCode += "_" + ck2[i];
-                            }
-                            measureCode = measureCode.Substring(1);
-
-                            cd += "," + measureCode;
+                           string measureCode = ck2[0];
+                            measureNo = ck2[1];
+                            cd = measureCode;
                             if (!"车载".Equals(ck2[1].ToString()))
                             {
                                 cartime = 30;
@@ -214,7 +210,6 @@ namespace LBKJClient
                 }
                 if (cd != null)
                 {
-                    cd = cd.Substring(1);
                     if (flag == 1)
                     {
                         cdlist = cd;
@@ -273,6 +268,7 @@ namespace LBKJClient
                             dt = dv.ToTable(true);
                             dt.Columns.Remove("carinterval");
                             dt.Columns.Remove("houseinterval");
+                            dt.Columns.Remove("measureNo");
                             DataTable dt1 = dv.ToTable(true, "measureMeterCode");
                             for (int i = 0; i < dt1.Rows.Count; i++)
                             {

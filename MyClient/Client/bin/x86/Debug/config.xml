@@ -5,10 +5,9 @@
   <historyDataIport>47.94.112.2:8992/history</historyDataIport>
   <user>user</user>
   <passd>2x22t8GcEGU=</passd>
-  <stoptime>170827124036</stoptime>
-  <starttime>170826102717</starttime>
-  <communicationType>
-  </communicationType>
+  <stoptime>170906163844</stoptime>
+  <starttime>170831094617</starttime>
+  <communicationType>1-COM1</communicationType>
   <communicationTcpType>
   </communicationTcpType>
   <datarefreshtime>60</datarefreshtime>

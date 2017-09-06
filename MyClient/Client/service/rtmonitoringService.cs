@@ -10,9 +10,9 @@ namespace LBKJClient.service
     class rtmonitoringService
     {
         dao.rtmonitoringDao rt = new dao.rtmonitoringDao();
-        public DataSet rtmonitoring(string time)
+        public DataSet rtmonitoring()
         {
-            return rt.monitoring(time);
+            return rt.monitoring();
         }
         public DataTable queryMonitoringByhousecode(string code)
         {

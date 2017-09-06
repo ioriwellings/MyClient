@@ -272,11 +272,11 @@ namespace LBKJClient
             double h_low;
             string time="";
             if (dataGridView1.RowCount > 0) { 
-            string warn = this.dataGridView1.SelectedRows[0].Cells[10].Value.ToString();
+            string warn = this.dataGridView1.SelectedRows[0].Cells[11].Value.ToString();
             if (!"已处理".Equals(warn))
             {
                 warningHandle wh = new warningHandle();
-                wh.Text = this.dataGridView1.SelectedRows[0].Cells[5].Value.ToString() + "报警处理";
+                wh.Text = this.dataGridView1.SelectedRows[0].Cells[1].Value.ToString() + "报警处理";
                 wh.label2.Text = frmLogin.name;
                 wh.textBox1.Text = this.dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
                 
@@ -329,7 +329,7 @@ namespace LBKJClient
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            string bs=this.dataGridView1.SelectedRows[0].Cells[10].Value.ToString();
+            string bs=this.dataGridView1.SelectedRows[0].Cells[11].Value.ToString();
             if (!"未处理".Equals(bs))
             {
                 string hostcode = this.dataGridView1.SelectedRows[0].Cells[2].Value.ToString();

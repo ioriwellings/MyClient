@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Linq;
 using System.Windows;
 
 namespace LBKJClient.dao
@@ -201,6 +202,26 @@ namespace LBKJClient.dao
             ds = DbHelperMySQL.Query(sql);
             return ds.Tables[0];
         }
+        public bool updateBatchHouseType(string cd, string type)
+        {
+            int ret = 0;
+            string terminalnames1 = null;
+            string sql = "update lb_device_information set house_code = '" + type + "'";
+            if (cd != null)
+            {
+                sql += "  where  ";
+                string[] terminalnames = cd.Split(',');
+                for (int i = 0; i < terminalnames.Count(); i++)
+                {
+                    terminalnames1 += "','" + terminalnames[i];
+                }
+                terminalnames1 = terminalnames1.Substring(3);
+                sql += "terminalname in ('" + terminalnames1 + "')";
+            }
+            ret = DbHelperMySQL.ExecuteSql(sql);
+            return ret == 0 ? false : true;
+        }
+
         public bool updateAllIformationDao(bean.deviceInformation di)
         {
             int ret = 0;

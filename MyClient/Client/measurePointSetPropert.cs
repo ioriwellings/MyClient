@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -6,6 +7,7 @@ namespace LBKJClient
 {
     public partial class measurePointSetPropert : Form
     {
+        service.deviceInformationService dis = new service.deviceInformationService();
         public measurePointSetPropert()
         {
             InitializeComponent();
@@ -37,14 +39,14 @@ namespace LBKJClient
                 di.h_high = float.Parse(h_high);
                 di.h_low = float.Parse(h_low);
                 di.housecode = type;
-                if (this.checkBox2.Checked) {
-                    di.powerflag = Int32.Parse(this.checkBox2.Tag.ToString());
-                }
                 if (this.checkBox1.Checked)
                 {
                     di.powerflag = Int32.Parse(this.checkBox1.Tag.ToString());
                 }
-                service.deviceInformationService dis = new service.deviceInformationService();
+                else {
+                    di.powerflag = 1;
+                };
+               
                 bool isok = dis.updateIformation(di);
                 if (isok)
                 {
@@ -66,20 +68,80 @@ namespace LBKJClient
             this.comboBox3.DisplayMember = "name";//显示给用户的数据集表项
             this.comboBox3.ValueMember = "id";//操作时获取的值 
             string hcode=this.textBox2.Text;
+
+            this.button3.BackgroundImage = Image.FromFile(@str + "/images/save.png");
+            this.button4.BackgroundImage = Image.FromFile(@str + "/images/cancel.png");
+            this.comboBox1.DataSource = hts.queryhouseType();//绑定数据源
+            this.comboBox1.DisplayMember = "name";//显示给用户的数据集表项
+            this.comboBox1.ValueMember = "id";//操作时获取的值 
+                                              ///新增测点权限分配
+            service.changGuicheckService cgs = new service.changGuicheckService();
+            DataTable dta = cgs.checkcedianAll(null).Tables[0];
+            int t = dta.Rows.Count;
+            if (t > 0)
+            {
+                for (int i = 0; i < t; i++)
+                {
+                    string tag = dta.Rows[i]["terminalname"].ToString();
+                    this.checkedListBox1.Items.Add(tag);
+                }
+            }
+
+
             if (hcode != null && !"".Equals(hcode))
             {
+            //this.comboBox3.SelectedIndex = Int32.Parse(hcode)-1;
             this.comboBox3.Text =hcode;
+            this.comboBox1.Text = hcode;
             }      
         }
-
-        private void checkBox1_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
-            this.checkBox2.Checked = false;
+            String cd = null;
+            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+            {
+                if (checkedListBox1.GetItemChecked(i))
+                {
+                    cd += "," + checkedListBox1.GetItemText(checkedListBox1.Items[i]);
+                }
+            }
+            cd = cd.Substring(1);
+            string type = this.comboBox1.SelectedValue.ToString();
+            if (cd != "" && type != "")
+            {
+                bool isok = dis.updateBatchHouseType(cd, type);
+                if (isok)
+                {
+                    this.DialogResult = DialogResult.OK;
+                }
+            }
+            else {
+                MessageBox.Show("请选择测点或库房！");
+            }
         }
 
-        private void checkBox2_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
-            this.checkBox1.Checked = false;
+            this.Hide();
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            bool check = this.checkBox3.Checked;
+            if (check == true)
+            {
+                for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                {
+                    checkedListBox1.SetItemChecked(i, true);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                {
+                    checkedListBox1.SetItemChecked(i, false);
+                }
+            }
         }
     }
 }
