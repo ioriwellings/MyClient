@@ -89,11 +89,11 @@ namespace LBKJClient.dao
             String sql=null;
             if (flag == 0)
             {
-                sql = "select a.id,a.measureCode,a.meterNo,a.terminalname,b.hostAddress,b.CommunicationType,b.serialPort,a.t_high,a.t_low,a.h_high,a.h_low,h.name,a.powerflag from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode left join lb_house_type h on a.house_code=h.id ORDER BY a.meterNo";
+                sql = "select a.id,a.measureCode,a.meterNo,a.terminalname,b.hostAddress,b.CommunicationType,b.serialPort,a.t_high,a.t_low,a.h_high,a.h_low,h.name,a.powerflag from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode left join lb_house_type h on a.house_code=h.id ORDER BY b.createTime,a.measureCode,a.meterNo";
             }
             else if(flag == 3)
             {
-                sql = "select a.id,a.measureCode,a.meterNo,a.terminalname,b.hostAddress,b.CommunicationType,b.serialPort,a.t_high,a.t_low,a.h_high,a.h_low,h.name from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode and b.networkType = 'YUN' left join lb_house_type h on a.house_code = h.id ORDER BY a.meterNo";  
+                sql = "select a.id,a.measureCode,a.meterNo,a.terminalname,b.hostAddress,b.CommunicationType,b.serialPort,a.t_high,a.t_low,a.h_high,a.h_low,h.name from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode and b.networkType = 'YUN' left join lb_house_type h on a.house_code = h.id ORDER BY b.createTime,a.measureCode,a.meterNo";  
             }
             ds = DbHelperMySQL.Query(sql);
             return ds.Tables[0];
