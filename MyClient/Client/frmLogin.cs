@@ -196,6 +196,11 @@ namespace LBKJClient
                     listpower = power.Split(',').ToList();
                 }
                 name = this.txtName.Text;
+                bean.loginLogBean lb = new bean.loginLogBean();
+                lb.name = name;
+                lb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                lb.eventInfo = "登录系统！";
+                lls.addCheckLog(lb);
                 SplashScreen.CloseSplashScreen();
                 this.Hide();
                 frmMain main = new frmMain();

@@ -345,7 +345,7 @@ namespace LBKJClient
                 {
                     table=new PdfPTable(10);
                     table.WidthPercentage = 100;//table占宽度百分比 100%
-                    pdftitle = new Paragraph(frmMain.companyName + "历史报警数据查询结果", fonttitle);
+                    pdftitle = new Paragraph(frmMain.companyName + "历史报警数据查询结果" + "\r\n" + "(" + changeguicheck.time1 + "-" + changeguicheck.time2 + ")", fonttitle);
                     table.SetWidths(new int[] { 5, 20, 15, 15, 5, 7, 7, 14, 8, 8 });
                     columnsnames = new string[] { "序号", "采集时间", "设备标识", "管理主机编号", "仪表编号", "温度", "湿度", "报警事件", "温度差值", "湿度差值" };
                     flag = 0;
@@ -354,7 +354,7 @@ namespace LBKJClient
                 else
                 {
                     table=new PdfPTable(8);
-                    pdftitle = new Paragraph(frmMain.companyName + "历史数据查询结果", fonttitle);
+                    pdftitle = new Paragraph(frmMain.companyName + "历史数据查询结果" + "\r\n" + "(" + changeguicheck.time1 + "-" + changeguicheck.time2 + ")", fonttitle);
                     table.SetWidths(new int[] { 5, 20, 15, 20, 10, 10, 10 ,10});
                     dts.Columns.Remove("measureMeterCode");
                     dts.Columns.Remove("warningistrue");
