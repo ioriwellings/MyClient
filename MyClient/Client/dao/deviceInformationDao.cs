@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Linq;
 using System.Windows;
 
 namespace LBKJClient.dao
@@ -88,11 +89,11 @@ namespace LBKJClient.dao
             String sql=null;
             if (flag == 0)
             {
-                sql = "select a.id,a.measureCode,a.meterNo,a.terminalname,b.hostAddress,b.CommunicationType,b.serialPort,a.t_high,a.t_low,a.h_high,a.h_low,h.name,a.powerflag from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode left join lb_house_type h on a.house_code=h.id ORDER BY a.meterNo";
+                sql = "select a.id,a.measureCode,a.meterNo,a.terminalname,b.hostAddress,b.CommunicationType,b.serialPort,a.t_high,a.t_low,a.h_high,a.h_low,h.name,a.powerflag from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode left join lb_house_type h on a.house_code=h.id ORDER BY b.createTime,a.measureCode,a.meterNo";
             }
             else if(flag == 3)
             {
-                sql = "select a.id,a.measureCode,a.meterNo,a.terminalname,b.hostAddress,b.CommunicationType,b.serialPort,a.t_high,a.t_low,a.h_high,a.h_low,h.name from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode and b.networkType = 'YUN' left join lb_house_type h on a.house_code = h.id ORDER BY a.meterNo";  
+                sql = "select a.id,a.measureCode,a.meterNo,a.terminalname,b.hostAddress,b.CommunicationType,b.serialPort,a.t_high,a.t_low,a.h_high,a.h_low,h.name from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode and b.networkType = 'YUN' left join lb_house_type h on a.house_code = h.id ORDER BY b.createTime,a.measureCode,a.meterNo";  
             }
             ds = DbHelperMySQL.Query(sql);
             return ds.Tables[0];
@@ -201,6 +202,26 @@ namespace LBKJClient.dao
             ds = DbHelperMySQL.Query(sql);
             return ds.Tables[0];
         }
+        public bool updateBatchHouseType(string cd, string type)
+        {
+            int ret = 0;
+            string terminalnames1 = null;
+            string sql = "update lb_device_information set house_code = '" + type + "'";
+            if (cd != null)
+            {
+                sql += "  where  ";
+                string[] terminalnames = cd.Split(',');
+                for (int i = 0; i < terminalnames.Count(); i++)
+                {
+                    terminalnames1 += "','" + terminalnames[i];
+                }
+                terminalnames1 = terminalnames1.Substring(3);
+                sql += "terminalname in ('" + terminalnames1 + "')";
+            }
+            ret = DbHelperMySQL.ExecuteSql(sql);
+            return ret == 0 ? false : true;
+        }
+
         public bool updateAllIformationDao(bean.deviceInformation di)
         {
             int ret = 0;

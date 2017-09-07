@@ -32,23 +32,23 @@ namespace LBKJClient
                 if (this.radioButton1.Checked)
                 {
                     mh.hostAddress = this.numericUpDown2.Value.ToString();
-                    mh.serialPort = this.comboBox4.SelectedItem.ToString();
+                    mh.serialPort = this.comboBox4.Text;
                     mh.tcp_ip_Port = "";
-                    mh.networkType = "串口";
+                    mh.networkType = "COM";
                 }
                 else if (this.radioButton2.Checked)
                 {
                     mh.hostAddress = this.numericUpDown3.Value.ToString();
                     mh.tcp_ip_Port = this.textBox4.Text + ":" + this.numericUpDown4.Value.ToString();
                     mh.serialPort = "";
-                    mh.networkType = "tcp";
+                    mh.networkType = "TCP";
                 }
                 else
                 {
                     mh.hostAddress = "";
                     mh.serialPort = "";
                     mh.tcp_ip_Port = "";
-                    mh.networkType = "";
+                    mh.networkType = "YUN";
                 }
                 istrue = mhs.updateManageHost(mh);
                 this.DialogResult = DialogResult.OK;
@@ -78,15 +78,15 @@ namespace LBKJClient
             {
                 this.comboBox1.Text = hcode;
             }
-            string[] ArryPort = System.IO.Ports.SerialPort.GetPortNames();
-            this.comboBox4.Items.Clear();
-            if (ArryPort.Length > 0)
-            {
-                for (int i = 0; i < ArryPort.Length; i++)
-                {
-                    this.comboBox4.Items.Add(ArryPort[i]);
-                }
-            }
+            //string[] ArryPort = System.IO.Ports.SerialPort.GetPortNames();
+            //this.comboBox4.Items.Clear();
+            //if (ArryPort.Length > 0)
+            //{
+            //    for (int i = 0; i < ArryPort.Length; i++)
+            //    {
+            //        this.comboBox4.Items.Add(ArryPort[i]);
+            //    }
+            //}
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {

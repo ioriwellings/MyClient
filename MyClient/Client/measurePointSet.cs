@@ -71,12 +71,12 @@ namespace LBKJClient
             string h_low = this.dataGridView1.SelectedRows[0].Cells[10].Value.ToString();
             string housecode = this.dataGridView1.SelectedRows[0].Cells[11].Value.ToString();
             string pflag = this.dataGridView1.SelectedRows[0].Cells[12].Value.ToString();
-            if (pflag == "1")
+            if (pflag == "0")
             {
-                mpsp.checkBox2.Checked = true;
+                mpsp.checkBox1.Checked = true;
             }
             else {
-                mpsp.checkBox1.Checked = true;
+                mpsp.checkBox1.Checked = false;
             }
             if (name != null && !"".Equals(name))
             {

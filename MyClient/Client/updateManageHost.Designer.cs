@@ -299,7 +299,7 @@
             this.groupBox3.Size = new System.Drawing.Size(637, 132);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "groupBox3";
+            this.groupBox3.Text = "通讯设置";
             // 
             // numericUpDown4
             // 
@@ -470,9 +470,9 @@
         private System.Windows.Forms.Label label11;
         public System.Windows.Forms.RadioButton radioButton1;
         public System.Windows.Forms.RadioButton radioButton2;
-        public System.Windows.Forms.ComboBox comboBox4;
         public System.Windows.Forms.NumericUpDown numericUpDown3;
         public System.Windows.Forms.TextBox textBox4;
         public System.Windows.Forms.NumericUpDown numericUpDown4;
+        public System.Windows.Forms.ComboBox comboBox4;
     }
 }

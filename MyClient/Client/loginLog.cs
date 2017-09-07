@@ -23,11 +23,13 @@ namespace LBKJClient
             //让默认的日期时间减一天
             this.dateTimePicker1.Value = this.dateTimePicker2.Value.AddDays(-1);
         }
+        string time1 = "";
+        string time2 = "";
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string time1 = this.dateTimePicker1.Text.ToString();
-            string time2 = this.dateTimePicker2.Text.ToString();
+             time1 = this.dateTimePicker1.Text.ToString();
+             time2 = this.dateTimePicker2.Text.ToString();
             service.loginLogService lls = new service.loginLogService();
             dt = lls.checkLog(time1, time2);
             if (dt.Rows.Count > 0)
@@ -103,7 +105,7 @@ namespace LBKJClient
                 iTextSharp.text.Font font = new iTextSharp.text.Font(baseFT, 10);//内容字体
 
                 //标题
-                Paragraph pdftitle = new Paragraph("登录日志查询结果", fonttitle);
+                Paragraph pdftitle = new Paragraph(frmMain.companyName + "登录日志查询结果" + "\r\n" + "(" + time1 + "-" + time2 + ")", fonttitle);
                 pdftitle.Alignment = 1;
                 doc.Add(pdftitle);
                 //标题和内容间的空白行

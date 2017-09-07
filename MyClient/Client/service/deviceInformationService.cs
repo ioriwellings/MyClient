@@ -70,5 +70,9 @@ namespace LBKJClient.service
         {
             return deviceinfo.selectHouseTypeK();
         }
+        public bool updateBatchHouseType(string cd, string type)
+        {
+            return deviceinfo.updateBatchHouseType(cd, type);
+        }
     }
 }

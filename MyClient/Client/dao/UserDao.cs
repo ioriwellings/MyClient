@@ -27,7 +27,8 @@ namespace LBKJClient.dao
         }
         public DataTable listUser()  
         {
-            String sql = "select id,name,pwd,case when enable = 1 then '启用' else '禁用' end,createTime,power from userinfo where 1=1 and name != 'admin'";
+            //String sql = "select id,name,pwd,case when enable = 1 then '启用' else '禁用' end,createTime,power from userinfo where 1=1 and name != 'admin'";
+            String sql = "select id,name,pwd,case when enable = 1 then '启用' else '禁用' end,createTime,power from userinfo where 1=1";
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);

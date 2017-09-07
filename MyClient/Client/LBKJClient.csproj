@@ -176,12 +176,6 @@
     <Compile Include="dataReduction.Designer.cs">
       <DependentUpon>dataReduction.cs</DependentUpon>
     </Compile>
-    <Compile Include="dataSynchronous.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="dataSynchronous.Designer.cs">
-      <DependentUpon>dataSynchronous.cs</DependentUpon>
-    </Compile>
     <Compile Include="Exit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -259,12 +253,6 @@
     <Compile Include="passWordUpdate.Designer.cs">
       <DependentUpon>passWordUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="readHistoryData.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="readHistoryData.Designer.cs">
-      <DependentUpon>readHistoryData.cs</DependentUpon>
-    </Compile>
     <Compile Include="service\deleteInvalidDataService.cs" />
     <Compile Include="service\houseTypeService.cs" />
     <Compile Include="service\loginLogService.cs" />
@@ -330,7 +318,6 @@
       <DependentUpon>changGuiCheck.cs</DependentUpon>
     </Compile>
     <Compile Include="CRC1.cs" />
-    <Compile Include="dao\addDataDao.cs" />
     <Compile Include="dao\changGuicheckDao.cs" />
     <Compile Include="dao\chartsDao.cs" />
     <Compile Include="dao\deviceInformationDao.cs" />
@@ -376,7 +363,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="service\addDataService.cs" />
     <Compile Include="service\changGuicheckService.cs" />
     <Compile Include="service\chartsCheck.cs" />
     <Compile Include="service\deviceInformationService.cs" />
@@ -446,9 +432,6 @@
     <EmbeddedResource Include="dataReduction.resx">
       <DependentUpon>dataReduction.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="dataSynchronous.resx">
-      <DependentUpon>dataSynchronous.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Exit.resx">
       <DependentUpon>Exit.cs</DependentUpon>
     </EmbeddedResource>
@@ -513,9 +496,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="passWordUpdate.resx">
       <DependentUpon>passWordUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="readHistoryData.resx">
-      <DependentUpon>readHistoryData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="showReport.resx">
       <DependentUpon>showReport.cs</DependentUpon>

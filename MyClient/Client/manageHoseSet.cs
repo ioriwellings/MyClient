@@ -21,7 +21,6 @@ namespace LBKJClient
             this.button2.BackgroundImage = Image.FromFile(@str + "/images/delete.png");
             this.button3.BackgroundImage = Image.FromFile(@str + "/images/update.png");
             this.button4.BackgroundImage = Image.FromFile(@str + "/images/close.png");
-            this.button5.BackgroundImage = Image.FromFile(@str + "/images/dqjl.png");
             querymanageHose();//查询管理主机信息
         }
         private void button1_Click(object sender, EventArgs e)
@@ -132,7 +131,7 @@ namespace LBKJClient
             umh.textBox2.Text = code;
             umh.textBox3.Text = kflx;
             if (address!=null&&!"".Equals(address)) {
-                if (networkType == "串口") { umh.radioButton1.Checked = true; } else if (networkType == "tcp") { umh.radioButton2.Checked = true; };
+                if (networkType == "COM") { umh.radioButton1.Checked = true; } else if (networkType == "TCP") { umh.radioButton2.Checked = true; };
                 if (umh.radioButton1.Checked)
                 {
                     umh.numericUpDown2.Value = Convert.ToInt32(address);
@@ -158,27 +157,6 @@ namespace LBKJClient
                 {
                     RefreshEvent(null, null);
                 }
-            }
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            string name = this.dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-            string address = this.dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
-            string code = this.dataGridView1.SelectedRows[0].Cells[9].Value.ToString();
-            if (address!=""&&!"".Equals(address)&&Int32.Parse(address) > 0)
-            {
-                readHistoryData rhd = new readHistoryData();
-                rhd.address = address;
-                rhd.measureCode = code;
-                rhd.comCode = comCode;
-                rhd.label1.Text = "读取【"+name+"】的历史记录";
-                int ww = (rhd.Width - rhd.label1.Width) / 2;
-                rhd.label1.Location = new Point(ww-10,22);
-                rhd.ShowDialog();
-            }
-            else {
-                MessageBox.Show("不是通过串口通信的管理主机！");
             }
         }
     }

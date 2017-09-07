@@ -10,13 +10,13 @@ namespace LBKJClient.service
     class changGuicheckService
    {
         dao.changGuicheckDao checkdao = new dao.changGuicheckDao();
-        public DataSet changguicheck(String time1, String time2,String cd)
+        public DataSet changguicheck(String time1, String time2,String cd, String measureNo)
         {
-            return checkdao.changguicheck(time1, time2,cd);
+            return checkdao.changguicheck(time1, time2,cd, measureNo);
         }
-        public DataTable changguicheckFenye(String time1, String time2, String cd, int PageIndex, int PageSize)
+        public DataTable changguicheckFenye(String time1, String time2, String cd, int PageIndex, int PageSize, String measureNo)
         {
-            return checkdao.changguicheckFenye(time1, time2, cd, PageIndex, PageSize);
+            return checkdao.changguicheckFenye(time1, time2, cd, PageIndex, PageSize,measureNo);
         }
         public DataSet changguicheckGlzj(String time1, String time2, String glzj)
         {

@@ -31,7 +31,10 @@ namespace LBKJClient
             dd.Columns.Add("neir", typeof(string));
             foreach (DataRow rows in dd.Rows)
             {
-                if (rows[1].ToString() == "user")
+                if (rows[1].ToString() == "admin") {
+                    rows["neir"] = "超级用户";
+                } else
+                if (rows[1].ToString() == "user") 
                 {
                     rows["neir"] = "管理员";
                 }
@@ -51,10 +54,6 @@ namespace LBKJClient
             this.dataGridView1.Columns[1].Width = 110;
             this.dataGridView1.Columns[4].Width = 130;
             this.dataGridView1.RowsDefaultCellStyle.ForeColor = Color.Black;
-            //for (int j = 0; (j <= (this.dataGridView1.Rows.Count - 2)); j++)
-            //{
-            //    this.dataGridView1.Rows[j].HeaderCell.Value = String.Format("{0}", j + 1);
-            //}
             this.dataGridView1.AllowUserToAddRows = false;
         }
         private void button4_Click(object sender, EventArgs e)

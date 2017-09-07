@@ -9,9 +9,13 @@ using System.Threading;
 using System.Web.Script.Serialization;
 using System.IO.Ports;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Xml;
 using System.Drawing.Text;
 using System.Diagnostics;
+using NT88Test;
+using SmartX1Demo;
+using System.Collections;
 using System.Net;
 using System.Net.Sockets;
 namespace LBKJClient
@@ -19,12 +23,10 @@ namespace LBKJClient
     public partial class frmMain : Form
     {
         public delegate void MyDelegate();
-        MyDelegate mydelegate;
         public static string mids = null;
         public static string ipport = null;
         public static bool istrueport = true;
         public int hulie = 1;
-        private string rcids = null;
         private int logrizhi = 0;
         private int socketserver = 0;
         public delegate void UpdateAcceptTextBoxTextHandler(string text);
@@ -51,7 +53,6 @@ namespace LBKJClient
         historydata historyd = new historydata();//历史数据功能
         graphCheck graphcheck = new graphCheck();
         service.deviceInformationService dis = new service.deviceInformationService();
-        service.addDataService adddatas = new service.addDataService();//新增数据
         service.rtmonitoringService monitoringservice = new service.rtmonitoringService();
         service.manageHostService mhs = new service.manageHostService();//查询GZ02有串口地址的数据
         dataBackUpSet sb = new dataBackUpSet();//数据备份
@@ -61,8 +62,6 @@ namespace LBKJClient
         DataTable dt;
         DataTable dtcdinfo;
         DataTable dtcdinfo1 = null;
-        DataTable dtcdinfo2 = null;
-        public DataTable dtB = null;//查询测点最后一条记录用
         PictureBox[] picb;
         private int num = 0;
         private double a = 0;
@@ -84,7 +83,6 @@ namespace LBKJClient
         public static int housetime = 0;
         public static int autosave02 = 0;
         public static int autosave16 = 0;
-        Boolean isCRC = false;
         //变量声明
         private string username;
         private string password;
@@ -96,7 +94,6 @@ namespace LBKJClient
         private DataTable dtCom;
         private string[] result;
         private int comnum = 0;
-        Thread multiHS;
         public frmMain()
         {
             InitializeComponent();
@@ -106,7 +103,7 @@ namespace LBKJClient
             if (hulie == 1)
             {
                 this.timer1.Start();
-                string power = "显示报告,库房平面图,分库浏览,采集器数据同步,库房管理,管理主机设置,数据库管理,查询登录日志,查询报警处理,查询报警记录,查询历史曲线,查询历史数据,密码修改,测点属性设置,报警设置,基本设置,修改标题,修改公司名称,用户管理";
+                string power = "显示报告,库房平面图,分库浏览,库房管理,管理主机设置,数据库管理,查询登录日志,查询报警处理,查询报警记录,查询历史曲线,查询历史数据,密码修改,测点属性设置,报警设置,基本设置,修改标题,修改公司名称,用户管理";
                 frmLogin.listpower= power.Split(',').ToList();
             }
             if (frmLogin.name!="admin") {
@@ -153,39 +150,17 @@ namespace LBKJClient
             overtime = Properties.Settings.Default.overTime;
             //获取通信类别
             getFromXmlcommunication();
-            this.timer3.Interval = Int32.Parse(datarefreshtime) * 1000;
-            this.timer3.Start();
             dtcdinfo1 = dis.checkPointInfo(0);
             if (getresults != null && !"".Equals(getresults))
             {
-                //自动读取历史数据占用主线程
-                if (autosave02 == 1)
-                {
-                    insertHYStopData();
-                };
-
                 result = getresults.Split('-');
                 if (result[0] == "1")
                 {
-                    dtCom = mhs.queryManageHostCom();
-                    bool istrue = initPort(result[1]);
-                    if (istrue)
-                    {
-                        port.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.mySerialPort_DataReceived);
-                        this.timerGetdeviceinfo.Interval = Int32.Parse(datasavetime) * 1000;
-                        this.timerGetdeviceinfo.Start();//抓取LBGZ-02管理主机数据
-                        timerGetdeviceinfo_Tick(sender, e);
-                    }
+                    dtCom = mhs.queryManageHostCom();               
                 }
             }
             queryMeterIds();
-            //启动服务器自动同步关服时间到开服时间无线主机历史数据
-            if (autosave16 == 1)
-            {
-                multiHS = new Thread(new ThreadStart(insertHStopData));
-                multiHS.IsBackground = true;
-                multiHS.Start();
-            };
+
             sdfilename = sb.textBox1.Text;
             zdfilename = sb.textBox2.Text;
             //以下是标题的操作
@@ -206,867 +181,14 @@ namespace LBKJClient
             }
       
             this.lblTitle.Text = companyName + titlename;
-            //this.lblTitle.ForeColor = Color.FromArgb(65, 105, 225); 
             this.lblTitle.ForeColor = Color.FromArgb(51, 51, 51);
             lblTitle.Font = new Font("微软雅黑", 26F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(134)));
             lblTitle.Left = (this.lbtitle.Width - this.lblTitle.Width) / 2;
             lblTitle.BringToFront();
-            backupDatabase();//数据库自动备份
+          //  backupDatabase();//数据库自动备份
             this.timer2.Interval = Int32.Parse(datasavetime) * 1000;
             this.timer2.Start();
         }
-
-        DataTable dtcdinfoHY = null;
-        string bwnum = "";
-        SerialPort portHY = new SerialPort();
-        Thread multiHYA;
-        service.manageHostService mhsHY = new service.manageHostService();
-        public string comCode = "";
-        public string addressHY = "";
-        public string measureCodeHY = "";
-        private void insertHYStopData()
-        {
-            service.deviceInformationService dis = new service.deviceInformationService();
-            dtcdinfoHY = dis.checkPointInfo(0);
-            //1获取端口号,设置端口信息
-            int baudRate = 9600;
-            portHY.BaudRate = baudRate;
-            if (getresults != null && !"".Equals(getresults))
-            {
-                result = getresults.Split('-');
-                comCode = result[1];
-                portHY.PortName = comCode;
-            }
-
-            portHY.DataReceived += new SerialDataReceivedEventHandler(this.mySerialPortHY_DataReceived);
-
-
-            //2获取主机编号与地址
-            DataTable dtHY = mhsHY.queryManageHost();
-            if (dtHY.Rows.Count > 0)
-            {
-                for (int i = 0; i < dtHY.Rows.Count; i++)
-                {
-
-                    addressHY = "" + dtHY.Rows[i][2];
-                    measureCodeHY = "" + dtHY.Rows[i][7];
-                    if (!portHY.IsOpen)
-                    {
-                        portHY.Open();
-                        portHY.DiscardOutBuffer();
-                        portHY.DiscardInBuffer();
-                    }
-                    if (addressHY != "")
-                     {
-                        byte[] byteSend = getCRCHY(addressHY);
-                        portHY.Write(byteSend, 0, byteSend.Length);
-                        Thread.Sleep(500);
-                        while (bwnum != "" && Int32.Parse(bwnum) != 0)
-                        {
-                            byteSend = getCRCHY(addressHY);
-                            portHY.Write(byteSend, 0, byteSend.Length);
-                            Thread.Sleep(500);
-                         };
-                        portHY.Close();
-                    }
-
-                };
-            }
-        }
-        List<bean.dataSerialization> ldsHY = null;
-        int Hck = 0;
-        private void mySerialPortHY_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            Boolean isCRC = false;
-            try
-            {
-                SerialPort sp = (SerialPort)sender;
-                Byte[] byteRead = new Byte[sp.BytesToRead];
-                sp.Read(byteRead, 0, byteRead.Length);
-                sp.DiscardInBuffer();
-                sp.DiscardOutBuffer();
-                //totalHYReceivedBytes += size;               
-                totalByteRead = totalByteRead.Concat(byteRead).ToArray();
-                if (totalByteRead.Length > 10)
-                {
-                    byte[] crcByte = totalByteRead.Skip(2).Take(totalByteRead.Length - 4).ToArray();
-                    uint crcRet = CRC1.calcrc16(crcByte, (uint)crcByte.Length);
-                    uint crcSource = (uint)(totalByteRead[totalByteRead.Length - 2] << 8 | totalByteRead[totalByteRead.Length - 1]);
-                    if (crcSource == crcRet)
-                    {
-                        isCRC = true;
-                    }
-                    else
-                    {
-                        isCRC = false;
-                    }
-                }
-                if (isCRC)
-                {   //仓储管理主机解析报文并存入数据库
-                    //int index_end = this.IndexOf(totalByteRead, new byte[] { 0x40, 0x10 });
-                    string no = null;
-                    int intervalNum1 = 0;
-                    int intervalNum2 = 0;
-                    int intervalNum3 = 0;
-                    double tt, t1, t2, hh, h1, h2;
-                    string str_temperature = null;
-                    string str_humidity = null;
-                    byte[] byte_date = totalByteRead.Skip(totalByteRead.Length - 8).Take(4).ToArray();
-                    byte[] byte_bwnum = totalByteRead.Skip(totalByteRead.Length - 4).Take(2).ToArray();
-                    string str_datetime = ToDateString(byte_date);
-                    string powerClose = Int32.Parse(totalByteRead[totalByteRead.Length - 10].ToString("X2")) == 40 ? "1" : "0";
-                    bwnum = ToBwNumString(byte_bwnum);
-
-                    //转换时间格式
-                    string TarStr1 = "yyyy-MM-dd HH:mm:ss";
-                    string TarStr = "yyyyMMddHHmmss";
-                    IFormatProvider format = new System.Globalization.CultureInfo("zh-CN");
-                    string datetime = DateTime.ParseExact(str_datetime, TarStr, format).ToString(TarStr1);
-                    DateTime MyDate = DateTime.ParseExact(str_datetime, TarStr, format);
-                    datetime = MyDate.ToString(TarStr1);
-                    int mm = MyDate.Minute;
-                    if (mm % 2 == 0)
-                    {
-                        intervalNum1 = 2;
-                    }
-                    else
-                    {
-                        intervalNum1 = 0;
-                    }
-                    if (mm % cartime == 0)
-                    {
-                        intervalNum2 = 5;
-                    }
-                    else
-                    {
-                        intervalNum2 = 0;
-                    }
-
-                    if (mm % housetime == 30)
-                    {
-                        intervalNum3 = 3;
-                    }
-                    else
-                    {
-                        intervalNum3 = 0;
-                    }
-
-                    ldsHY = new List<bean.dataSerialization>();
-                    bean.dataSerialization info = null;
-                    int history = 0;
-                    int Whistory = 0;
-                    string measureMeterCodeB = "";
-                    for (int i = 6; i < totalByteRead.Length - 9; i = i + 6)
-                    {
-                        byte[] newA = totalByteRead.Skip(i).Take(6).ToArray();
-                        byte[] byte_temperature = { newA[2], newA[1] };
-                        byte[] byte_humidity = { newA[4], newA[3] };
-                        no = (Int32.Parse(newA[0].ToString()) + 1).ToString();
-                        string binary = Convert.ToString(newA[5], 2).PadLeft(8, '0').Substring(0, 1);
-                        str_temperature = BitConverter.ToInt16(byte_temperature, 0).ToString();
-                        str_humidity = BitConverter.ToInt16(byte_humidity, 0).ToString();
-
-                        info = new bean.dataSerialization();
-
-                        if (str_temperature.Length > 2)
-                        {
-                            info.temperature = str_temperature.Insert(2, ".");
-                        }
-                        else if (str_temperature.Length == 2)
-                        {
-                            info.temperature = str_temperature.Insert(1, ".");
-                        }
-                        else
-                        {
-                            info.temperature = str_temperature;
-                        }
-                        if (str_humidity.Length > 2)
-                        {
-                            info.humidity = str_humidity.Insert(2, ".");
-                        }
-                        else if (str_humidity.Length == 2)
-                        {
-                            info.humidity = str_humidity.Insert(1, ".");
-                        }
-                        else
-                        {
-                            info.humidity = str_humidity;
-                        }
-                        if (Int32.Parse(binary) > 0)
-                        {
-                            info.temperature = info.temperature.Insert(0, "-");
-                        }
-
-                        if (no.ToString().Length == 1)
-                        {
-                            info.deviceNum = no.ToString().Insert(0, "0");
-                        }
-                        else
-                        {
-                            info.deviceNum = no.ToString();
-                        }
-                        if (measureCodeHY != null && !"".Equals(measureCodeHY))
-                        {
-                            info.managerID = measureCodeHY;
-                        }
-                        info.devicedate = datetime;
-                        info.sysdate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        info.measureMeterCode = measureCodeHY + "_" + info.deviceNum;
-
-                        measureMeterCodeB = info.measureMeterCode;
-                        if (Hck != 0)
-                        {
-                            dtB = adddatas.checkLastRecordBIsOr(info.measureMeterCode, info.devicedate);
-                            if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
-                            if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
-                        };
-
-                        if (intervalNum1 == 2)
-                        {
-                            DataRow[] drs = dtcdinfoHY.Select("measureCode='" + info.managerID + "' and meterNo='" + info.deviceNum + "'");
-                            tt = Double.Parse(info.temperature);
-                            t1 = Double.Parse(drs[0]["t_high"].ToString());
-                            t2 = Double.Parse(drs[0]["t_low"].ToString());
-                            hh = Double.Parse(info.humidity);
-                            h1 = Double.Parse(drs[0]["h_high"].ToString());
-                            h2 = Double.Parse(drs[0]["h_low"].ToString());
-                            if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
-                            {
-                                info.warningistrue = "2";
-                            }
-                            else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2) {
-                                info.warningistrue = "3";
-                                history = 0;
-                            } else {
-                                history = 0;
-                            }
-                            if (Int32.Parse(powerClose) == 1)
-                            {
-                                info.warnState = powerClose;
-                            }
-                            else if (Int32.Parse(powerClose) != 1 && Whistory == 1) { info.warnState = "3"; Whistory = 0; } else { Whistory = 0; };
-                        }
-                        if (intervalNum2 == 5)
-                        {
-                            info.carinterval = "5";
-                        }
-                        if (intervalNum3 == 3)
-                        {
-                            info.houseinterval = "30";
-                        }
-                        if (Int32.Parse(powerClose) == 1)
-                        {
-                            info.sign = "1";
-                        }
-                        else if (Int32.Parse(powerClose) != 1 && Whistory == 1) { info.sign = "3"; Whistory = 0; } else { Whistory = 0; };
-                        ldsHY.Add(info);
-                    }
-                    totalByteRead = new Byte[0];
-                    if (ldsHY.Count > 0)
-                    {
-                        multiHYA = new Thread(new ThreadStart(addDataHistory));
-                        multiHYA.IsBackground = true;
-                        multiHYA.Start();
-                    }
-                }
-
-            }
-            catch (Exception ee)
-            {
-            }
-
-        }
-
-        private string ToBwNumString(byte[] bytes)
-        {
-            int num = 0;
-            if (bytes != null)
-            {
-                string bn = ToHexString(bytes).Replace(" ", "");
-                num = Convert.ToInt32(bn, 16);
-            }
-            return num.ToString();
-
-        }
-
-        private void addDataHistory()
-        {
-            Hck++;
-            adddatas.addData(ldsHY);
-        }
-        private byte[] getCRCHY(string text)
-        {
-            byte[] byteSends = { 0x1B, 0x06, 0x00, 0x03, 0x03, 0x11, 0x66, 0x00, 0x00, 0xBA, 0x10 };
-            byte[] byteSend = { 0x00, 0x03, 0x03, 0x11, 0x66, 0x00, 0x00 };
-            if (Int32.Parse(text) < 10)
-            {
-                text = "0" + text;
-            }
-            byteSend[1] = (byte)Convert.ToInt32("0x" + text, 16);
-            uint crcRet = CRC1.calcrc16(byteSend, (uint)byteSend.Length);
-            string xx = crcRet.ToString("X");
-            if (xx.Length == 3)
-            {
-                xx = "0" + xx;
-            }
-            byteSends[3] = (byte)Convert.ToInt32("0x" + text, 16);
-            byteSends[9] = (byte)Convert.ToInt32("0x" + xx.Substring(0, 2), 16);
-            byteSends[10] = (byte)Convert.ToInt32("0x" + xx.Substring(2), 16);
-            return byteSends;
-        }
-        string json = "";
-        DataTable dtH;
-        public string ipportH = null;
-        private void insertHStopData()
-        {
-            //获取设备监测历史数据接口(因服务器关机等没有保存的监测信息在服务器开启时既用户再次开机登录时同步到数据库)
-            //获取参数 mids,上面方法queryMeterIds()已赋值"measureCode-meterNo:";
-            dtcdinfo = dis.checkPointInfo(3);
-            xmlDoc.Load(path);
-            XmlNode node;
-            node = xmlDoc.SelectSingleNode("config/stoptime");
-            starttime = node.InnerText;
-
-
-            node = xmlDoc.SelectSingleNode("config/starttime");
-            stoptime = node.InnerText;
-
-
-            node = xmlDoc.SelectSingleNode("config/historyDataIport");
-            ipportH = node.InnerText;
-
-
-
-            MyDate = DateTime.ParseExact(starttime, TarStr, formatH);
-            starttime1 = MyDate.ToString(TarStr1);
-
-            MyDate = DateTime.ParseExact(stoptime, TarStr, formatH);
-            stoptime1 = MyDate.ToString(TarStr1);
-
-            dtH = adddatas.checkDatasTimes(starttime1, stoptime1);
-            string[] cdlist;
-            if (mids != "" && mids != null) {
-                cdlist = mids.Split(':');
-                if (cdlist.Length > 0)
-                {
-                  for (int i = 0; i < cdlist.Length; i++)
-                   {
-                    json = "{\"id\":\"" + cdlist[i] + "\",\"sign\":\"1wVebSp57j67GOV7bQ6IDg==\",\"starttime\":\"" + starttime + "\",\"endtime\":\"" + stoptime + "\"}";
-                    string jsonData = utils.HttpClient.getDeviceData(json, ipportH);
-                        if (jsonData != "" && jsonData.Length > 50)
-                    {
-                        list = js.Deserialize<List<bean.dataSerialization>>(jsonData);
-                        insertHData(list);
-                    }
-                    Thread.Sleep(500);
-                }
-               }
-            };
-        }
-
-        string TarStr1 = "yyyy-MM-dd HH:mm:ss";
-        string TarStr = "yyMMddHHmmss";
-        int intervalNum1 = 0;
-        int intervalNum2 = 0;
-        int intervalNum3 = 0;
-        IFormatProvider formatH = new System.Globalization.CultureInfo("zh-CN");
-        DateTime MyDate;
-        DateTime MyDate1;
-        double tt, t1, t2, hh, h1, h2;
-        private void insertHData(List<bean.dataSerialization> list)
-        {
-            List<bean.dataSerialization> listed = new List<bean.dataSerialization>();
-            int history = 0;
-            int Whistory = 0;
-
-            foreach (bean.dataSerialization datas in list)
-            {
-                datas.temperature = getFloat(datas.temperature);
-
-                datas.humidity = getFloat(datas.humidity);
-
-                if (datas.lng != null && !"".Equals(datas.lng) && datas.lng.Length > 3)
-                {
-                    datas.lng = datas.lng.Insert(3, ".");
-                }
-                else
-                {
-                    datas.lng = "";
-                }
-                if (datas.lat != null && !"".Equals(datas.lat) && datas.lat.Length > 3)
-                {
-                    datas.lat = datas.lat.Insert(2, ".");
-                }
-                else
-                {
-                    datas.lat = "";
-                }
-                if (datas.devicedate != null && datas.devicedate.Length > 0)
-                {
-                    MyDate = DateTime.ParseExact(datas.devicedate, TarStr, formatH);
-                    datas.devicedate = MyDate.ToString(TarStr1);
-                    int mm = MyDate.Minute;
-                    if (mm % 2 == 0)
-                    {
-                        intervalNum1 = 2;
-                    }
-                    else
-                    {
-                        intervalNum1 = 0;
-                    }
-                    if (mm % cartime == 0)
-                    {
-                        intervalNum2 = 5;
-                    }
-                    else
-                    {
-                        intervalNum2 = 0;
-                    }
-                    if (mm % housetime == 0)
-                    {
-                        intervalNum3 = 3;
-                    }
-                    else
-                    {
-                        intervalNum3 = 0;
-                    }
-                }
-                if (datas.sysdate != null && datas.sysdate.Length > 0)
-                {
-                    MyDate1 = DateTime.ParseExact(datas.sysdate, TarStr, formatH);
-                    datas.sysdate = MyDate1.ToString(TarStr1);
-                }
-                datas.measureMeterCode = datas.managerID + "_" + datas.deviceNum;
-
-                DataRow[] drs = dtcdinfo.Select("measureCode='" + datas.managerID + "' and meterNo='" + datas.deviceNum + "'"); ;
-                tt = Double.Parse(datas.temperature);
-                t1 = Double.Parse(drs[0]["t_high"].ToString());
-                t2 = Double.Parse(drs[0]["t_low"].ToString());
-                hh = Double.Parse(datas.humidity);
-                h1 = Double.Parse(drs[0]["h_high"].ToString());
-                h2 = Double.Parse(drs[0]["h_low"].ToString());
-                string CommunicationType = drs[0]["CommunicationType"].ToString();
-                if (CommunicationType == "LBCC-16" || CommunicationType == "[管理主机]LB863RSB_N1(LBGZ-02)" || CommunicationType == "LBGZ-04" || CommunicationType == "RC-8/-10")
-                {
-                    //if (hh != 0)
-                    //{
-
-                    if (CommunicationType == "LBGZ-04" && datas.charge == "0")
-                    {
-                        datas.sign = "1";
-                        datas.warnState = "1";
-                        Whistory = 1;
-                    }
-                    else if (CommunicationType == "LBGZ-04" && datas.charge != "0" && Whistory == 1)
-                    {
-                        datas.sign = "3";
-                        datas.warnState = "3";
-                        Whistory = 0;
-                    }
-                    else
-                    {
-                    }
-
-
-                    if (CommunicationType == "RC-8/-10" && datas.charge == "0")
-                    {
-                        datas.sign = "1";
-                        datas.warnState = "1";
-                        Whistory = 1;
-                    }
-                    else if (CommunicationType == "RC-8/-10" && datas.charge != "0" && Whistory == 1)
-                    {
-                        datas.sign = "3";
-                        datas.warnState = "3";
-                        Whistory = 0;
-                    }
-                    else
-                    {
-                        Whistory = 0;
-                    }
-
-
-
-                    if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
-                    {
-                        datas.warningistrue = "2";
-                        history = 2;
-                    }
-                    else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
-                    {
-                        datas.warningistrue = "3";
-                        history = 0;
-                    }
-                    else
-                    {
-                        datas.warningistrue = "1";
-                        history = 0;
-                    }
-                }
-                else
-                {
-                    if (intervalNum1 == 2)
-                    {
-                        if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
-                        {
-                            datas.warningistrue = "2";
-                            history = 2;
-                        }
-                        if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
-                        {
-                            datas.warningistrue = "3";
-                            history = 0;
-                        }
-                        else
-                        {
-                            datas.warningistrue = "1";
-                            history = 0;
-                        }
-                    }
-                    if (intervalNum2 == 5)
-                    {
-                        datas.carinterval = "5";
-                    }
-                    if (intervalNum3 == 3)
-                    {
-                        datas.houseinterval = "30";
-                    }
-                }
-                listed.Add(datas);
-            }
-            if (listed.Count > 0 && dtH.Rows.Count > 0)
-            {
-                for (int i = 0; i < listed.Count; i++)
-                {
-                    DataRow[] drArr = dtH.Select("measureCode='" + listed[i].managerID + "' and meterNo='" + listed[i].deviceNum + "' and devtime='" + listed[i].devicedate + "'");
-                    if (drArr.Length > 0)
-                    {
-                        listed.RemoveAt(i);
-                        if (i > 0)
-                        {
-                            --i;
-                        }
-                        else
-                        {
-                            i = -1;
-                        }
-                    }
-                }
-            }
-            adddatas.addData(listed);
-        }
-
-        List<bean.dataSerialization> lds = null;
-        int ck = 0;
-        private void mySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            //Thread.Sleep(240);
-            try
-            {
-                string time111 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ");
-                SerialPort sp = (SerialPort)sender;
-                string text = string.Empty;
-                Byte[] byteRead = new Byte[sp.BytesToRead];
-                if (byteRead.Length == 0)
-                {
-                    doGetDeviceInfo();
-                    return;
-                }
-                sp.Read(byteRead, 0, byteRead.Length);
-                sp.DiscardInBuffer();
-                sp.DiscardOutBuffer();
-                totalByteRead = totalByteRead.Concat(byteRead).ToArray();
-                text = ToHexString(totalByteRead);
-                if (totalByteRead.Length > 10)
-                {
-                    byte[] crcByte = totalByteRead.Skip(2).Take(totalByteRead.Length - 4).ToArray();
-                    uint crcRet = CRC1.calcrc16(crcByte, (uint)crcByte.Length);
-                    uint crcSource = (uint)(totalByteRead[totalByteRead.Length - 2] << 8 | totalByteRead[totalByteRead.Length - 1]);
-                    if (crcSource == crcRet)
-                    {
-                        isCRC = true;
-                    }
-                    else
-                    {
-                        isCRC = false;
-                        if (logrizhi == 1)
-                        {
-                            using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:/log.txt", true))
-                            {
-                                sw.WriteLine("开始：" + time111 + "  结束：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "   错误：" + text);
-                            }
-                        }
-                    }
-                }
-                if (isCRC)
-                {
-                    //仓储管理主机解析报文并存入数据库
-                    //int index_end = this.IndexOf(totalByteRead, new byte[] { 0x40, 0x10 });
-                    lds = new List<bean.dataSerialization>();
-                    string no = null;
-                    string str_temperature = null;
-                    string str_humidity = null;
-                    string datetime = "";
-                    double tt, t1, t2, hh, h1, h2;
-                    int intervalNum1 = 0;
-                    int intervalNum2 = 0;
-                    int intervalNum3 = 0;
-                    byte[] byte_date = totalByteRead.Skip(totalByteRead.Length - 6).Take(4).ToArray();
-                    string str_datetime = ToDateString(byte_date);
-                    string powerClose = Int32.Parse(totalByteRead[totalByteRead.Length - 8].ToString("X2")) == 40 ? "1" : "0";
-                    //转换时间格式
-                    string TarStr1 = "yyyy-MM-dd HH:mm:ss";
-                    string TarStr = "yyyyMMddHHmmss";
-                    IFormatProvider format = new System.Globalization.CultureInfo("zh-CN");
-                    try
-                    {
-                        DateTime MyDate=DateTime.ParseExact(str_datetime, TarStr, format);
-                        datetime = MyDate.ToString(TarStr1);
-                        int mm = MyDate.Minute;
-                        if (mm % 2 == 0)
-                        {
-                            intervalNum1 = 2;
-                        }
-                        else
-                        {
-                            intervalNum1 = 0;
-                        }
-                        if (mm % cartime == 0)
-                        {
-                            intervalNum2 = 5;
-                        }
-                        else
-                        {
-                            intervalNum2 = 0;
-                        }
-
-                        if (mm % housetime == 0)
-                        {
-                            intervalNum3 = 3;
-                        }
-                        else
-                        {
-                            intervalNum3 = 0;
-                        }
-                    }
-                    catch {
-                        datetime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                    }
-                    bean.dataSerialization info = null;
-                    int history = 0;
-                    int Whistory = 0;
-                    for (int i = 6; i < totalByteRead.Length-7; i += 6)
-                    {
-                        byte[] newA = totalByteRead.Skip(i).Take(6).ToArray();
-                        byte[] byte_temperature = { newA[2], newA[1] };
-                        byte[] byte_humidity = { newA[4], newA[3] };
-                        no = newA[0].ToString();
-                        string binary = Convert.ToString(newA[5], 2).PadLeft(8, '0').Substring(0,1);
-                        str_temperature = BitConverter.ToInt16(byte_temperature, 0).ToString();
-                        str_humidity = BitConverter.ToInt16(byte_humidity, 0).ToString();
-                       
-                        info = new bean.dataSerialization();
-
-                        if (str_temperature.Length > 2)
-                        {
-                            info.temperature = str_temperature.Insert(2, ".");
-                        }
-                        else if (str_temperature.Length == 2)
-                        {
-                            info.temperature = str_temperature.Insert(1, ".");
-                        }
-                        else
-                        {
-                            info.temperature = str_temperature;
-                        }
-                        if (str_humidity.Length > 2)
-                        {
-                            info.humidity = str_humidity.Insert(2, ".");
-                        }
-                        else if (str_humidity.Length == 2)
-                        {
-                            info.humidity = str_humidity.Insert(1, ".");
-                        }
-                        else
-                        {
-                            info.humidity = str_humidity;
-                        }
-                        if (Int32.Parse(binary) > 0)
-                        {
-                            info.temperature = info.temperature.Insert(0, "-");
-                        }
-                        if (no.ToString().Length == 1)
-                        {
-                            info.deviceNum = no.ToString().Insert(0, "0");
-                        }
-                        else
-                        {
-                            info.deviceNum = no.ToString();
-                        }
-                        if (measureCode != null && !"".Equals(measureCode))
-                        {
-                            info.managerID = measureCode;
-                        }
-                        info.devicedate = datetime;
-                        info.sysdate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        info.measureMeterCode = measureCode + "_" + info.deviceNum;
-                        if (ck != 0)
-                        {
-                            dtB = adddatas.checkLastRecordBIsOr(info.measureMeterCode, info.devicedate);
-                            if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
-                            if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
-                        };
-
-                        if (intervalNum1==2)
-                        {
-                            DataRow[] drs = dtcdinfo1.Select("measureCode='" + info.managerID + "' and meterNo='" + info.deviceNum + "'");
-                            tt = Double.Parse(info.temperature);
-                            t1 = Double.Parse(drs[0]["t_high"].ToString());
-                            t2 = Double.Parse(drs[0]["t_low"].ToString());
-                            hh = Double.Parse(info.humidity);
-                            h1 = Double.Parse(drs[0]["h_high"].ToString());
-                            h2 = Double.Parse(drs[0]["h_low"].ToString());
-                            if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
-                            {
-                                info.warningistrue = "2";
-                            }
-                            else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
-                            {
-                                info.warningistrue = "3";
-                                history = 0;
-                            }
-                            else {
-                                history = 0;
-                            }
-                            if (Int32.Parse(powerClose) == 1)
-                            {
-                                info.warnState = powerClose;
-                               
-                            }
-                            else if (Int32.Parse(powerClose) != 1 && Whistory == 1) { info.warnState = "3"; Whistory = 0; } else { Whistory = 0; };
-                        }
-                        if (intervalNum2 == 5) {
-                            info.carinterval = "5";
-                        }
-                        if (intervalNum3 == 3)
-                        {
-                            info.houseinterval = "30";
-                        }
-                        if (Int32.Parse(powerClose) == 1)
-                        {
-                            info.sign = "1";
-                        }
-                        else if (Int32.Parse(powerClose) != 1 && Whistory == 1) { info.sign = "3"; Whistory = 0; } else { Whistory = 0; };
-                        lds.Add(info);
-                    }
-                    
-                    if (lds.Count>0) {
-                        ck++;
-                        Thread multiAdd = new Thread(new ThreadStart(addData));
-                        multiAdd.IsBackground = true;
-                        multiAdd.Start();
-                        if (logrizhi == 1)
-                        {
-                            using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:/log.txt", true))
-                            {
-                                sw.WriteLine("开始：" + time111 + "  结束：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "   成功：" + text + "  插入数量：" + lds.Count.ToString() + "  报文数量：" + totalByteRead.Length.ToString());
-                            }
-                        }
-                    }
-                    if (socketserver > 0)
-                    {
-                        socketConnection();//Socket连接
-                        string sendStr = text + "BEBE" + measureCode;
-                        byte[] bs = Encoding.ASCII.GetBytes(sendStr);
-                        sk.Send(bs, bs.Length, 0); //发送信息
-                        sk.Shutdown(SocketShutdown.Both);
-                        sk.Close();
-                    }
-                    totalByteRead = new Byte[0];
-                    doGetDeviceInfo();
-                }
-
-            }
-            catch (Exception ee)
-            {
-            }
-        }
-        private void addData()
-        {
-            adddatas.addData(lds);
-        }
-
-        private string ToDateString(byte[] bytes)
-        {
-            string hexString = DateTime.Now.Year.ToString();
-            if (bytes != null)
-            {
-                StringBuilder strB = new StringBuilder();
-
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    string str_val = bytes[i].ToString();
-                    strB.Append(str_val.Length == 1 ? "0" + str_val : str_val);
-                }
-
-                hexString += strB.ToString() + "00";
-            }
-            return hexString;
-
-        }
-        private int IndexOf(byte[] srcBytes, byte[] searchBytes)
-        {
-            if (srcBytes == null) { return -1; }
-            if (searchBytes == null) { return -1; }
-            if (srcBytes.Length == 0) { return -1; }
-            if (searchBytes.Length == 0) { return -1; }
-            if (srcBytes.Length < searchBytes.Length) { return -1; }
-            for (int i = 0; i < srcBytes.Length - searchBytes.Length; i++)
-            {
-                if (srcBytes[i] == searchBytes[0])
-                {
-                    if (searchBytes.Length == 1) { return i; }
-                    bool flag = true;
-                    for (int j = 1; j < searchBytes.Length; j++)
-                    {
-                        if (srcBytes[i + j] != searchBytes[j])
-                        {
-                            flag = false;
-                            break;
-                        }
-                    }
-                    if (flag) { return i; }
-                }
-            }
-            return -1;
-        }
-        string ToHexString(byte[] bytes)
-        {
-            string hexString = string.Empty;
-            if (bytes != null)
-            {
-                StringBuilder strB = new StringBuilder();
-
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    strB.Append(bytes[i].ToString("X2"));
-                }
-
-                hexString = strB.ToString();
-            }
-            return hexString;
-        }
-
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-  
-
-        /// <summary>
-        /// 查询管理主机下的所有仪表
-        /// </summary>
         private void queryMeterIds()
         {
             string ids = null;
@@ -1077,22 +199,7 @@ namespace LBKJClient
                     ids+=":"+ dtcdinfo.Rows[i][1] + "-" + dtcdinfo.Rows[i][2]; 
                 }
                 mids=ids.Substring(1);
-                //获取-16云数据
-                mydelegate = new MyDelegate(yunpingtaiDatas);
-                mydelegate.BeginInvoke(null, null);
-            }
-            dtcdinfo2 = dis.checkPointInfoRc();
-            if (dtcdinfo2.Rows.Count > 0)
-            {
-                ids = null;
-                for (int i = 0; i < dtcdinfo2.Rows.Count; i++)
-                {
-                    ids += ";" + dtcdinfo2.Rows[i][1];
-                }
-                rcids = ids.Substring(1);
-                //获取RC-10/-8平台数据
-                //yunpingtaiDataRC();
-            }
+            }         
                 if (dtcdinfo1.Rows.Count>0)
             {
                 //首页-查询测点的实时温湿度数据              
@@ -1120,10 +227,6 @@ namespace LBKJClient
             housetime = Int32.Parse(node.InnerText);
             node = xmlDoc.SelectSingleNode("config/log");
             logrizhi = Int32.Parse(node.InnerText);
-            node = xmlDoc.SelectSingleNode("config/autosave02");
-            autosave02 = Int32.Parse(node.InnerText);
-            node = xmlDoc.SelectSingleNode("config/autosave16");
-            autosave16 = Int32.Parse(node.InnerText);
         }
         private bool initPort(string com)
         {
@@ -1203,7 +306,7 @@ namespace LBKJClient
             int kk = 0;
             monitoringservice = new service.rtmonitoringService();
             string timeHouse = DateTime.Now.ToString("yyyy-MM-dd HH") + ":00:00";
-            da =monitoringservice.rtmonitoring(timeHouse);
+            da =monitoringservice.rtmonitoring();
             DataTable dts1 =da.Tables[0];
             DataRow[] dr1 = dts1.Select("powerflag='0'");
             if (dr1.Count() > 0)
@@ -1517,11 +620,6 @@ namespace LBKJClient
                 }
             }
         }
-        private void toolStripLabel1_Click_1(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void 退出系统ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             toolStripLabel7_Click(sender,e);
@@ -1532,7 +630,6 @@ namespace LBKJClient
             if (basicsetup.ShowDialog() == DialogResult.OK)
             {
                 this.timer2.Stop();
-                this.timer3.Stop();
                 frmMain_Load(sender,e);
             }
         }
@@ -1564,27 +661,6 @@ namespace LBKJClient
                 }
             }
         }
-
-        private void 用户登陆ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmLogin login = new frmLogin();
-            login.ShowDialog();
-        }
-
-        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void flowLayoutPanel1_Paint_1(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void toolStripMenuItem5_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
         private void toolStripMenuItem5_Click(object sender, EventArgs e)
         {
             
@@ -1733,17 +809,6 @@ namespace LBKJClient
             }
         }
 
-        private void resizeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStripLabel6_Click(object sender, EventArgs e)
-        {
-            frmLogin login = new frmLogin();
-            login.ShowDialog();
-        }
-
         private void 修改公司名称ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeCompanyName changecompanyname = new ChangeCompanyName();
@@ -1854,7 +919,7 @@ namespace LBKJClient
         {
             int kk = 0;
             string timeHouse = DateTime.Now.ToString("yyyy-MM-dd HH") + ":00:00";
-            da = monitoringservice.rtmonitoring(timeHouse);
+            da = monitoringservice.rtmonitoring();
             DataTable dts1 = da.Tables[0];
             if (dts1.Rows.Count > 0)
             {
@@ -2246,616 +1311,7 @@ namespace LBKJClient
                 }
             }
         }
-        private void timer3_Tick(object sender, EventArgs e)
-        {
-            if (mids!=null && mids.Length > 0) {
-                mydelegate = new MyDelegate(yunpingtaiDatas);
-                mydelegate.BeginInvoke(null, null);
-                //yunpingtaiDatas();
-            }
-
-            if (rcids!=null && rcids.Length>0) {
-                //yunpingtaiDataRC();
-            }
-            
-        }
-        public String getFloat(String floatStr)
-        {
-            float f = 0;
-            if (floatStr == null|| floatStr=="")
-            {
-                return "0";
-            }
-            //异常读数处理
-            if (floatStr.Trim().Equals("F01")|| floatStr.Trim().Equals("9901.0"))
-            {
-                return "0";
-            }
-            int index = floatStr.IndexOf(".");
-            floatStr = float.Parse( floatStr).ToString();  // -6[-60]   6[60]  -16[-160]
-            if (index>-1) {
-                return floatStr;
-            }
-            else {
-                string s1 = floatStr.Substring(0, floatStr.Length - 1);
-                string s2 = floatStr.Last().ToString();
-
-                string s3 = s1 + "." + s2;
-
-                try
-                {
-                    f = float.Parse(s3);
-                }
-                catch (Exception e)
-                {
-                   // throw new Exception(e.Message);
-                }
-            }
-            return f.ToString();
-        }
-
         bean.showReportBean rb = new bean.showReportBean();
-        int wx = 0;
-        private void yunpingtaiDatas()
-        {
-            string ids = "862609000079371-00:862609000078639-00:862609000078845-00:862609000079462-00:862609000081609-00:862609000081518-00:862609000081500-00:862609000081617-00:862609000081625-00:862609000081443-00:862609000081716-00:862609000081567-00:862609000081369-00:862609000081559-00:862609000081682-00:862609000081419-00:862609000081484-00:862609000081476-00:862609000081351-00:862609000081740-00:862609000081773-00:862609000081492-00:862609000081401-00:862609000081831-00";
-            if (mids != null && !"".Equals(mids))
-            {
-                string[] midsArray=mids.Split(':');
-                int midsNo= midsArray.Length;
-
-                if (midsNo < 51)
-                {
-                    try
-                    {
-                        jsons = utils.HttpClient.getDeviceData(mids, ipport);
-                    }
-                    catch (Exception exc)
-                    {                
-                        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        rb.eventInfo = "连接远程服务器异常！";
-                        rb.type = "1";
-                        lls.addReport(rb);
-                    }
-                    if (jsons != null && !"".Equals(jsons) && !"errMsg".Equals(jsons.Substring(2, 6).ToString()))
-                    {
-                        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        rb.eventInfo = "连接远程服务器成功！";
-                        rb.type = "1";
-                        lls.addReport(rb);
-                        list = js.Deserialize<List<bean.dataSerialization>>(jsons);
-
-                        string TarStr1 = "yyyy-MM-dd HH:mm:ss";
-                        string TarStr = "yyMMddHHmmss";
-                        int intervalNum1 = 0;
-                        int intervalNum2 = 0;
-                        int intervalNum3 = 0;
-                        double tt, t1, t2, hh, h1, h2;
-                        IFormatProvider format = new System.Globalization.CultureInfo("zh-CN");
-                        DateTime MyDate;
-                        DateTime MyDate1;
-                        if (list.Count > 0)
-                        {
-                            List<bean.dataSerialization> listed = new List<bean.dataSerialization>();
-                            int history = 0;
-                            int Whistory = 0;
-                            foreach (bean.dataSerialization datas in list)
-                            {
-                                datas.temperature = getFloat(datas.temperature);
-
-                                datas.humidity = getFloat(datas.humidity);
-
-                                if (datas.lng != null && !"".Equals(datas.lng) && datas.lng.Length > 3)
-                                {
-                                    datas.lng = datas.lng.Insert(3, ".");
-                                }
-                                else
-                                {
-                                    datas.lng = "";
-                                }
-                                if (datas.lat != null && !"".Equals(datas.lat) && datas.lat.Length > 3)
-                                {
-                                    datas.lat = datas.lat.Insert(2, ".");
-                                }
-                                else
-                                {
-                                    datas.lat = "";
-                                }
-                                if (datas.devicedate != null && datas.devicedate.Length > 0)
-                                {
-                                    try
-                                    {
-                                        MyDate = DateTime.ParseExact(datas.devicedate, TarStr, format);
-                                    }
-                                    catch (Exception exc)
-                                    {
-                                        MyDate = DateTime.Now;
-                                    }
-                                    datas.devicedate = MyDate.ToString(TarStr1);
-                                    int mm = MyDate.Minute;
-                                    if (mm % 2 == 0)
-                                    {
-                                        intervalNum1 = 2;
-                                    }
-                                    else
-                                    {
-                                        intervalNum1 = 0;
-                                    }
-                                    if (mm % cartime == 0)
-                                    {
-                                        intervalNum2 = 5;
-                                    }
-                                    else
-                                    {
-                                        intervalNum2 = 0;
-                                    }
-                                    if (mm % housetime == 0)
-                                    {
-                                        intervalNum3 = 3;
-                                    }
-                                    else
-                                    {
-                                        intervalNum3 = 0;
-                                    }
-                                }
-                                if (datas.sysdate != null && datas.sysdate.Length > 0)
-                                {
-                                    MyDate1 = DateTime.ParseExact(datas.sysdate, TarStr, format);
-                                    datas.sysdate = MyDate1.ToString(TarStr1);
-                                }
-                                datas.measureMeterCode = datas.managerID + "_" + datas.deviceNum;
-
-
-                                if (wx != 0)
-                                {
-                                    dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode, datas.devicedate);
-                                    if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
-                                    if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
-                                };
-
-
-                                DataRow[] drs = dtcdinfo.Select("measureCode='" + datas.managerID + "' and meterNo='" + datas.deviceNum + "'");
-
-                                tt = Double.Parse(datas.temperature);
-                                t1 = Double.Parse(drs[0]["t_high"].ToString());
-                                t2 = Double.Parse(drs[0]["t_low"].ToString());
-                                hh = Double.Parse(datas.humidity);
-                                h1 = Double.Parse(drs[0]["h_high"].ToString());
-                                h2 = Double.Parse(drs[0]["h_low"].ToString());
-                                string CommunicationType = drs[0]["CommunicationType"].ToString();
-                                if (CommunicationType == "LBCC-16" || CommunicationType == "[管理主机]LB863RSB_N1(LBGZ-02)" || CommunicationType == "LBGZ-04" || CommunicationType == "RC-8/-10")
-                                {
-                                    if (CommunicationType == "LBGZ-04" && datas.charge == "0")
-                                    {
-                                        datas.sign = "1";
-                                        datas.warnState = "1";
-                                    }
-                                    else if (CommunicationType == "LBGZ-04" && datas.charge != "0" && Whistory == 1)
-                                    {
-                                        datas.sign = "3";
-                                        datas.warnState = "3";
-                                        Whistory = 0;
-                                    }
-                                    else
-                                    {
-                                    }
-
-                                    if (CommunicationType == "RC-8/-10" && datas.charge == "0")
-                                    {
-                                        datas.sign = "1";
-                                        datas.warnState = "1";
-                                    }
-                                    else if (CommunicationType == "RC-8/-10" && datas.charge != "0" && Whistory == 1)
-                                    {
-                                        datas.sign = "3";
-                                        datas.warnState = "3";
-                                        Whistory = 0;
-                                    } else
-                                    {
-                                        Whistory = 0;
-                                    }
-
-                                    if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
-                                    {
-                                      datas.warningistrue = "2";
-                                    }
-                                    else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
-                                    {
-                                        datas.warningistrue = "3";
-                                        history = 0;
-                                    }
-                                    else
-                                    {
-                                        datas.warningistrue = "1";
-                                        history = 0;
-                                    }
-                                }
-                                else
-                                {
-                                    if (intervalNum1 == 2)
-                                    {
-                                        if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
-                                        {
-                                           datas.warningistrue = "2";
-                                        }
-                                        else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
-                                        {
-                                            datas.warningistrue = "3";
-                                            history = 0;
-                                        }
-                                        else {
-                                            history = 0;
-                                        }
-                                    }
-                                    if (intervalNum2 == 5)
-                                    {
-                                        datas.carinterval = "5";
-                                    }
-                                    if (intervalNum3 == 3)
-                                    {
-                                        datas.houseinterval = "30";
-                                    }
-                                }
-                                listed.Add(datas);
-                            }
-                            wx++;
-                            adddatas.addData(listed);
-                        }
-                    }
-                }
-                else
-                {
-
-                    int fornum = midsNo / 50 + 1;
-
-                    for (int i = 0; i < fornum; i++)
-                    {
-                        string mid = "";
-                        int endnum = (i + 1) * 50;
-                        if (i == fornum - 1)
-                        {
-                            endnum = i * 50 + (midsNo % 50);
-                        }
-                        for (int j = i * 50; j < endnum; j++)
-                        {
-                            mid += ":" + midsArray[j].ToString();
-                        }
-                        string midnew = mid.Substring(1);
-                        try
-                        {
-                            jsons = utils.HttpClient.getDeviceData(midnew, ipport);
-                        }
-                        catch (Exception exc)
-                        {
-                        }
-
-                        if (jsons != null && !"".Equals(jsons) && !"errMsg".Equals(jsons.Substring(2, 6).ToString()))
-                        {
-                            list = js.Deserialize<List<bean.dataSerialization>>(jsons);
-
-                            string TarStr1 = "yyyy-MM-dd HH:mm:ss";
-                            string TarStr = "yyMMddHHmmss";
-                            int intervalNum1 = 0;
-                            int intervalNum2 = 0;
-                            int intervalNum3 = 0;
-                            double tt, t1, t2, hh, h1, h2;
-                            IFormatProvider format = new System.Globalization.CultureInfo("zh-CN");
-                            DateTime MyDate;
-                            DateTime MyDate1;
-                            if (list.Count > 0)
-                            {
-                                List<bean.dataSerialization> listed = new List<bean.dataSerialization>();
-                                int history = 0;
-                                int Whistory = 0;
-
-                                foreach (bean.dataSerialization datas in list)
-                                {
-                                    datas.temperature = getFloat(datas.temperature);
-
-                                    datas.humidity = getFloat(datas.humidity);
-
-                                    if (datas.lng != null && !"".Equals(datas.lng) && datas.lng.Length > 3)
-                                    {
-                                        datas.lng = datas.lng.Insert(3, ".");
-                                    }
-                                    else
-                                    {
-                                        datas.lng = "";
-                                    }
-                                    if (datas.lat != null && !"".Equals(datas.lat) && datas.lat.Length > 3)
-                                    {
-                                        datas.lat = datas.lat.Insert(2, ".");
-                                    }
-                                    else
-                                    {
-                                        datas.lat = "";
-                                    }
-                                    if (datas.devicedate != null && datas.devicedate.Length > 0)
-                                    {
-                                        try
-                                        {
-                                            MyDate = DateTime.ParseExact(datas.devicedate, TarStr, format);
-                                        }
-                                        catch (Exception exc)
-                                        {
-                                            continue;
-                                        }
-                                        datas.devicedate = MyDate.ToString(TarStr1);
-                                        int mm = MyDate.Minute;
-                                        if (mm % 2 == 0)
-                                        {
-                                            intervalNum1 = 2;
-                                        }
-                                        else
-                                        {
-                                            intervalNum1 = 0;
-                                        }
-                                        if (mm % cartime == 0)
-                                        {
-                                            intervalNum2 = 5;
-                                        }
-                                        else
-                                        {
-                                            intervalNum2 = 0;
-                                        }
-                                        if (mm % housetime == 0)
-                                        {
-                                            intervalNum3 = 3;
-                                        }
-                                        else
-                                        {
-                                            intervalNum3 = 0;
-                                        }
-                                    }
-                                    if (datas.sysdate != null && datas.sysdate.Length > 0)
-                                    {
-                                        MyDate1 = DateTime.ParseExact(datas.sysdate, TarStr, format);
-                                        datas.sysdate = MyDate1.ToString(TarStr1);
-                                    }
-                                    datas.measureMeterCode = datas.managerID + "_" + datas.deviceNum;
-                                    dtB = adddatas.checkLastRecordBIsOr(datas.measureMeterCode, datas.devicedate);
-                                    if (dtB.Rows[0][1].ToString() == "1") { Whistory = 1; } else { Whistory = 0; };
-                                    if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
-
-                                    DataRow[] drs = dtcdinfo.Select("measureCode='" + datas.managerID + "' and meterNo='" + datas.deviceNum + "'");
-                                    tt = Double.Parse(datas.temperature);
-                                    t1 = Double.Parse(drs[0]["t_high"].ToString());
-                                    t2 = Double.Parse(drs[0]["t_low"].ToString());
-                                    hh = Double.Parse(datas.humidity);
-                                    h1 = Double.Parse(drs[0]["h_high"].ToString());
-                                    h2 = Double.Parse(drs[0]["h_low"].ToString());
-                                    string CommunicationType = drs[0]["CommunicationType"].ToString();
-                                    if (CommunicationType == "LBCC-16" || CommunicationType == "[管理主机]LB863RSB_N1(LBGZ-02)" || CommunicationType == "LBGZ-04" || CommunicationType == "RC-8/-10")
-                                    {
-                                        if (CommunicationType == "LBGZ-04" && datas.charge == "0")
-                                        {
-                                            datas.sign = "1";
-                                            datas.warnState = "1";
-                                        }
-                                        else if (CommunicationType == "LBGZ-04" && datas.charge != "0" && Whistory == 1)
-                                        {
-                                            datas.sign = "3";
-                                            datas.warnState = "3";
-                                            Whistory = 0;
-                                        }
-                                        else
-                                        {                                         
-                                        }
-
-
-                                        if (CommunicationType == "RC-8/-10" && datas.charge == "0")
-                                        {
-                                            datas.sign = "1";
-                                            datas.warnState = "1";
-                                        }
-                                        else if (CommunicationType == "RC-8/-10" && datas.charge != "0" && Whistory == 1)
-                                        {
-                                            datas.sign = "3";
-                                            datas.warnState = "3";
-                                            Whistory = 0;
-                                        }
-                                        else
-                                        {
-                                            Whistory = 0;
-                                        }
-
-                                        if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
-                                            {
-                                              datas.warningistrue = "2";                                                
-                                            }
-                                            else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
-                                            {
-                                                datas.warningistrue = "3";
-                                                history = 0;
-                                            }
-                                            else
-                                            {
-                                                datas.warningistrue = "1";
-                                                 history = 0;
-                                             }
-                                    }
-                                    else
-                                    {
-                                        if (intervalNum1 == 2)
-                                        {
-                                            if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
-                                            {
-                                                    datas.warningistrue = "2";
-                                            }
-                                            else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
-                                            {
-                                                datas.warningistrue = "3";
-                                                history = 0;
-                                            }
-                                            else
-                                            {
-                                                history = 0;
-                                            }
-                                        }
-                                        if (intervalNum2 == 5)
-                                        {
-                                            datas.carinterval = "5";
-                                        }
-                                        if (intervalNum3 == 3)
-                                        {
-                                            datas.houseinterval = "30";
-                                        }
-                                    }
-                                    listed.Add(datas);
-                                }
-                                adddatas.addData(listed);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        //private void yunpingtaiDataRC()
-        //{
-        //    List<bean.dataSerialization> lstData = new List<bean.dataSerialization>();
-        //    string url = "cdc.anquan365.org:8080/api/searchDevCurrentStateList.action?devGroupCode=1014000100030008&bm_dcs$device$devNum_orstr=" + rcids;
-        //    try
-        //    {
-        //        string ret = utils.HttpClient.getDeviceData("", url);
-        //        if (ret.Length > 0)
-        //        {
-        //            JavaScriptSerializer js = new JavaScriptSerializer();
-        //            var jarr = js.Deserialize<Dictionary<string, object>>(ret);
-        //            string str_code = "";
-        //            ArrayList dcsvoList = new ArrayList(); ;
-        //            foreach (var j in jarr)
-        //            {
-        //                if (j.Key.Equals("jsonCode"))
-        //                    str_code = j.Value.ToString();
-        //                else if (j.Key.Equals("dcsvoList"))
-        //                {
-        //                    string str_v = js.Serialize(j.Value);
-        //                    dcsvoList = (ArrayList)j.Value;
-        //                }
-        //            }
-
-        //            if (str_code.Equals("200"))
-        //            {
-        //                int history = 0;
-        //                foreach (object outElement in dcsvoList)
-        //                {
-        //                    string str = js.Serialize(outElement);
-        //                    string temper = "";
-        //                    string rh = "";
-        //                    string rdate = "";
-        //                    string maaagerid = "";
-
-        //                    jarr = js.Deserialize<Dictionary<string, object>>(str);
-        //                    foreach (var j in jarr)
-        //                    {
-        //                        if (j.Key.Equals("currentTempdata"))
-        //                            temper = j.Value.ToString();
-        //                        else if (j.Key.Equals("currentRhdata"))
-        //                            rh = j.Value.ToString();
-        //                        else if (j.Key.Equals("lastReportTime"))
-        //                            rdate = j.Value.ToString();
-        //                        else if (j.Key.Equals("device"))
-        //                        {
-        //                            Dictionary<string, object> dic = (Dictionary<string, object>)j.Value;
-        //                            foreach (var k in dic)
-        //                            {
-        //                                maaagerid = k.Value.ToString();
-        //                            }
-        //                        }
-        //                    }
-        //                    bean.dataSerialization devInfo = new bean.dataSerialization();
-        //                    devInfo.temperature = temper;
-        //                    devInfo.humidity = rh;
-        //                    devInfo.devicedate = rdate;
-        //                    devInfo.managerID = maaagerid;
-        //                    devInfo.deviceNum = "00";
-        //                    devInfo.sysdate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");       
-        //                    devInfo.measureMeterCode = devInfo.managerID + "_" + devInfo.deviceNum;
-
-
-        //                    dtB = adddatas.checkLastRecordBIsOr(devInfo.measureMeterCode);
-        //                    if (dtB.Rows[0][2].ToString() == "2") { history = 2; } else { history = 0; };
-        //                    DataRow[] drs = dtcdinfo.Select("measureCode='" + devInfo.managerID + "' and meterNo='" + devInfo.deviceNum + "'");
-        //                    Double tt = Double.Parse(devInfo.temperature);
-        //                    Double t1 = Double.Parse(drs[0]["t_high"].ToString());
-        //                    Double t2 = Double.Parse(drs[0]["t_low"].ToString());
-        //                    Double hh = Double.Parse(devInfo.humidity);
-        //                    Double h1 = Double.Parse(drs[0]["h_high"].ToString());
-        //                    Double h2 = Double.Parse(drs[0]["h_low"].ToString());
-
-        //                    if (tt > t1 || tt < t2 || hh > h1 || hh < h2)
-        //                    {
-        //                        devInfo.warningistrue = "2";                                
-        //                    }
-        //                    else if (tt < t1 && tt > t2 && hh < h1 && hh > h2 && history == 2)
-        //                    {
-        //                        devInfo.warningistrue = "3";
-        //                        history = 0;
-        //                    }
-        //                    else
-        //                    {
-        //                        history = 0;
-        //                    }
-        //                    devInfo.carinterval = "5";
-        //                    lstData.Add(devInfo);
-        //                }
-        //                adddatas.addData(lstData);
-        //            }
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //    }
-        //    finally
-        //    { }
-
-
-        //}
-        private void doGetDeviceInfo()
-        {
-            if (port.IsOpen)
-            {
-                try
-                {
-                    if (dtCom != null && dtCom.Rows.Count > 0)
-                    {
-                        if (comnum < dtCom.Rows.Count)
-                        {
-                            string address = dtCom.Rows[comnum][2].ToString();
-                            byte[] byteSend = getCRC(address);
-                            measureCode = dtCom.Rows[comnum][7].ToString();
-                            totalByteRead = new Byte[0];
-                            port.Write(byteSend, 0, byteSend.Length);
-                            comnum += 1;
-                        }
-                        else
-                        {
-                            port.Close();
-                            comnum = 0;
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    
-                }
-            }
-            else
-            {
-                try
-                {
-                    //if (istrueport)
-                    //{
-                        if(initPort(result[1]))
-                        doGetDeviceInfo();
-                    //}
-                }
-                catch (Exception e)
-                {
-                }
-            }
-        }
         //根据管理主机唯一地址  计算出校验码的请求数据
         private byte[] getCRC(string text)
         {
@@ -2872,18 +1328,6 @@ namespace LBKJClient
             byteSends[9] = (byte)Convert.ToInt32("0x" + xx.Substring(0, 2), 16);
             byteSends[10] = (byte)Convert.ToInt32("0x" + xx.Substring(2), 16);
             return byteSends;
-        }
-        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (port.IsOpen)
-            {
-                port.Close();
-               
-            }  
-        }
-        private void timerGetdeviceinfo_Tick(object sender, EventArgs e)
-        {
-            doGetDeviceInfo();
         }
 
         private void 查询ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2907,14 +1351,6 @@ namespace LBKJClient
             this.timer2.Stop();
             queryMeterIds();
             this.timer2.Start();
-            //重新加载本页面
-            if (result != null&&result[0] == "1")
-            {
-                this.timerGetdeviceinfo.Stop();
-                dtCom = mhs.queryManageHostCom();
-                timerGetdeviceinfo_Tick(sender, e);
-                this.timerGetdeviceinfo.Start();
-            }
         }
         private void 测点属性设置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2932,14 +1368,6 @@ namespace LBKJClient
                 this.timer2.Stop();
                 queryMeterIds();
                 this.timer2.Start();
-                //重新加载本页面
-                if (result!=null&& result[0] == "1")
-                {
-                    this.timerGetdeviceinfo.Stop();
-                    dtCom = mhs.queryManageHostCom();
-                    timerGetdeviceinfo_Tick(sender, e);
-                    this.timerGetdeviceinfo.Start();
-                }
                 }
             }
             else
@@ -3070,7 +1498,6 @@ namespace LBKJClient
             {
                 //MessageBox.Show("恢复数据库成功!");
                 this.timer2.Stop();
-                this.timer3.Stop();
                 frmMain_Load(sender, e);
                 
             }
@@ -3193,18 +1620,6 @@ namespace LBKJClient
         private void timer5_Tick(object sender, EventArgs e)
         {
             int vv = 1;
-            //int[] keyHandles = new int[8];
-            //int[] keyNumber = new int[8];
-            //SmartApp smart = new SmartApp();
-            //vv = smart.SmartX1Find("GSPAutoMonitor", keyHandles, keyNumber);
-            //if (IntPtr.Size == 4)
-            //{
-            //    vv = NT88_X86.NTFindFirst("longbangrj716");
-            //}
-            //else
-            //{
-            //    vv = NT88_X64.NTFindFirst("longbangrj716");
-            //}
             if (vv != 0)
             {
                 MessageBox.Show("系统未检测到软件加密锁，软件将自动退出！请插入软件加密锁重新打开软件！");
@@ -3462,27 +1877,6 @@ namespace LBKJClient
         {
             showReport rp = new showReport();
             rp.ShowDialog();
-        }
-
-        private void 数据同步ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            dataSynchronous dsh = new dataSynchronous();
-            dsh.ShowDialog();
-        }
-        private void socketConnection()
-        {
-            try
-            {
-                //创建终结点EndPoint
-                IPAddress ip = IPAddress.Parse(Properties.Settings.Default.ip);
-                IPEndPoint ipe = new IPEndPoint(ip, Int32.Parse(Properties.Settings.Default.port));   //把ip和端口转化为IPEndPoint的实例                                          
-                sk = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);   //  创建Socket
-                sk.Connect(ipe); //连接到服务器
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
         }
         // mysql数据库手动备份
         public void DoBackupNoauto(string host, string port, string user, string password, string database, string filepath)
