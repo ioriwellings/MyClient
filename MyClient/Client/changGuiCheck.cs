@@ -268,7 +268,7 @@ namespace LBKJClient
                             dt = dv.ToTable(true);
                             dt.Columns.Remove("carinterval");
                             dt.Columns.Remove("houseinterval");
-                            dt.Columns.Remove("measureNo");
+                            //dt.Columns.Remove("measureNo");
                             DataTable dt1 = dv.ToTable(true, "measureMeterCode");
                             for (int i = 0; i < dt1.Rows.Count; i++)
                             {
