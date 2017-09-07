@@ -112,7 +112,6 @@ C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.ad
 C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.convenientSet.resources
 C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.dataBackUpSet.resources
 C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.dataReduction.resources
-C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.dataSynchronous.resources
 C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.Exit.resources
 C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.houseCheckInfo.resources
 C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.houseManage.resources
@@ -125,7 +124,6 @@ C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.me
 C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.measurePointSetPropert.resources
 C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.PagerControl.resources
 C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.passWordUpdate.resources
-C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.readHistoryData.resources
 C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.showReport.resources
 C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.SplashScreen.resources
 C:\Users\clark\Source\Repos\MyClient\MyClient\Client\obj\x86\Debug\LBKJClient.updateHouseManage.resources
