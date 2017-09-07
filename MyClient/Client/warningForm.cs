@@ -199,7 +199,7 @@ namespace LBKJClient
                 iTextSharp.text.Font font = new iTextSharp.text.Font(baseFT, 10);//内容字体
 
                 //标题
-                Paragraph pdftitle = new Paragraph("报警数据查询结果", fonttitle);
+                Paragraph pdftitle = new Paragraph(frmMain.companyName + "报警数据查询结果" + "\r\n" + "(" + time1 + "-" + time2 + ")", fonttitle);
                 pdftitle.Alignment = 1;
                 doc.Add(pdftitle);
                 //标题和内容间的空白行
