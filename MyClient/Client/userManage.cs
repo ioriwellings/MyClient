@@ -31,7 +31,10 @@ namespace LBKJClient
             dd.Columns.Add("neir", typeof(string));
             foreach (DataRow rows in dd.Rows)
             {
-                if (rows[1].ToString() == "user")
+                if (rows[1].ToString() == "admin") {
+                    rows["neir"] = "超级用户";
+                } else
+                if (rows[1].ToString() == "user") 
                 {
                     rows["neir"] = "管理员";
                 }

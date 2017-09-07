@@ -216,7 +216,11 @@ namespace LBKJClient
         }
         private void label2_Click(object sender, EventArgs e)
         {
-            DataTable dtss= dtcount.Copy();
+            if (dtcount==null || dtcount.Rows.Count < 1)
+            {
+                return;
+            }
+            DataTable dtss = dtcount.Copy();
             if (dtss != null&& dtcount.Rows.Count>0)
             {
                 dtss.Columns.Remove("warnState");
