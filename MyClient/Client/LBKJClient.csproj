@@ -370,10 +370,6 @@
     <Compile Include="service\rtmonitoringService.cs" />
     <Compile Include="service\UserService.cs" />
     <Compile Include="service\warningCheckService.cs" />
-    <Compile Include="SQLiteHelper\SQLiteColumn.cs" />
-    <Compile Include="SQLiteHelper\SQLiteColumnList.cs" />
-    <Compile Include="SQLiteHelper\SQLiteHelper.cs" />
-    <Compile Include="SQLiteHelper\SQLiteTable.cs" />
     <Compile Include="updateUser.cs">
       <SubType>Form</SubType>
     </Compile>

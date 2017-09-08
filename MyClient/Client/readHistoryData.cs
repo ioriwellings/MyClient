@@ -68,6 +68,7 @@ namespace LBKJClient
                 totalByteRead = totalByteRead.Concat(byteRead).ToArray();
                 if (totalByteRead.Length > 10)
                 {
+                   
                     byte[] crcByte = totalByteRead.Skip(2).Take(totalByteRead.Length - 4).ToArray();
                     uint crcRet = CRC1.calcrc16(crcByte, (uint)crcByte.Length);
                     uint crcSource = (uint)(totalByteRead[totalByteRead.Length - 2] << 8 | totalByteRead[totalByteRead.Length - 1]);
