@@ -110,7 +110,6 @@ C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\bin\x8
 C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\bin\x86\Release\itextsharp.dll
 C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\bin\x86\Release\MySql.Data.dll
 C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\bin\x86\Release\System.Data.SQLite.dll
-C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\obj\x86\Release\LBKJClient.csprojResolveAssemblyReference.cache
 C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\obj\x86\Release\LBKJClient.About.resources
 C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\obj\x86\Release\LBKJClient.addUser.resources
 C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\obj\x86\Release\LBKJClient.convenientSet.resources
