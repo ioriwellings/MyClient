@@ -309,7 +309,9 @@ namespace LBKJClient
                         time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     }
                     //wh.textBox2.Text = time;
-                    wh.dateTimePicker1.Value =Convert.ToDateTime(time);
+                    //wh.dateTimePicker1.Value =Convert.ToDateTime(time);
+                    wh.dateTimePicker1.Value = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+
                     wh.textBox5.Text = this.dataGridView1.SelectedRows[0].Cells[2].Value.ToString() + "_" + this.dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
                 if (wh.ShowDialog() == DialogResult.OK)
                 {
@@ -344,7 +346,8 @@ namespace LBKJClient
                     wh.label2.Text = frmLogin.name;
                     wh.textBox1.Text = time;
                     //wh.textBox2.Text = dtw.Rows[0][3].ToString();
-                    wh.dateTimePicker1.Value= Convert.ToDateTime(dtw.Rows[0][3].ToString());
+                    //wh.dateTimePicker1.Value= Convert.ToDateTime(dtw.Rows[0][3].ToString());
+                    wh.dateTimePicker1.Value = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                     wh.textBox3.Text = dtw.Rows[0][4].ToString();
                     wh.textBox4.Text = dtw.Rows[0][5].ToString();
                     wh.richTextBox1.Text = dtw.Rows[0][6].ToString();
