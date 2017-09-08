@@ -1620,6 +1620,18 @@ namespace LBKJClient
         private void timer5_Tick(object sender, EventArgs e)
         {
             int vv = 1;
+            //int[] keyHandles = new int[8];
+            //int[] keyNumber = new int[8];
+            //SmartApp smart = new SmartApp();
+            //vv = smart.SmartX1Find("GSPAutoMonitor", keyHandles, keyNumber);
+            if (IntPtr.Size == 4)
+            {
+                vv = NT88_X86.NTFindFirst("longbangrj716");
+            }
+            else
+            {
+                vv = NT88_X64.NTFindFirst("longbangrj716");
+            }
             if (vv != 0)
             {
                 MessageBox.Show("系统未检测到软件加密锁，软件将自动退出！请插入软件加密锁重新打开软件！");
