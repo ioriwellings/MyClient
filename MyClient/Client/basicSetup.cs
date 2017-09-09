@@ -32,86 +32,10 @@ namespace LBKJClient
             //this.comboBox4.SelectedItem = (Int32.Parse(datasavetime) / 60).ToString();
             //this.comboBox1.SelectedItem = result[1];
             //this.comboBox4.SelectedItem = result[1];
-
-            string[] ArryPort = System.IO.Ports.SerialPort.GetPortNames();
-            this.comboBox5.Items.Clear();
-            if (ArryPort.Length > 0)
-            {
-                for (int i = 0; i < ArryPort.Length; i++)
-                {
-                    this.comboBox5.Items.Add(ArryPort[i]);
-                }
-            }
-            if (getresults != "" && !"".Equals(getresults))
-            {
-                string[] result = getresults.Split('-');
-                if (result[0] == "1")
-                {
-                    this.comboBox5.Items.Add(result[1]);
-                    this.radioButton1.Checked = true;
-                    this.comboBox5.SelectedItem = result[1];
-                    //this.comboBox5.SelectedIndex =Int32.Parse(result[1].Substring(3))-1;
-                    this.textBox1.Enabled = false;
-                    this.textBox2.Enabled = false;
-                    this.numericUpDown3.Enabled = false;
-                    this.numericUpDown4.Enabled = false;
-                }
-                if (result[0] == "2")
-                {
-                    this.radioButton2.Checked = true;
-                    this.textBox1.Text = result[1];
-                    this.numericUpDown3.Value = Convert.ToInt32(result[2]);
-                    this.comboBox5.Enabled = false;
-                    this.textBox2.Enabled = false;
-                    this.numericUpDown4.Enabled = false;
-                }
-                if (result[0] == "3")
-                {
-                    this.radioButton3.Checked = true;
-                    this.textBox2.Text = result[1];
-                    this.numericUpDown4.Value = Convert.ToInt32(result[2]);
-                    this.comboBox5.Enabled = false;
-                    this.textBox1.Enabled = false;
-                    this.numericUpDown3.Enabled = false;
-
-                }
-            }
-            else
-            {
-                this.comboBox5.Enabled = false;
-                this.textBox1.Enabled = false;
-                this.textBox2.Enabled = false;
-                this.numericUpDown3.Enabled = false;
-                this.numericUpDown4.Enabled = false;
-            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (this.radioButton1.Checked)
-            {
-                string aa = this.radioButton1.Tag.ToString();
-                string txxy = this.comboBox5.SelectedItem.ToString();
-                saveToXmlsStoptime(aa + "-" + txxy);
-
-            }
-            else if (this.radioButton2.Checked)
-            {
-                string ipnum = this.textBox1.Text;
-                string aa = this.radioButton2.Tag.ToString();
-                string port = this.numericUpDown3.Value.ToString();
-                saveToXmlsStoptime(aa + "-" + ipnum + "-" + port);
-
-            }
-            else if (this.radioButton3.Checked)
-            {
-                string aa = this.radioButton3.Tag.ToString();
-                string ipnum = this.textBox2.Text;
-                string port = this.numericUpDown4.Value.ToString();
-                saveToXmlsStoptime(aa + "-" + ipnum + "-" + port);
-
-            }
-
             string datasxtime=this.numericUpDown1.Value.ToString();
             string timetype=this.comboBox1.Text;
             if ("秒".Equals(timetype))
@@ -229,40 +153,6 @@ namespace LBKJClient
             node.InnerText = time;
             xmlDoc.Save(path);
 
-        }
-        private void radioButton1_Click(object sender, EventArgs e)
-        {
-            if (this.radioButton1.Checked) {
-                this.comboBox5.Enabled = true;
-                this.textBox1.Enabled = false;
-                this.textBox2.Enabled = false;
-                this.numericUpDown3.Enabled = false;
-                this.numericUpDown4.Enabled = false;
-            }
-        }
-
-        private void radioButton2_Click(object sender, EventArgs e)
-        {
-            if (this.radioButton2.Checked)
-            {
-                this.textBox1.Enabled = true;
-                this.numericUpDown3.Enabled = true;
-                this.comboBox5.Enabled = false;
-                this.textBox2.Enabled = false;
-                this.numericUpDown4.Enabled = false;
-            }
-        }
-
-        private void radioButton3_Click(object sender, EventArgs e)
-        {
-            if (this.radioButton3.Checked)
-            {
-                this.comboBox5.Enabled = false;
-                this.textBox1.Enabled = false;
-                this.numericUpDown3.Enabled = false;
-                this.textBox2.Enabled = true;
-                this.numericUpDown4.Enabled = true;
-            }
         }
     }
 }
