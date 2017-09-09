@@ -61,7 +61,11 @@ namespace LBKJClient
                     lb.name = name;
                     lb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     lb.eventInfo = "登录系统！";
+                if(name != "admin" && name != "")
+                {
                     lls.addCheckLog(lb);
+                }
+                   
                     this.Hide();
                     frmMain main = new frmMain();
                     main.hulie = 0;
@@ -200,7 +204,10 @@ namespace LBKJClient
                 lb.name = name;
                 lb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 lb.eventInfo = "登录系统！";
-                lls.addCheckLog(lb);
+                if (name != "admin" && name != "") {
+                    lls.addCheckLog(lb);
+                }
+                    
                 SplashScreen.CloseSplashScreen();
                 this.Hide();
                 frmMain main = new frmMain();
