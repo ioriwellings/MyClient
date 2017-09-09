@@ -47,11 +47,15 @@ namespace LBKJClient
                     mh.tcp_ip_Port = this.textBox1.Text + ":" + this.numericUpDown3.Value.ToString();
                     mh.networkType = "TCP";
                 }
-                else {
+                else if (this.radioButton4.Checked)
+                {
                     mh.hostAddress = "";
                     mh.serialPort = "";
                     mh.tcp_ip_Port = "";
                     mh.networkType = "YUN";
+                }else{
+                    MessageBox.Show("请选择通讯方式");
+                    return;
                 }
 
                 if (this.textBox2.Text != null && !"".Equals(this.textBox2.Text))

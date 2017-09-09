@@ -43,12 +43,15 @@ namespace LBKJClient
                     mh.serialPort = "";
                     mh.networkType = "TCP";
                 }
-                else
+                else if (this.radioButton3.Checked)
                 {
                     mh.hostAddress = "";
                     mh.serialPort = "";
                     mh.tcp_ip_Port = "";
                     mh.networkType = "YUN";
+                }else{
+                    MessageBox.Show("请选择通讯方式");
+                    return;
                 }
                 istrue = mhs.updateManageHost(mh);
                 this.DialogResult = DialogResult.OK;

@@ -62,6 +62,7 @@
             this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -256,7 +257,7 @@
             // 
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(153, 403);
+            this.button1.Location = new System.Drawing.Point(148, 444);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 25);
             this.button1.TabIndex = 2;
@@ -267,7 +268,7 @@
             // 
             this.button2.FlatAppearance.BorderSize = 0;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(432, 403);
+            this.button2.Location = new System.Drawing.Point(428, 444);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 25);
             this.button2.TabIndex = 3;
@@ -276,6 +277,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.radioButton4);
             this.groupBox3.Controls.Add(this.numericUpDown5);
             this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.textBox4);
@@ -295,7 +297,7 @@
             this.groupBox3.Controls.Add(this.radioButton1);
             this.groupBox3.Location = new System.Drawing.Point(10, 203);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(639, 173);
+            this.groupBox3.Size = new System.Drawing.Size(639, 205);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "通讯设置";
@@ -329,7 +331,7 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(171, 187);
+            this.textBox4.Location = new System.Drawing.Point(187, 214);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(143, 21);
             this.textBox4.TabIndex = 32;
@@ -338,7 +340,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label11.Location = new System.Drawing.Point(338, 190);
+            this.label11.Location = new System.Drawing.Point(336, 223);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(53, 12);
             this.label11.TabIndex = 30;
@@ -346,7 +348,7 @@
             // 
             // numericUpDown4
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(397, 185);
+            this.numericUpDown4.Location = new System.Drawing.Point(407, 221);
             this.numericUpDown4.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -365,7 +367,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label12.Location = new System.Drawing.Point(106, 194);
+            this.label12.Location = new System.Drawing.Point(106, 217);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(59, 12);
             this.label12.TabIndex = 29;
@@ -375,7 +377,7 @@
             // 
             this.radioButton3.AutoSize = true;
             this.radioButton3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.radioButton3.Location = new System.Drawing.Point(29, 192);
+            this.radioButton3.Location = new System.Drawing.Point(29, 215);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(71, 16);
             this.radioButton3.TabIndex = 28;
@@ -475,11 +477,22 @@
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
+            // radioButton4
+            // 
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Location = new System.Drawing.Point(34, 172);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(59, 16);
+            this.radioButton4.TabIndex = 35;
+            this.radioButton4.TabStop = true;
+            this.radioButton4.Text = "云平台";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            // 
             // addManageHost
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(661, 435);
+            this.ClientSize = new System.Drawing.Size(661, 481);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -540,5 +553,6 @@
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.NumericUpDown numericUpDown5;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.RadioButton radioButton4;
     }
 }

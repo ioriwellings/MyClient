@@ -198,7 +198,7 @@ namespace LBKJClient.dao
                 sql = "select b.measureCode,b.meterNo,b.terminalname,CONCAT(b.measureCode,'_', b.meterNo) AS measureMeterCode from lb_device_information b where 1 = 1 and  b.measureCode || '_'|| b.meterNo='" + code + "'";
             }
             else {
-                sql = "select b.measureCode,b.meterNo,b.terminalname,CONCAT(b.measureCode,'_', b.meterNo) AS measureMeterCode from lb_device_information b where 1 = 1";
+                sql = "select b.measureCode,b.meterNo,b.terminalname,CONCAT(b.measureCode,'_', b.meterNo) AS measureMeterCode from lb_device_information b where 1 = 1  order by  b.measureCode,b.meterNo";
             }
             ds = DbHelperMySQL.Query(sql);
             return ds;

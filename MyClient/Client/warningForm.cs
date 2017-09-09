@@ -384,7 +384,7 @@ namespace LBKJClient
                 int powerwarn = 0;
 
                 DataView dv = dt.DefaultView;//虚拟视图
-                dv.Sort = "measureCode,meterNo,devtime asc";
+                dv.Sort = "devtime,measureCode,meterNo asc";
                 DataTable dts = dv.ToTable(true);
                 this.dataGridView1.DataSource = dts.DefaultView;
 
