@@ -36,7 +36,14 @@ namespace LBKJClient
                 if (this.radioButton1.Checked)
                 {
                     mh.hostAddress = this.numericUpDown2.Value.ToString();
-                    mh.serialPort = this.comboBox5.SelectedItem.ToString();
+                    if (this.comboBox5.Text != "")
+                    {
+                        mh.serialPort = this.comboBox5.SelectedItem.ToString();
+                    }
+                    else {
+                        MessageBox.Show("请选择端口");
+                        return;
+                    }
                     mh.tcp_ip_Port = "";
                     mh.networkType = "COM";
                 }

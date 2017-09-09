@@ -34,7 +34,9 @@ namespace LBKJClient.dao
             if (ret > 0)
             {
                 string sql1 = "delete from lb_device_information where measureCode = '" + code + "'";
+                string sql2 = "delete from lb_base_data_home where measureCode = '" + code + "';delete from data_home where measureCode = '" + code + "';delete from lb_warning_data where measureCode = '" + code + "'";
                 cd = DbHelperMySQL.ExecuteSql(sql1);
+                DbHelperMySQL.ExecuteSql(sql2);
             }
             return cd == 0 ? false : true;
         }

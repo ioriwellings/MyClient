@@ -11,7 +11,7 @@ namespace LBKJClient.dao
         {
             ds = new DataSet();
             ds.Clear();
-            String sql = "select b.measureCode,b.meterNo,a.temperature,a.humidity,max(datetime(a.devtime)) devtime,b.terminalname,b.t_high,b.t_low,b.h_high,b.h_low,a.warnState,a.sign,a.measureMeterCode,b.housetype,b.powerflag from lb_device_information b left join lb_base_data_home a on a.measureCode=b.measureCode and a.meterNo=b.meterNo join lb_managehost_info m on b.measureCode=m.measureCode group by b.measureCode,b.meterNo order by m.createTime,b.measureCode,b.meterNo";
+            String sql = "select b.measureCode,b.meterNo,a.temperature,a.humidity,devtime,b.terminalname,b.t_high,b.t_low,b.h_high,b.h_low,a.warnState,a.sign,a.measureMeterCode,b.housetype,b.powerflag from lb_device_information b left join lb_base_data_home a on a.measureCode=b.measureCode and a.meterNo=b.meterNo join lb_managehost_info m on b.measureCode=m.measureCode order by m.createTime,b.measureCode,b.meterNo";
             ds = DbHelperMySQL.Query(sql);
             return ds;
         }
