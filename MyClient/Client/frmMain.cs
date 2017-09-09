@@ -1230,7 +1230,7 @@ namespace LBKJClient
                                 }
                             }
                         }
-                        if (ddbj != null && !"".Equals(ddbj))
+                        if (ddbj == "1")
                         {   //右下角断电报警图标
                             r = new Rectangle(670, 490, ddbjImage.Width, ddbjImage.Height);
                             gg.DrawImage(ddbjImage, r.Right, r.Bottom, ddbjImage.Width, ddbjImage.Height);
