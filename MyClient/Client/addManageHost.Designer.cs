@@ -205,12 +205,10 @@
             this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
-            "[管理主机]LB863RSB_N1(LBGZ-02)",
-            "LBGZ-04",
-            "LBCC-16",
-            "RC-8/-10",
-            "LB410D",
-            "LB410H"});
+            "串口通讯协议",
+            "TCP协议",
+            "云平台协议-01",
+            "云平台协议-00"});
             this.comboBox2.Location = new System.Drawing.Point(122, 28);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(177, 20);

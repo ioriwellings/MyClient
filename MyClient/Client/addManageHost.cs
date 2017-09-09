@@ -36,14 +36,7 @@ namespace LBKJClient
                 if (this.radioButton1.Checked)
                 {
                     mh.hostAddress = this.numericUpDown2.Value.ToString();
-                    if (this.comboBox5.Text != "")
-                    {
-                        mh.serialPort = this.comboBox5.SelectedItem.ToString();
-                    }
-                    else {
-                        MessageBox.Show("请选择端口");
-                        return;
-                    }
+                    mh.serialPort = this.comboBox5.Text;
                     mh.tcp_ip_Port = "";
                     mh.networkType = "COM";
                 }
@@ -51,7 +44,7 @@ namespace LBKJClient
                 {
                     mh.hostAddress = this.numericUpDown5.Value.ToString();
                     mh.serialPort = "";
-                    mh.tcp_ip_Port = this.textBox1.Text + ":" + this.numericUpDown3.Value.ToString();
+                    mh.tcp_ip_Port = this.textBox3.Text + ":" + this.numericUpDown3.Value.ToString();
                     mh.networkType = "TCP";
                 }
                 else if (this.radioButton4.Checked)
@@ -111,16 +104,31 @@ namespace LBKJClient
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.comboBox2.SelectedItem.ToString() != "[管理主机]LB863RSB_N1(LBGZ-02)")
+            if (this.comboBox2.SelectedItem.ToString() == "串口通讯协议")
+            {
+                this.radioButton1.Checked = true;
+                this.radioButton2.Checked = false;
+                this.radioButton4.Checked = false;
+                this.radioButton1.Enabled = true;
+                this.radioButton2.Enabled = false;
+                this.radioButton4.Enabled = false;
+            }
+            else if (this.comboBox2.SelectedItem.ToString() == "TCP协议")
             {
                 this.radioButton1.Checked = false;
-                this.radioButton2.Checked = false;
+                this.radioButton2.Checked = true;
+                this.radioButton4.Checked = false;
                 this.radioButton1.Enabled = false;
-                this.radioButton2.Enabled = false;
+                this.radioButton2.Enabled = true;
+                this.radioButton4.Enabled = false;
             }
             else {
-                this.radioButton1.Enabled = true;
-                this.radioButton2.Enabled = true;
+                this.radioButton1.Checked = false;
+                this.radioButton2.Checked = false;
+                this.radioButton4.Checked = true;
+                this.radioButton1.Enabled = false;
+                this.radioButton2.Enabled = false;
+                this.radioButton4.Enabled = true;
             }
 
         }

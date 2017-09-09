@@ -27,7 +27,7 @@ namespace LBKJClient.dao
             for (int j = 0; j < num; j++) { 
                 if (j < 10)
                 {
-                    if (hm.CommunicationType != "LBCC-16" && hm.CommunicationType!= "RC-8/-10" && hm.CommunicationType != "LB410D")
+                    if (hm.CommunicationType == "串口通讯协议" || hm.CommunicationType!= "TCP协议" || hm.CommunicationType == "云平台协议-01")
                     {
                         if (j + 1 == 10) {
                             m = (j + 1).ToString();
@@ -37,7 +37,7 @@ namespace LBKJClient.dao
                         }
                     }
                     else {
-                        if (hm.CommunicationType == "LBCC-16" || hm.CommunicationType == "LB410D" || hm.CommunicationType == "RC-8/-10")
+                        if (hm.CommunicationType == "云平台协议-00")
                         {
                             if (num == 1)
                             {
@@ -51,9 +51,7 @@ namespace LBKJClient.dao
                     cd += hm.hostName + "-"+m;
                 }
                 else {
-                    if(j >= 10 && hm.CommunicationType == "LBCC-16") { m = j.ToString(); }
-                    else if (j >= 10 && hm.CommunicationType == "LB410D") { m = j.ToString(); }
-                    else if (j >= 10 && hm.CommunicationType == "RC-8/-10") { m = j.ToString(); }
+                    if(hm.CommunicationType == "串口通讯协议" || hm.CommunicationType != "TCP协议" || hm.CommunicationType == "云平台协议-01") { m = j.ToString(); }
                     else
                     {
                         m = (j + 1).ToString();

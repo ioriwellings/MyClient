@@ -16,8 +16,8 @@ namespace LBKJClient
         {
            string name= this.textBox1.Text;
            string cdnum= this.numericUpDown1.Value.ToString();
-           string cktype = this.comboBox3.SelectedItem.ToString();
-           string txxy= this.comboBox2.SelectedItem.ToString();
+           string cktype = this.comboBox3.Text;
+           string txxy= this.comboBox2.Text;
            string kflx = this.comboBox1.SelectedValue.ToString();
             if (name!=null&&!"".Equals(name)&&cdnum!=null&& cktype!=null&& txxy!=null && kflx != null) {
                 mh = new bean.manageHose();
@@ -124,17 +124,32 @@ namespace LBKJClient
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.comboBox2.SelectedItem.ToString() != "[管理主机]LB863RSB_N1(LBGZ-02)")
+            if (this.comboBox2.SelectedItem.ToString() == "串口通讯协议")
+            {
+                this.radioButton1.Checked = true;
+                this.radioButton2.Checked = false;
+                this.radioButton3.Checked = false;
+                this.radioButton1.Enabled = true;
+                this.radioButton2.Enabled = false;
+                this.radioButton3.Enabled = false;
+            }
+            else if (this.comboBox2.SelectedItem.ToString() == "TCP协议")
             {
                 this.radioButton1.Checked = false;
-                this.radioButton2.Checked = false;
+                this.radioButton2.Checked = true;
+                this.radioButton3.Checked = false;
                 this.radioButton1.Enabled = false;
-                this.radioButton2.Enabled = false;
+                this.radioButton2.Enabled = true;
+                this.radioButton3.Enabled = false;
             }
             else
             {
-                this.radioButton1.Enabled = true;
-                this.radioButton2.Enabled = true;
+                this.radioButton1.Checked = false;
+                this.radioButton2.Checked = false;
+                this.radioButton3.Checked = true;
+                this.radioButton1.Enabled = false;
+                this.radioButton2.Enabled = false;
+                this.radioButton3.Enabled = true;
             }
         }
     }
