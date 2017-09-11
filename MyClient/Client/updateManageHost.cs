@@ -94,15 +94,15 @@ namespace LBKJClient
             {
                 this.comboBox1.Text = hcode;
             }
-            //string[] ArryPort = System.IO.Ports.SerialPort.GetPortNames();
+            string[] ArryPort = System.IO.Ports.SerialPort.GetPortNames();
             //this.comboBox4.Items.Clear();
-            //if (ArryPort.Length > 0)
-            //{
-            //    for (int i = 0; i < ArryPort.Length; i++)
-            //    {
-            //        this.comboBox4.Items.Add(ArryPort[i]);
-            //    }
-            //}
+            if (ArryPort.Length > 0)
+            {
+                for (int i = 0; i < ArryPort.Length; i++)
+                {
+                    this.comboBox4.Items.Add(ArryPort[i]);
+                }
+            }
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {

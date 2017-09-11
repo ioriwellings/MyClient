@@ -485,6 +485,6 @@
         public System.Windows.Forms.TextBox textBox4;
         public System.Windows.Forms.NumericUpDown numericUpDown4;
         public System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.RadioButton radioButton3;
+        public System.Windows.Forms.RadioButton radioButton3;
     }
 }
