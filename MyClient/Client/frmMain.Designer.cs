@@ -756,7 +756,6 @@
             this.lbtitle.Name = "lbtitle";
             this.lbtitle.Size = new System.Drawing.Size(1028, 70);
             this.lbtitle.TabIndex = 4;
-            this.lbtitle.Paint += new System.Windows.Forms.PaintEventHandler(this.lbtitle_Paint);
             // 
             // lblTitle
             // 
@@ -785,7 +784,6 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1028, 388);
             this.flowLayoutPanel1.TabIndex = 0;
-            this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint_2);
             this.flowLayoutPanel1.MouseEnter += new System.EventHandler(this.flowLayoutPanel1_MouseEnter_1);
             // 
             // timer2

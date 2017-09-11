@@ -8,7 +8,7 @@
   <passd>
   </passd>
   <stoptime>170911161724</stoptime>
-  <starttime>170911161638</starttime>
+  <starttime>170911162326</starttime>
   <communicationType>1-COM1</communicationType>
   <communicationTcpType>
   </communicationTcpType>
@@ -20,7 +20,7 @@
   <log>0</log>
   <autosave02>0</autosave02>
   <autosave16>0</autosave16>
-  <autoSizeX>180</autoSizeX>
-  <autoSizeY>155</autoSizeY>
+  <autoSizeX>280</autoSizeX>
+  <autoSizeY>230</autoSizeY>
   <scoketServer>0</scoketServer>
 </config>
