@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -15,13 +16,24 @@ namespace LBKJClient
         private void button1_Click(object sender, EventArgs e)
         {
            string name= this.textBox1.Text;
-           string cdnum= this.numericUpDown1.Value.ToString();
+            //验证主机名称是否重复
+            service.manageHostService mhs = new service.manageHostService();
+            DataTable dt = mhs.queryManageHost();
+            if (name0 != "" && name0 != name)
+            {
+                DataRow[] drr = dt.Select("hostName = '" + name + "'");
+                if (drr.Length > 0)
+                {
+                    MessageBox.Show("主机名称已存在，请重新输入！");
+                    return;
+                }
+            }
+            string cdnum= this.numericUpDown1.Value.ToString();
            string cktype = this.comboBox3.Text;
            string txxy= this.comboBox2.Text;
            string kflx = this.comboBox1.SelectedValue.ToString();
             if (name!=null&&!"".Equals(name)&&cdnum!=null&& cktype!=null&& txxy!=null && kflx != null) {
                 mh = new bean.manageHose();
-                service.manageHostService mhs = new service.manageHostService();
                 bool istrue = false;
                 mh.hostName = name;
                 mh.CommunicationType = txxy;
@@ -66,9 +78,10 @@ namespace LBKJClient
         {
             this.Hide();
         }
-
+        string name0 = "";
         private void updateManageHost_Load(object sender, EventArgs e)
         {
+            name0 = this.textBox1.Text;
             string str = Application.StartupPath;//项目路径
             this.button1.BackgroundImage = Image.FromFile(@str + "/images/save.png");
             this.button2.BackgroundImage = Image.FromFile(@str + "/images/cancel.png");

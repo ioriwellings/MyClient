@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -18,14 +19,22 @@ namespace LBKJClient
         private void button1_Click(object sender, EventArgs e)
         {
            string name = this.textBox1.Text;
-           string cdnum= this.numericUpDown1.Value.ToString();
+            //验证主机名称是否重复
+            service.manageHostService mhs = new service.manageHostService();
+            DataTable dt = mhs.queryManageHost();
+            DataRow[] drr = dt.Select("hostName = '" + name + "'");
+            if (drr.Length > 0) {
+                MessageBox.Show("主机名称已存在，请重新输入！");
+                return;
+            }
+            string cdnum= this.numericUpDown1.Value.ToString();
            string cktype = this.comboBox3.SelectedItem.ToString();
            string txxy= this.comboBox2.SelectedItem.ToString();
            string kflx = this.comboBox1.SelectedValue.ToString();
 
             if (name!=null&&!"".Equals(name)&&cdnum!=null&& cktype!=null&& txxy!=null&& kflx!=null) {
                 mh = new bean.manageHose();
-                service.manageHostService mhs = new service.manageHostService();
+              
                 bool istrue = false;
                 mh.hostName = name;
                 mh.CommunicationType = txxy;
@@ -61,7 +70,15 @@ namespace LBKJClient
                 if (this.textBox2.Text != null && !"".Equals(this.textBox2.Text))
                     {
                         mh.measureCode = this.textBox2.Text;
-                        istrue = mhs.addManageHost(mh);
+                    //验证主机主机编号是否重复
+                    DataRow[] drr0 = dt.Select("measureCode = '" + mh.measureCode + "'");
+                    if (drr0.Length > 0)
+                    {
+                        MessageBox.Show("主机编号已存在，请重新输入！");
+                        return;
+                    }
+                    //添加主机
+                    istrue = mhs.addManageHost(mh);
                     }
                     else
                     {
