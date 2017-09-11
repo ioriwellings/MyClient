@@ -19,7 +19,6 @@ namespace LBKJClient
         {
             string str = Application.StartupPath;//项目路径
             this.button1.BackgroundImage = Image.FromFile(@str + "/images/insert.png");
-            this.button2.BackgroundImage = Image.FromFile(@str + "/images/forbid.png");
             this.button3.BackgroundImage = Image.FromFile(@str + "/images/update.png");
             this.button4.BackgroundImage = Image.FromFile(@str + "/images/close.png");
 
@@ -31,9 +30,6 @@ namespace LBKJClient
             dd.Columns.Add("neir", typeof(string));
             foreach (DataRow rows in dd.Rows)
             {
-                if (rows[1].ToString() == "admin") {
-                    rows["neir"] = "超级用户";
-                } else
                 if (rows[1].ToString() == "user") 
                 {
                     rows["neir"] = "管理员";
@@ -61,31 +57,6 @@ namespace LBKJClient
             this.Close();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            bool istrue = false;
-            string id = this.dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-            string name = this.dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-            if (name=="admin" || name=="user") {
-                MessageBox.Show("管理员账号不能被禁用！");
-            }
-            else { 
-            if (id != null)
-            {
-                DialogResult rr = MessageBox.Show("是否要禁用当前用户信息？", "确认禁用提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-                int tt = (int)rr;
-                if (tt == 1)
-                {//删除用户       
-                    istrue = us.deleteUser(id);
-                    if (istrue)
-                    {
-                        queryUser();
-                        MessageBox.Show("禁用成功！");
-                    }
-                }
-            }
-          }
-        }
         private void button1_Click(object sender, EventArgs e)
         {
             addUser au = new addUser();
@@ -101,6 +72,11 @@ namespace LBKJClient
             string name = this.dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
             string enable=this.dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
             string power = this.dataGridView1.SelectedRows[0].Cells[5].Value.ToString();
+            if (name == "admin" || name == "user")
+            {
+                MessageBox.Show("管理员账号不能被修改！");
+                return;
+            }
             if (name != null && !"".Equals(name))
             {
                 updateUser up = new updateUser();

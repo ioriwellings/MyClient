@@ -131,7 +131,7 @@ namespace LBKJClient
             umh.textBox2.Text = code;
             umh.textBox3.Text = kflx;
             if (address!=null&&!"".Equals(address)) {
-                if (networkType == "COM") { umh.radioButton1.Checked = true; } else if (networkType == "TCP") { umh.radioButton2.Checked = true; };
+                if (networkType == "COM") { umh.radioButton1.Checked = true; } else if (networkType == "TCP") { umh.radioButton2.Checked = true; } else if (networkType == "YUN") { umh.radioButton3.Checked = true; };
                 if (umh.radioButton1.Checked)
                 {
                     umh.numericUpDown2.Value = Convert.ToInt32(address);

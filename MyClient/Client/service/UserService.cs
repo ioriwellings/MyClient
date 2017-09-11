@@ -29,10 +29,6 @@ namespace LBKJClient.service
         {
             return user.listUser();
         }
-        public bool deleteUser(string id)
-        {
-            return user.deleteUser(id);
-        }
         public bool addUser(bean.UserInfo ui)
         {
             return user.addUser(ui);

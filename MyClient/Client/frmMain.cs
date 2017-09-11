@@ -41,8 +41,6 @@ namespace LBKJClient
         string datarefreshtime = null;
         string datasavetime = null;
         JavaScriptSerializer js = new JavaScriptSerializer();
-        List<bean.dataSerialization> list;
-        String jsons;
         PrivateFontCollection privateFonts = new PrivateFontCollection();
 
         public delegate void invokeDisplay(string str);
@@ -57,7 +55,6 @@ namespace LBKJClient
         service.manageHostService mhs = new service.manageHostService();//查询GZ02有串口地址的数据
         dataBackUpSet sb = new dataBackUpSet();//数据备份
         service.showReportService lls = new service.showReportService();
-        Socket sk;//连接用Socket
         DataSet da;
         DataTable dt;
         DataTable dtcdinfo;
@@ -88,12 +85,10 @@ namespace LBKJClient
         private string password;
         private string path = @"config.xml";
         XmlDocument xmlDoc = new XmlDocument();
-        string stoptime, starttime, stoptime1, starttime1;
+        string stoptime, starttime;
         private string getresults;
-        private string measureCode;
         private DataTable dtCom;
         private string[] result;
-        private int comnum = 0;
         public frmMain()
         {
             InitializeComponent();
@@ -228,45 +223,6 @@ namespace LBKJClient
             node = xmlDoc.SelectSingleNode("config/log");
             logrizhi = Int32.Parse(node.InnerText);
         }
-        private bool initPort(string com)
-        {
-            try
-            {
-                if (!port.IsOpen)
-                {
-                    string portName = com;
-                    int baudRate = 9600;
-
-                    port.PortName = portName;
-                    port.BaudRate = baudRate;
-                    port.DtrEnable = true;
-                    port.ReceivedBytesThreshold = 1;
-                    port.Open();
-                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                    rb.eventInfo = "串口连接成功！";
-                    rb.type = "0";
-                    lls.addReport(rb);
-                    return true;
-                }
-                else {
-                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                    rb.eventInfo = "串口连接失败！";
-                    rb.type = "0";
-                    lls.addReport(rb);
-                    return false;
-                }
-        }catch{
-                port.Close();
-                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                rb.eventInfo = "串口连接失败了！";
-                rb.type = "0";
-                lls.addReport(rb);
-                return false;
-            }
-        
-
-        }
-
         private void initPointsInfo()
         {
             默认大小ToolStripMenuItem.CheckState = CheckState.Unchecked;
@@ -914,10 +870,6 @@ namespace LBKJClient
              graphcheck.ShowDialog();
         }
 
-        private void flowLayoutPanel1_Paint_2(object sender, PaintEventArgs e)
-        {
-
-        }
         private void timer2_Tick(object sender, EventArgs e)
         {
             int kk = 0;
@@ -1448,43 +1400,6 @@ namespace LBKJClient
             }
         }
 
-        private void backupDatabase()
-        {
-            string time = DateTime.Now.ToString("yyyyMMddHHmmss");
-            string filepath = zdfilename;
-
-            // 得到 hour minute second  如果等于某个值就开始执行某个程序。 
-            //int intDay= DateTime.Now.Day;
-            //int intHour = DateTime.Now.Hour;
-            //int intMinute = DateTime.Now.Minute;
-
-            // 定制时间； 比如 在10：30的时候执行某个函数  
-            //int iDay = 1;
-            //int iHour = 10;
-            //int iMinute = 30;
-
-            //if (times == 1 && intHour == iHour && intMinute == iMinute)
-            //{
-            if (filepath != null && !"".Equals(filepath))
-            {
-                if (!System.IO.Directory.Exists(filepath))
-                {
-                    System.IO.Directory.CreateDirectory(filepath);
-                }
-                string[] mysqlinfo = Properties.Settings.Default.mysqlInfo.Split(',');
-                try
-                {      
-                    DoBackup(mysqlinfo[0], mysqlinfo[1], mysqlinfo[2], mysqlinfo[3], mysqlinfo[4], filepath);
-                    textFile(@str + "/automateBackupTimes.txt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                }
-                catch (Exception exc)
-                {
-                    
-                }
-            
-            }
-            //}
-        }
         private void saveToXmldatabasetimer(string jtime)
         {
             xmlDoc.Load(path);
@@ -1701,17 +1616,6 @@ namespace LBKJClient
             xmlDoc.Save(path);
 
         }
-        private void autogetServiceData()
-        {
-            xmlDoc.Load(path);
-            XmlNode node;
-            node = xmlDoc.SelectSingleNode("config/stoptime");
-            stoptime = node.InnerText;
-            node = xmlDoc.SelectSingleNode("config/starttime");
-            starttime = node.InnerText;
-
-        }
-
         private void 帮助主题ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string pdfpath = @str + @"/冷链5S软件说明书.pdf";
@@ -1848,12 +1752,6 @@ namespace LBKJClient
         {
             this.toolStripLabel7.BackgroundImage = null;
         }
-
-        private void lbtitle_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         int djs = 1800;
         private void timer1_Tick(object sender, EventArgs e)
         {

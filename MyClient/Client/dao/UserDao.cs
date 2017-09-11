@@ -33,13 +33,6 @@ namespace LBKJClient.dao
             ds = DbHelperMySQL.Query(sql);
             return ds.Tables[0];
         }
-        public bool deleteUser(string id)
-        {
-            int ret = 0;
-            String sql = "update userinfo set enable = 0 where id = '" + id + "'";
-            ret = DbHelperMySQL.ExecuteSql(sql);
-            return ret == 0 ? false : true;
-        }
         public bool addUser(bean.UserInfo ui )
         {
             if (ui.Enable==0) {

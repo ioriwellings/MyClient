@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -18,14 +19,22 @@ namespace LBKJClient
         private void button1_Click(object sender, EventArgs e)
         {
            string name = this.textBox1.Text;
-           string cdnum= this.numericUpDown1.Value.ToString();
+            //验证主机名称是否重复
+            service.manageHostService mhs = new service.manageHostService();
+            DataTable dt = mhs.queryManageHost();
+            DataRow[] drr = dt.Select("hostName = '" + name + "'");
+            if (drr.Length > 0) {
+                MessageBox.Show("主机名称已存在，请重新输入！");
+                return;
+            }
+            string cdnum= this.numericUpDown1.Value.ToString();
            string cktype = this.comboBox3.SelectedItem.ToString();
            string txxy= this.comboBox2.SelectedItem.ToString();
            string kflx = this.comboBox1.SelectedValue.ToString();
 
             if (name!=null&&!"".Equals(name)&&cdnum!=null&& cktype!=null&& txxy!=null&& kflx!=null) {
                 mh = new bean.manageHose();
-                service.manageHostService mhs = new service.manageHostService();
+              
                 bool istrue = false;
                 mh.hostName = name;
                 mh.CommunicationType = txxy;
@@ -36,14 +45,7 @@ namespace LBKJClient
                 if (this.radioButton1.Checked)
                 {
                     mh.hostAddress = this.numericUpDown2.Value.ToString();
-                    if (this.comboBox5.Text != "")
-                    {
-                        mh.serialPort = this.comboBox5.SelectedItem.ToString();
-                    }
-                    else {
-                        MessageBox.Show("请选择端口");
-                        return;
-                    }
+                    mh.serialPort = this.comboBox5.Text;
                     mh.tcp_ip_Port = "";
                     mh.networkType = "COM";
                 }
@@ -51,7 +53,7 @@ namespace LBKJClient
                 {
                     mh.hostAddress = this.numericUpDown5.Value.ToString();
                     mh.serialPort = "";
-                    mh.tcp_ip_Port = this.textBox1.Text + ":" + this.numericUpDown3.Value.ToString();
+                    mh.tcp_ip_Port = this.textBox3.Text + ":" + this.numericUpDown3.Value.ToString();
                     mh.networkType = "TCP";
                 }
                 else if (this.radioButton4.Checked)
@@ -68,7 +70,15 @@ namespace LBKJClient
                 if (this.textBox2.Text != null && !"".Equals(this.textBox2.Text))
                     {
                         mh.measureCode = this.textBox2.Text;
-                        istrue = mhs.addManageHost(mh);
+                    //验证主机主机编号是否重复
+                    DataRow[] drr0 = dt.Select("measureCode = '" + mh.measureCode + "'");
+                    if (drr0.Length > 0)
+                    {
+                        MessageBox.Show("主机编号已存在，请重新输入！");
+                        return;
+                    }
+                    //添加主机
+                    istrue = mhs.addManageHost(mh);
                     }
                     else
                     {
@@ -111,16 +121,31 @@ namespace LBKJClient
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.comboBox2.SelectedItem.ToString() != "[管理主机]LB863RSB_N1(LBGZ-02)")
+            if (this.comboBox2.SelectedItem.ToString() == "串口通讯协议")
+            {
+                this.radioButton1.Checked = true;
+                this.radioButton2.Checked = false;
+                this.radioButton4.Checked = false;
+                this.radioButton1.Enabled = true;
+                this.radioButton2.Enabled = false;
+                this.radioButton4.Enabled = false;
+            }
+            else if (this.comboBox2.SelectedItem.ToString() == "TCP协议")
             {
                 this.radioButton1.Checked = false;
-                this.radioButton2.Checked = false;
+                this.radioButton2.Checked = true;
+                this.radioButton4.Checked = false;
                 this.radioButton1.Enabled = false;
-                this.radioButton2.Enabled = false;
+                this.radioButton2.Enabled = true;
+                this.radioButton4.Enabled = false;
             }
             else {
-                this.radioButton1.Enabled = true;
-                this.radioButton2.Enabled = true;
+                this.radioButton1.Checked = false;
+                this.radioButton2.Checked = false;
+                this.radioButton4.Checked = true;
+                this.radioButton1.Enabled = false;
+                this.radioButton2.Enabled = false;
+                this.radioButton4.Enabled = true;
             }
 
         }
