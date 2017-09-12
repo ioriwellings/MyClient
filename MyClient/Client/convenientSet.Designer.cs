@@ -44,16 +44,14 @@
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -102,7 +100,9 @@
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -351,6 +351,19 @@
             0,
             0});
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.checkBox2.Location = new System.Drawing.Point(394, 114);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(72, 16);
+            this.checkBox2.TabIndex = 31;
+            this.checkBox2.Tag = "1";
+            this.checkBox2.Text = "是否隐藏";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.Click += new System.EventHandler(this.checkBox2_Click);
+            // 
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(102, 26);
@@ -372,7 +385,7 @@
             // 
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Items.AddRange(new object[] {
-             "串口通讯协议",
+            "串口通讯协议",
             "TCP协议",
             "云平台协议-01",
             "云平台协议-00"});
@@ -389,28 +402,6 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(149, 21);
             this.textBox2.TabIndex = 27;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label11.Location = new System.Drawing.Point(36, 200);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(59, 12);
-            this.label11.TabIndex = 24;
-            this.label11.Text = "DTU序号：";
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.radioButton3.Location = new System.Drawing.Point(299, 72);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(71, 16);
-            this.radioButton3.TabIndex = 23;
-            this.radioButton3.Tag = "3";
-            this.radioButton3.Text = "GPRS通讯";
-            this.radioButton3.UseVisualStyleBackColor = true;
             // 
             // textBox1
             // 
@@ -447,16 +438,6 @@
             0,
             0,
             0});
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label8.Location = new System.Drawing.Point(12, 158);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(83, 12);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "Tcp/Ip/域名：";
             // 
             // radioButton2
             // 
@@ -1013,18 +994,37 @@
             this.groupBox6.TabIndex = 9;
             this.groupBox6.TabStop = false;
             // 
-            // checkBox2
+            // radioButton3
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBox2.Location = new System.Drawing.Point(394, 114);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(72, 16);
-            this.checkBox2.TabIndex = 31;
-            this.checkBox2.Tag = "1";
-            this.checkBox2.Text = "是否隐藏";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.Click += new System.EventHandler(this.checkBox2_Click);
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.radioButton3.Location = new System.Drawing.Point(299, 72);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(71, 16);
+            this.radioButton3.TabIndex = 23;
+            this.radioButton3.Tag = "3";
+            this.radioButton3.Text = "GPRS通讯";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label11.Location = new System.Drawing.Point(36, 200);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(59, 12);
+            this.label11.TabIndex = 24;
+            this.label11.Text = "DTU序号：";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label8.Location = new System.Drawing.Point(12, 158);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(83, 12);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "Tcp/Ip/域名：";
             // 
             // convenientSet
             // 
@@ -1082,12 +1082,9 @@
         private System.Windows.Forms.GroupBox groupBox2;
         public System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.RadioButton radioButton2;
         public System.Windows.Forms.ComboBox comboBox5;
         private System.Windows.Forms.Label label7;
@@ -1151,5 +1148,8 @@
         public System.Windows.Forms.TextBox textBox9;
         public System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label8;
     }
 }
