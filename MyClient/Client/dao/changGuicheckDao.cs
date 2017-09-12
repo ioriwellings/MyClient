@@ -97,9 +97,9 @@ namespace LBKJClient.dao
                 string[] measureNos = measureNo.Split(',');
                 for (int i = 0; i < measureNos.Count(); i++)
                 {
-                    measureNos1 += "," + measureNos[i];
+                    measureNos1 += "','" + measureNos[i];
                 }
-                measureNos1 = measureNos1.Substring(1);
+                measureNos1 = measureNos1.Substring(3);
                 sql += " and measureNo in ('" + measureNos1 + "')";
             }
             if (cd != null)
