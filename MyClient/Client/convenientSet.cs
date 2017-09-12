@@ -480,6 +480,10 @@ namespace LBKJClient
             {
                 text = "0" + text;
             }
+            if (Int32.Parse(id) > 9)
+            {
+                id = Int32.Parse(id).ToString("X2");
+            }
             byteSend[1] = (byte)Convert.ToInt32("0x" + text, 16);
             byteSend[3] = (byte)Convert.ToInt32("0x" + id, 16);
             byteSend[8] = (byte)Convert.ToInt32("0x" + ab1, 16);

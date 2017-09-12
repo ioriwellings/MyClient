@@ -43,7 +43,6 @@
             this.checkBox27 = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
             this.checkBox21 = new System.Windows.Forms.CheckBox();
-            this.checkBox17 = new System.Windows.Forms.CheckBox();
             this.checkBox16 = new System.Windows.Forms.CheckBox();
             this.checkBox15 = new System.Windows.Forms.CheckBox();
             this.checkBox14 = new System.Windows.Forms.CheckBox();
@@ -159,7 +158,6 @@
             this.groupBox2.Controls.Add(this.checkBox27);
             this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.checkBox21);
-            this.groupBox2.Controls.Add(this.checkBox17);
             this.groupBox2.Controls.Add(this.checkBox16);
             this.groupBox2.Controls.Add(this.checkBox15);
             this.groupBox2.Controls.Add(this.checkBox14);
@@ -187,7 +185,7 @@
             // 
             this.checkBox5.AutoSize = true;
             this.checkBox5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBox5.Location = new System.Drawing.Point(388, 123);
+            this.checkBox5.Location = new System.Drawing.Point(270, 123);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(72, 16);
             this.checkBox5.TabIndex = 37;
@@ -231,23 +229,12 @@
             // 
             this.checkBox21.AutoSize = true;
             this.checkBox21.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBox21.Location = new System.Drawing.Point(152, 123);
+            this.checkBox21.Location = new System.Drawing.Point(33, 123);
             this.checkBox21.Name = "checkBox21";
             this.checkBox21.Size = new System.Drawing.Size(72, 16);
             this.checkBox21.TabIndex = 20;
             this.checkBox21.Text = "分库浏览";
             this.checkBox21.UseVisualStyleBackColor = true;
-            // 
-            // checkBox17
-            // 
-            this.checkBox17.AutoSize = true;
-            this.checkBox17.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBox17.Location = new System.Drawing.Point(33, 123);
-            this.checkBox17.Name = "checkBox17";
-            this.checkBox17.Size = new System.Drawing.Size(108, 16);
-            this.checkBox17.TabIndex = 16;
-            this.checkBox17.Text = "采集器数据同步";
-            this.checkBox17.UseVisualStyleBackColor = true;
             // 
             // checkBox16
             // 
@@ -352,7 +339,7 @@
             // 
             this.checkBox7.AutoSize = true;
             this.checkBox7.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBox7.Location = new System.Drawing.Point(270, 123);
+            this.checkBox7.Location = new System.Drawing.Point(151, 123);
             this.checkBox7.Name = "checkBox7";
             this.checkBox7.Size = new System.Drawing.Size(72, 16);
             this.checkBox7.TabIndex = 6;
@@ -455,7 +442,6 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox6;
         private System.Windows.Forms.CheckBox checkBox21;
-        private System.Windows.Forms.CheckBox checkBox17;
         private System.Windows.Forms.CheckBox checkBox16;
         private System.Windows.Forms.CheckBox checkBox15;
         private System.Windows.Forms.CheckBox checkBox14;
