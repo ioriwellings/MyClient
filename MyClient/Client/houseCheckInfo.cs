@@ -846,8 +846,6 @@ namespace LBKJClient
                 string hostaddress = dtd.Rows[0]["hostAddress"].ToString();
                 if (hostaddress != null && !"".Equals(hostaddress))
                 {
-                    cs.radioButton1.Checked = true;
-                    cs.comboBox5.Enabled = true;
                     cs.comboBox5.Text = "COM" + hostaddress;
                 }
                 cs.comboBox3.Text = dtd.Rows[0]["CommunicationType"].ToString();
