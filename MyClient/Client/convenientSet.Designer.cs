@@ -372,12 +372,10 @@
             // 
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Items.AddRange(new object[] {
-            "[管理主机]LB863RSB_N1(LBGZ-02)",
-            "LBGZ-04",
-            "LBCC-16",
-            "RC-8/-10",
-            "LB410D",
-            "LB410H"});
+             "串口通讯协议",
+            "TCP协议",
+            "云平台协议-01",
+            "云平台协议-00"});
             this.comboBox3.Location = new System.Drawing.Point(102, 69);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(149, 20);
