@@ -27,7 +27,7 @@ namespace LBKJClient.dao
             for (int j = 0; j < num; j++) { 
                 if (j < 10)
                 {
-                    if (hm.CommunicationType == "串口通讯协议" || hm.CommunicationType!= "TCP协议" || hm.CommunicationType == "云平台协议-01")
+                    if (hm.CommunicationType == "串口通讯协议" || hm.CommunicationType == "TCP协议" || hm.CommunicationType == "云平台协议-01")
                     {
                         if (j + 1 == 10) {
                             m = (j + 1).ToString();
@@ -51,10 +51,10 @@ namespace LBKJClient.dao
                     cd += hm.hostName + "-"+m;
                 }
                 else {
-                    if(hm.CommunicationType == "串口通讯协议" || hm.CommunicationType != "TCP协议" || hm.CommunicationType == "云平台协议-01") { m = j.ToString(); }
+                    if(hm.CommunicationType == "串口通讯协议" || hm.CommunicationType == "TCP协议" || hm.CommunicationType == "云平台协议-01") { m = (j + 1).ToString(); }
                     else
                     {
-                        m = (j + 1).ToString();
+                        m = j.ToString();
                     }
                     cd += hm.hostName + "-" + m;
                 }
@@ -126,8 +126,7 @@ namespace LBKJClient.dao
             int flag = 0;
             string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             int ret = 0;
-            string cdname = di.measureCode + "_" + di.meterNo;
-            String sql = "insert into lb_device_information (id,measureCode,meterNo,terminalname,house_code,housetype,t_high,t_low,h_high,h_low,powerflag,createtime) values ('" + id + "','" + di.measureCode + "', '" + di.meterNo + "', '" + cdname + "', '" + di.housecode + "','" + 0 + "', '" + di.t_high + "', '" + di.t_low + "', '" + di.h_high + "', '" + di.h_low + "', '" + flag + "', '" + time + "')";
+            String sql = "insert into lb_device_information (id,measureCode,meterNo,terminalname,house_code,housetype,t_high,t_low,h_high,h_low,powerflag,createtime) values ('" + id + "','" + di.measureCode + "', '" + di.meterNo + "', '" + di.terminalname + "', '" + di.housecode + "','" + 0 + "', '" + di.t_high + "', '" + di.t_low + "', '" + di.h_high + "', '" + di.h_low + "', '" + flag + "', '" + time + "')";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }

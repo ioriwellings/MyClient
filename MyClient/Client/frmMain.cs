@@ -85,7 +85,6 @@ namespace LBKJClient
         private string password;
         private string path = @"config.xml";
         XmlDocument xmlDoc = new XmlDocument();
-        string stoptime, starttime;
         private string getresults;
         private DataTable dtCom;
         private string[] result;
@@ -1479,12 +1478,6 @@ namespace LBKJClient
                 if (hostaddress != null && !"".Equals(hostaddress))
                 {
                     cs.textBox5.Text = hostaddress;
-                    cs.radioButton1.Checked = true;
-                    cs.comboBox5.Enabled = true;
-                    if (result != null && result.Length > 0)
-                    {
-                        cs.comboBox5.Text = result[1];
-                    }
                 }
 
                 cs.comboBox3.Text = dtd.Rows[0]["CommunicationType"].ToString();
