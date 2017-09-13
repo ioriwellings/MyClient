@@ -27,7 +27,7 @@ namespace LBKJClient.dao
             for (int j = 0; j < num; j++) { 
                 if (j < 10)
                 {
-                    if (hm.CommunicationType == "串口通讯协议" || hm.CommunicationType!= "TCP协议" || hm.CommunicationType == "云平台协议-01")
+                    if (hm.CommunicationType == "串口通讯协议" || hm.CommunicationType == "TCP协议" || hm.CommunicationType == "云平台协议-01")
                     {
                         if (j + 1 == 10) {
                             m = (j + 1).ToString();
