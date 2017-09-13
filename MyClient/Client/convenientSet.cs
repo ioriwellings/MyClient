@@ -181,7 +181,7 @@ namespace LBKJClient
                     if (crcSource == crcRet)
                     {
                         isCRC = true;
-                        this.label17.Text = "读取成功";
+                        this.label7.Text = "读取成功";
                     }
                     else
                     {
@@ -190,7 +190,7 @@ namespace LBKJClient
                     }
                     if (totalByteRead.Length == 11)
                     {
-                        this.label17.Text = "设置成功";
+                        this.label7.Text = "设置成功";
                         isCRC = false;
                         totalByteRead = new Byte[0];
                     }
@@ -272,7 +272,7 @@ namespace LBKJClient
                     string bjInterval = Convert.ToString(totalByteRead[15], 10);
                     this.numericUpDown13.Value = (decimal)Convert.ToDouble(cdnum);
                     this.numericUpDown12.Value = (decimal)Convert.ToDouble(bjInterval);
-                    this.label17.Text = "日期间隔读取成功";
+                    this.label7.Text = "日期间隔读取成功";
                     this.button8.Enabled = true;
                     this.button3.Enabled = true;
                     totalByteRead = new Byte[0];
@@ -289,7 +289,7 @@ namespace LBKJClient
                     this.textBox6.Text = pno1;
                     this.textBox7.Text = pno2;
                     this.textBox8.Text = pno3;
-                    this.label17.Text = "短信手机号读取成功";
+                    this.label7.Text = "短信手机号读取成功";
                     this.button4.Enabled = true;
                     totalByteRead = new Byte[0];
                 }
