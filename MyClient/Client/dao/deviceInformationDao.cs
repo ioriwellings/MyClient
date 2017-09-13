@@ -51,10 +51,10 @@ namespace LBKJClient.dao
                     cd += hm.hostName + "-"+m;
                 }
                 else {
-                    if(hm.CommunicationType == "串口通讯协议" || hm.CommunicationType != "TCP协议" || hm.CommunicationType == "云平台协议-01") { m = j.ToString(); }
+                    if(hm.CommunicationType == "串口通讯协议" || hm.CommunicationType == "TCP协议" || hm.CommunicationType == "云平台协议-01") { m = (j + 1).ToString(); }
                     else
                     {
-                        m = (j + 1).ToString();
+                        m = j.ToString();
                     }
                     cd += hm.hostName + "-" + m;
                 }
