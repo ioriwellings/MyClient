@@ -804,7 +804,7 @@
             // 
             this.timer5.Enabled = true;
             this.timer5.Interval = 3600000;
-           // this.timer5.Tick += new System.EventHandler(this.timer5_Tick);
+            this.timer5.Tick += new System.EventHandler(this.timer5_Tick);
             // 
             // notifyIcon1
             // 
