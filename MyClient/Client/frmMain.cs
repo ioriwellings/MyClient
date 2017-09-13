@@ -1478,6 +1478,7 @@ namespace LBKJClient
                 if (hostaddress != null && !"".Equals(hostaddress))
                 {
                     cs.textBox5.Text = hostaddress;
+                    cs.comboBox5.Text = dtd.Rows[0]["serialPort"].ToString(); 
                 }
 
                 cs.comboBox3.Text = dtd.Rows[0]["CommunicationType"].ToString();
