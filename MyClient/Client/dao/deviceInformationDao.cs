@@ -126,8 +126,7 @@ namespace LBKJClient.dao
             int flag = 0;
             string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             int ret = 0;
-            string cdname = di.measureCode + "_" + di.meterNo;
-            String sql = "insert into lb_device_information (id,measureCode,meterNo,terminalname,house_code,housetype,t_high,t_low,h_high,h_low,powerflag,createtime) values ('" + id + "','" + di.measureCode + "', '" + di.meterNo + "', '" + cdname + "', '" + di.housecode + "','" + 0 + "', '" + di.t_high + "', '" + di.t_low + "', '" + di.h_high + "', '" + di.h_low + "', '" + flag + "', '" + time + "')";
+            String sql = "insert into lb_device_information (id,measureCode,meterNo,terminalname,house_code,housetype,t_high,t_low,h_high,h_low,powerflag,createtime) values ('" + id + "','" + di.measureCode + "', '" + di.meterNo + "', '" + di.terminalname + "', '" + di.housecode + "','" + 0 + "', '" + di.t_high + "', '" + di.t_low + "', '" + di.h_high + "', '" + di.h_low + "', '" + flag + "', '" + time + "')";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
