@@ -14,6 +14,10 @@ namespace LBKJClient.service
         {
             return deviceinfo.addDeviceInformationDao(hm);
         }
+        public bool updateDeviceInformation(bean.manageHose hm)
+        {
+            return deviceinfo.updateDeviceInformationDao(hm);
+        }
         public DataTable checkPointInfo(int flag)
         {
             return deviceinfo.checkPointInfo(flag);

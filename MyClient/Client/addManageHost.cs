@@ -85,9 +85,9 @@ namespace LBKJClient
                         MessageBox.Show("管理主机编号为空，请输入...");
                     }
                 if (istrue)
-                    {
+                {
                     service.deviceInformationService ds = new service.deviceInformationService();
-                    bool isfalse= ds.addDeviceInformation(mh);
+                    bool isfalse = ds.addDeviceInformation(mh);
                     if (isfalse)
                     {
                         this.DialogResult = DialogResult.OK;

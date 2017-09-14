@@ -66,8 +66,15 @@ namespace LBKJClient
                     return;
                 }
                 istrue = mhs.updateManageHost(mh);
-                this.DialogResult = DialogResult.OK;
-
+                if (istrue)
+                {
+                    service.deviceInformationService ds = new service.deviceInformationService();
+                    bool isfalse = ds.updateDeviceInformation(mh);
+                    if (isfalse)
+                    {
+                        this.DialogResult = DialogResult.OK;
+                    }
+                }
             }
             else {
                 MessageBox.Show("请输入主机名称！");
