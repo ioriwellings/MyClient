@@ -684,10 +684,9 @@ namespace LBKJClient
                     lb.name = frmLogin.name;
                     lb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     lb.eventInfo = "退出系统！";
-                    if (lb.name != "admin" && lb.name != "") {
+                    if (lb.name != "admin" && lb.name != "" && lb.name != null) {
                         llse.addCheckLog(lb);
                     }
-                        llse.addCheckLog(lb);
                     saveToXmlsStoptime(DateTime.Now.ToString("yyMMddHHmmss"));
                     if (port.IsOpen)
                     {
