@@ -110,13 +110,7 @@ namespace LBKJClient.dao
         {
             int ret = 0;
             String sql = "";
-            if (di.powerflag > 0)
-            {
-                sql = "update lb_device_information set terminalname='" + di.terminalname + "',t_high='" + di.t_high + "',t_low='" + di.t_low + "',h_high='" + di.h_high + "',h_low='" + di.h_low + "',powerflag='" + di.powerflag + "' where measureCode='" + di.measureCode + "' and meterNo='" + di.meterNo + "'";
-            }
-            else {
-                sql = "update lb_device_information set terminalname='" + di.terminalname + "',house_code='" + di.housecode + "',housetype ='0',t_high='" + di.t_high + "',t_low='" + di.t_low + "',h_high='" + di.h_high + "',h_low='" + di.h_low + "',powerflag='" + di.powerflag + "' where measureCode='" + di.measureCode + "' and meterNo='" + di.meterNo + "'";
-            }
+            sql = "update lb_device_information set terminalname='" + di.terminalname + "',t_high='" + di.t_high + "',t_low='" + di.t_low + "',h_high='" + di.h_high + "',h_low='" + di.h_low + "',powerflag='" + di.powerflag + "' where measureCode='" + di.measureCode + "' and meterNo='" + di.meterNo + "'";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }

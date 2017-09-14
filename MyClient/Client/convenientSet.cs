@@ -68,9 +68,14 @@ namespace LBKJClient
                 di.t_low = float.Parse(t_low);
                 di.h_high = float.Parse(h_high);
                 di.h_low = float.Parse(h_low);
-                if (this.checkBox2.Checked) {
-                    di.powerflag = Int32.Parse(this.checkBox2.Tag.ToString());
+                if (this.checkBox1.Checked)
+                {
+                    di.powerflag = Int32.Parse(this.checkBox1.Tag.ToString());
                 }
+                else
+                {
+                    di.powerflag = 1;
+                };
                 service.deviceInformationService dis = new service.deviceInformationService();
                 bool isok = dis.updateIformation(di);
                 if (isok)
@@ -84,15 +89,6 @@ namespace LBKJClient
             }
         }
 
-        private void checkBox1_Click(object sender, EventArgs e)
-        {
-            this.checkBox2.Checked = false;
-        }
-
-        private void checkBox2_Click(object sender, EventArgs e)
-        {
-            this.checkBox1.Checked = false;
-        }
         private void initPort()
         {
             try

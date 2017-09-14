@@ -257,7 +257,7 @@
             this.checkBox1.Size = new System.Drawing.Size(72, 16);
             this.checkBox1.TabIndex = 32;
             this.checkBox1.Tag = "0";
-            this.checkBox1.Text = "是否启用";
+            this.checkBox1.Text = "是否显示";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // textBox2
