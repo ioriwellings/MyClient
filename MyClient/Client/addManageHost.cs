@@ -31,6 +31,12 @@ namespace LBKJClient
            string cktype = this.comboBox3.SelectedItem.ToString();
            string txxy= this.comboBox2.SelectedItem.ToString();
            string kflx = this.comboBox1.SelectedValue.ToString();
+            /////////////////////////设置主机信息
+            int RecordM = int.Parse(this.numericUpDown7.Value.ToString());
+            int WarningM = int.Parse(this.numericUpDown6.Value.ToString());
+            int PhoneNo = int.Parse(this.textBox5.Text.ToString());
+            int State = 1;
+            ////////////////////////////////
 
             if (name!=null&&!"".Equals(name)&&cdnum!=null&& cktype!=null&& txxy!=null&& kflx!=null) {
                 mh = new bean.manageHose();
@@ -41,7 +47,12 @@ namespace LBKJClient
                 mh.portNumber = cdnum;
                 mh.storeType = cktype;
                 mh.houseType = kflx;
-
+                /////////////////////////设置主机信息
+                mh.RecordM = RecordM;
+                mh.WarningM = WarningM;
+                mh.PhoneNo = PhoneNo;
+                mh.State = State;
+                ////////////////////////////////
                 if (this.radioButton1.Checked)
                 {
                     mh.hostAddress = this.numericUpDown2.Value.ToString();

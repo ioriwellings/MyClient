@@ -454,6 +454,11 @@
             this.numericUpDown5.Name = "numericUpDown5";
             this.numericUpDown5.Size = new System.Drawing.Size(120, 21);
             this.numericUpDown5.TabIndex = 18;
+            this.numericUpDown5.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
             // 
             // label13
             // 
@@ -470,15 +475,20 @@
             this.numericUpDown6.Name = "numericUpDown6";
             this.numericUpDown6.Size = new System.Drawing.Size(120, 21);
             this.numericUpDown6.TabIndex = 20;
+            this.numericUpDown6.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(322, 115);
+            this.label14.Location = new System.Drawing.Point(274, 115);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(77, 12);
+            this.label14.Size = new System.Drawing.Size(125, 12);
             this.label14.TabIndex = 21;
-            this.label14.Text = "短信手机号：";
+            this.label14.Text = "短信手机号（11位）：";
             // 
             // textBox5
             // 
@@ -486,6 +496,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(173, 21);
             this.textBox5.TabIndex = 22;
+            this.textBox5.Text = "00000000000";
             // 
             // updateManageHost
             // 
@@ -551,10 +562,10 @@
         public System.Windows.Forms.ComboBox comboBox4;
         public System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.NumericUpDown numericUpDown5;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.NumericUpDown numericUpDown6;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox textBox5;
+        public System.Windows.Forms.NumericUpDown numericUpDown5;
+        public System.Windows.Forms.NumericUpDown numericUpDown6;
+        public System.Windows.Forms.TextBox textBox5;
     }
 }

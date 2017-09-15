@@ -37,6 +37,7 @@ namespace LBKJClient
                 }
             }
         }
+
         private void querymanageHose()
         {
             DataTable dt = mhs.queryManageHost();
@@ -57,10 +58,13 @@ namespace LBKJClient
                 this.dataGridView1.Columns[9].HeaderCell.Value = "管理主机编号";
                 this.dataGridView1.Columns[10].Visible = false;
                 this.dataGridView1.Columns[11].Visible = false;
-
                 this.dataGridView1.Columns[12].Visible = false;
-
                 this.dataGridView1.Columns[13].HeaderCell.Value = "所属库房";
+
+                this.dataGridView1.Columns[14].Visible = false;
+                this.dataGridView1.Columns[15].Visible = false;
+                this.dataGridView1.Columns[16].Visible = false;
+
                 this.dataGridView1.Columns[1].Width = 200;
                 this.dataGridView1.Columns[3].Width = 200;
                 this.dataGridView1.Columns[7].Width = 80;
@@ -130,6 +134,30 @@ namespace LBKJClient
             umh.comboBox3.SelectedItem = type;
             umh.textBox2.Text = code;
             umh.textBox3.Text = kflx;
+            ////////////////
+            if (this.dataGridView1.SelectedRows[0].Cells[14].Value.ToString() == "")
+            {
+                umh.numericUpDown5.Value = 30;
+            }
+            else
+            {
+                umh.numericUpDown5.Value = Convert.ToInt32(this.dataGridView1.SelectedRows[0].Cells[14].Value.ToString());
+            }
+            if (this.dataGridView1.SelectedRows[0].Cells[15].Value.ToString() == "")
+            {
+                umh.numericUpDown6.Value  = 5;
+            }
+            else
+            {
+                umh.numericUpDown6.Value = Convert.ToInt32(this.dataGridView1.SelectedRows[0].Cells[15].Value.ToString());
+            }
+            if (this.dataGridView1.SelectedRows[0].Cells[16].Value.ToString() == "0" || this.dataGridView1.SelectedRows[0].Cells[16].Value.ToString() == "") {
+                umh.textBox5.Text = "00000000000";
+            } else {
+                umh.textBox5.Text = this.dataGridView1.SelectedRows[0].Cells[16].Value.ToString();
+            }
+           
+            ////////////////
             if (address!=null&&!"".Equals(address)) {
                 if (networkType == "COM") { umh.radioButton1.Checked = true; } else if (networkType == "TCP") { umh.radioButton2.Checked = true; } else if (networkType == "YUN") { umh.radioButton3.Checked = true; };
                 if (umh.radioButton1.Checked)
