@@ -80,6 +80,14 @@ namespace LBKJClient.dao
             
             return ret == 0 ? false : true;
         }
+        public bool updateDeviceInformationDao(bean.manageHose mh)
+        {
+            int ret = 0;
+            String sql = "update lb_device_information set house_code='" + mh.houseType + "' where measureCode = '" + mh.measureCode + "'";
+            ret = DbHelperMySQL.ExecuteSql(sql);
+            return ret == 0 ? false : true;
+        }
+
         public DataTable checkPointInfo(int flag) {
 
             DataSet ds = new DataSet();
@@ -110,13 +118,7 @@ namespace LBKJClient.dao
         {
             int ret = 0;
             String sql = "";
-            if (di.powerflag > 0)
-            {
-                sql = "update lb_device_information set terminalname='" + di.terminalname + "',t_high='" + di.t_high + "',t_low='" + di.t_low + "',h_high='" + di.h_high + "',h_low='" + di.h_low + "',powerflag='" + di.powerflag + "' where measureCode='" + di.measureCode + "' and meterNo='" + di.meterNo + "'";
-            }
-            else {
-                sql = "update lb_device_information set terminalname='" + di.terminalname + "',house_code='" + di.housecode + "',housetype ='0',t_high='" + di.t_high + "',t_low='" + di.t_low + "',h_high='" + di.h_high + "',h_low='" + di.h_low + "',powerflag='" + di.powerflag + "' where measureCode='" + di.measureCode + "' and meterNo='" + di.meterNo + "'";
-            }
+            sql = "update lb_device_information set terminalname='" + di.terminalname + "',t_high='" + di.t_high + "',t_low='" + di.t_low + "',h_high='" + di.h_high + "',h_low='" + di.h_low + "',powerflag='" + di.powerflag + "' where measureCode='" + di.measureCode + "' and meterNo='" + di.meterNo + "'";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
@@ -150,7 +152,7 @@ namespace LBKJClient.dao
 
             DataSet ds = new DataSet();
             ds.Clear();
-            String sql = "select a.id,a.measureCode,a.meterNo,a.terminalname,a.pointX,a.pointY from lb_device_information a where a.house_code='" + code+"'";
+            String sql = "select a.id,a.measureCode,a.meterNo,a.terminalname,a.pointX,a.pointY from lb_device_information a where a.house_code='" + code+ "' order by a.measureCode,a.meterNo";
             ds = DbHelperMySQL.Query(sql);
             return ds.Tables[0];
         }

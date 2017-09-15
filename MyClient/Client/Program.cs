@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using NT88Test;
 using SmartX1Demo;
+using System.Threading;
 
 namespace LBKJClient
 {
@@ -17,20 +18,28 @@ namespace LBKJClient
         [STAThread]
         static void Main()
         {
-            int vv = 0;
+            //Application.EnableVisualStyles();
+
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.SetCompatibleTextRenderingDefault(false);
+
+            //#region 线程异常处理 全局的异常处理
+            //Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
+            //AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            int vv = 1;
             //int[] keyHandles = new int[8];
             //int[] keyNumber = new int[8];
             //SmartApp smart = new SmartApp();
             //vv = smart.SmartX1Find("GSPAutoMonitor", keyHandles, keyNumber);
 
-            //if (IntPtr.Size == 4)
-            //{
-            //    vv = NT88_X86.NTFindFirst("longbangrj716");
-            //}
-            //else
-            //{
-            //    vv = NT88_X64.NTFindFirst("longbangrj716");
-            //}
+            if (IntPtr.Size == 4)
+            {
+                vv = NT88_X86.NTFindFirst("longbangrj716");
+            }
+            else
+            {
+                vv = NT88_X64.NTFindFirst("longbangrj716");
+            }
             if (vv != 0)
             {
                 //MessageBox.Show("系统程序未检测到加密狗，请插入加密狗或联系售后人员！");
@@ -39,7 +48,9 @@ namespace LBKJClient
                 if (tt == 4)
                 {
                     Main();
-                } else if (tt == 5) {
+                }
+                else if (tt == 5)
+                {
                     bool ret;
                     System.Threading.Mutex mutex = new System.Threading.Mutex(true, Application.ProductName, out ret);
                     if (ret)
@@ -67,27 +78,57 @@ namespace LBKJClient
             else
             {
                 bool ret;
-            System.Threading.Mutex mutex = new System.Threading.Mutex(true, Application.ProductName, out ret);
-            if (ret)
-            {
-                Application.EnableVisualStyles();   //这两行实现   XP   可视风格   
-                Application.DoEvents();             //这两行实现   XP   可视风格
+                System.Threading.Mutex mutex = new System.Threading.Mutex(true, Application.ProductName, out ret);
+                if (ret)
+                {
+                    Application.EnableVisualStyles();   //这两行实现   XP   可视风格   
+                    Application.DoEvents();             //这两行实现   XP   可视风格
 
-                // 启动  开始动画
-                SplashScreen.ShowSplashScreen();
-                System.Threading.Thread.Sleep(1500); 
-                Application.Run(new frmLogin());
+                    // 启动  开始动画
+                    SplashScreen.ShowSplashScreen();
+                    System.Threading.Thread.Sleep(1500);
+                    //Application.SetCompatibleTextRenderingDefault(false);   
+                    Application.Run(new frmLogin());
 
-                //Main   为你程序的主窗体，如果是控制台程序不用这句   
-                mutex.ReleaseMutex();
+                    //Main   为你程序的主窗体，如果是控制台程序不用这句   
+                    mutex.ReleaseMutex();
+                }
+                else
+                {
+                    MessageBox.Show(null, "有一个和本程序相同的应用程序正在运行，请先关闭！", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //提示信息，可以删除
+                    Application.Exit();//退出程序
+                }
             }
-            else
-            {
-                MessageBox.Show(null, "有一个和本程序相同的应用程序正在运行，请先关闭！", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //提示信息，可以删除
-                Application.Exit();//退出程序
-            }
-         }
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new frmLogin());
         }
+
+        /// <summary>
+        /// 线程异常处理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        //static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        //{
+        //    //在此处添加上你要写日志的方法
+        //    //MessageBox.Show(e.Exception.Message);
+        //    using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:/log.txt", true))
+        //    {
+        //        sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + "    " + e.Exception.Message);
+        //    }
+        //}
+
+        //static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+
+        //{
+        //    //此处写获取的日志 
+        //    //MessageBox.Show(e.ExceptionObject.ToString());
+        //    using (System.IO.StreamWriter sw = new System.IO.StreamWriter("D:/log.txt", true))
+        //    {
+        //        sw.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") +"    "+ e.ExceptionObject.ToString());
+        //    }
+        //}
     }
 }

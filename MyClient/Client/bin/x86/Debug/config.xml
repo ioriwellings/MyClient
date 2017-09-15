@@ -3,10 +3,12 @@
   <username>60.205.85.233</username>
   <password>8991</password>
   <historyDataIport>47.94.112.2:8992/history</historyDataIport>
-  <user>user</user>
-  <passd>2x22t8GcEGU=</passd>
-  <stoptime>170913143752</stoptime>
-  <starttime>170912224121</starttime>
+  <user>
+  </user>
+  <passd>
+  </passd>
+  <stoptime>170914181544</stoptime>
+  <starttime>170914180340</starttime>
   <communicationType>1-COM1</communicationType>
   <communicationTcpType>
   </communicationTcpType>
@@ -18,7 +20,7 @@
   <log>0</log>
   <autosave02>0</autosave02>
   <autosave16>0</autosave16>
-  <autoSizeX>280</autoSizeX>
-  <autoSizeY>230</autoSizeY>
+  <autoSizeX>220</autoSizeX>
+  <autoSizeY>185</autoSizeY>
   <scoketServer>0</scoketServer>
 </config>

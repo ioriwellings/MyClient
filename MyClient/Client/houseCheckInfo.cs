@@ -834,6 +834,8 @@ namespace LBKJClient
         private void picb_DouClick(object sender, EventArgs e)
         {
             service.deviceInformationService dis = new service.deviceInformationService();
+            service.manageHostService mhs = new service.manageHostService();
+
             convenientSet cs = new convenientSet();
             PictureBox pic = (PictureBox)sender;
             string tag = pic.Tag.ToString();
@@ -841,12 +843,17 @@ namespace LBKJClient
             DataTable dtd = dis.selectBydeviceInfo(tagg[2], tagg[3]);
             if (dtd.Rows.Count > 0)
             {
+                DataTable dd = mhs.queryManageHoststoreType(dtd.Rows[0]["measureCode"].ToString());
+                cs.textBox9.Text = dd.Rows[0]["hostName"].ToString();
+                cs.textBox10.Text = dtd.Rows[0]["meterNo"].ToString();
+
                 cs.textBox3.Text = dtd.Rows[0]["terminalname"].ToString();
                 cs.textBox4.Text = dtd.Rows[0]["measureCode"].ToString() + "-" + dtd.Rows[0]["meterNo"].ToString();
                 string hostaddress = dtd.Rows[0]["hostAddress"].ToString();
                 if (hostaddress != null && !"".Equals(hostaddress))
                 {
-                    cs.comboBox5.Text = "COM" + hostaddress;
+                    cs.textBox5.Text = hostaddress;
+                    cs.comboBox5.Text = dd.Rows[0]["serialPort"].ToString();
                 }
                 cs.comboBox3.Text = dtd.Rows[0]["CommunicationType"].ToString();
                 cs.numericUpDown4.Value = (decimal)Convert.ToDouble(dtd.Rows[0]["t_high"].ToString());

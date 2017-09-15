@@ -490,7 +490,7 @@ namespace LBKJClient
                     {
                         this.dataGridView1.Rows[i].Cells[6].Style.ForeColor = Color.Red;
                     }
-                    this.dataGridView1.Rows[i].Cells[6].Value = warningEvent;
+                    this.dataGridView1.Rows[i].Cells[6].Value = warningEvent; 
                 }
             }
             else

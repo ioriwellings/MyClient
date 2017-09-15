@@ -42,7 +42,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
@@ -50,6 +49,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
@@ -120,7 +120,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 66);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(542, 373);
+            this.tabControl1.Size = new System.Drawing.Size(542, 426);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -130,7 +130,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(534, 347);
+            this.tabPage1.Size = new System.Drawing.Size(534, 400);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "参数设置";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -146,7 +146,7 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.ForeColor = System.Drawing.Color.Red;
-            this.groupBox1.Location = new System.Drawing.Point(6, 174);
+            this.groupBox1.Location = new System.Drawing.Point(6, 223);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(522, 108);
             this.groupBox1.TabIndex = 23;
@@ -264,7 +264,6 @@
             // 
             this.groupBox2.Controls.Add(this.textBox5);
             this.groupBox2.Controls.Add(this.textBox4);
-            this.groupBox2.Controls.Add(this.checkBox2);
             this.groupBox2.Controls.Add(this.textBox3);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.comboBox3);
@@ -272,7 +271,7 @@
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.checkBox1);
             this.groupBox2.ForeColor = System.Drawing.Color.Red;
-            this.groupBox2.Location = new System.Drawing.Point(6, 11);
+            this.groupBox2.Location = new System.Drawing.Point(6, 43);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(522, 138);
             this.groupBox2.TabIndex = 22;
@@ -296,19 +295,6 @@
             this.textBox4.Size = new System.Drawing.Size(63, 21);
             this.textBox4.TabIndex = 34;
             this.textBox4.Visible = false;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.checkBox2.Location = new System.Drawing.Point(396, 30);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(72, 16);
-            this.checkBox2.TabIndex = 31;
-            this.checkBox2.Tag = "1";
-            this.checkBox2.Text = "是否隐藏";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.Click += new System.EventHandler(this.checkBox2_Click);
             // 
             // textBox3
             // 
@@ -373,12 +359,12 @@
             this.checkBox1.Size = new System.Drawing.Size(72, 16);
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Tag = "0";
-            this.checkBox1.Text = "是否启用";
+            this.checkBox1.Text = "是否显示";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Click += new System.EventHandler(this.checkBox1_Click);
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label7);
             this.tabPage2.Controls.Add(this.groupBox5);
             this.tabPage2.Controls.Add(this.label17);
             this.tabPage2.Controls.Add(this.groupBox4);
@@ -387,10 +373,18 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(534, 347);
+            this.tabPage2.Size = new System.Drawing.Size(534, 400);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "设备设置";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(187, 378);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(0, 12);
+            this.label7.TabIndex = 44;
             // 
             // groupBox5
             // 
@@ -406,7 +400,7 @@
             this.groupBox5.ForeColor = System.Drawing.Color.Red;
             this.groupBox5.Location = new System.Drawing.Point(9, 257);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(519, 145);
+            this.groupBox5.Size = new System.Drawing.Size(519, 113);
             this.groupBox5.TabIndex = 27;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "短信报警设置";
@@ -414,7 +408,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(374, 113);
+            this.label24.Location = new System.Drawing.Point(376, 156);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(137, 12);
             this.label24.TabIndex = 28;
@@ -424,7 +418,7 @@
             // 
             this.label23.AutoSize = true;
             this.label23.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label23.Location = new System.Drawing.Point(9, 120);
+            this.label23.Location = new System.Drawing.Point(3, 150);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(83, 12);
             this.label23.TabIndex = 43;
@@ -435,7 +429,7 @@
             // 
             this.label22.AutoSize = true;
             this.label22.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label22.Location = new System.Drawing.Point(9, 94);
+            this.label22.Location = new System.Drawing.Point(3, 115);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(83, 12);
             this.label22.TabIndex = 42;
@@ -444,7 +438,7 @@
             // 
             // textBox8
             // 
-            this.textBox8.Location = new System.Drawing.Point(99, 117);
+            this.textBox8.Location = new System.Drawing.Point(99, 150);
             this.textBox8.Name = "textBox8";
             this.textBox8.ReadOnly = true;
             this.textBox8.Size = new System.Drawing.Size(235, 21);
@@ -453,7 +447,7 @@
             // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(99, 91);
+            this.textBox7.Location = new System.Drawing.Point(99, 112);
             this.textBox7.Name = "textBox7";
             this.textBox7.ReadOnly = true;
             this.textBox7.Size = new System.Drawing.Size(235, 21);
@@ -798,7 +792,7 @@
             // 
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(306, 445);
+            this.button1.Location = new System.Drawing.Point(320, 498);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 25);
             this.button1.TabIndex = 3;
@@ -809,7 +803,7 @@
             // 
             this.button2.FlatAppearance.BorderSize = 0;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(445, 445);
+            this.button2.Location = new System.Drawing.Point(463, 501);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 25);
             this.button2.TabIndex = 4;
@@ -866,7 +860,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(566, 479);
+            this.ClientSize = new System.Drawing.Size(566, 534);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -972,6 +966,6 @@
         private System.Windows.Forms.GroupBox groupBox6;
         public System.Windows.Forms.TextBox textBox9;
         public System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Label label7;
     }
 }

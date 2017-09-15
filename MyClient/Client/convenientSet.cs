@@ -68,9 +68,14 @@ namespace LBKJClient
                 di.t_low = float.Parse(t_low);
                 di.h_high = float.Parse(h_high);
                 di.h_low = float.Parse(h_low);
-                if (this.checkBox2.Checked) {
-                    di.powerflag = Int32.Parse(this.checkBox2.Tag.ToString());
+                if (this.checkBox1.Checked)
+                {
+                    di.powerflag = Int32.Parse(this.checkBox1.Tag.ToString());
                 }
+                else
+                {
+                    di.powerflag = 1;
+                };
                 service.deviceInformationService dis = new service.deviceInformationService();
                 bool isok = dis.updateIformation(di);
                 if (isok)
@@ -84,15 +89,6 @@ namespace LBKJClient
             }
         }
 
-        private void checkBox1_Click(object sender, EventArgs e)
-        {
-            this.checkBox2.Checked = false;
-        }
-
-        private void checkBox2_Click(object sender, EventArgs e)
-        {
-            this.checkBox1.Checked = false;
-        }
         private void initPort()
         {
             try
@@ -181,7 +177,7 @@ namespace LBKJClient
                     if (crcSource == crcRet)
                     {
                         isCRC = true;
-                        this.label17.Text = "读取成功";
+                        this.label7.Text = "读取成功";
                     }
                     else
                     {
@@ -190,7 +186,7 @@ namespace LBKJClient
                     }
                     if (totalByteRead.Length == 11)
                     {
-                        this.label17.Text = "设置成功";
+                        this.label7.Text = "设置成功";
                         isCRC = false;
                         totalByteRead = new Byte[0];
                     }
@@ -272,7 +268,7 @@ namespace LBKJClient
                     string bjInterval = Convert.ToString(totalByteRead[15], 10);
                     this.numericUpDown13.Value = (decimal)Convert.ToDouble(cdnum);
                     this.numericUpDown12.Value = (decimal)Convert.ToDouble(bjInterval);
-                    this.label17.Text = "日期间隔读取成功";
+                    this.label7.Text = "日期间隔读取成功";
                     this.button8.Enabled = true;
                     this.button3.Enabled = true;
                     totalByteRead = new Byte[0];
@@ -289,7 +285,7 @@ namespace LBKJClient
                     this.textBox6.Text = pno1;
                     this.textBox7.Text = pno2;
                     this.textBox8.Text = pno3;
-                    this.label17.Text = "短信手机号读取成功";
+                    this.label7.Text = "短信手机号读取成功";
                     this.button4.Enabled = true;
                     totalByteRead = new Byte[0];
                 }
