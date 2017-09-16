@@ -731,9 +731,6 @@ namespace LBKJClient
             Exit exit = new Exit();
             if (exit.ShowDialog() == DialogResult.OK)
             {
-                DialogResult result = MessageBox.Show("是否确认退出？退出后将不能获取和保存温湿度数据！", "操作提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
                     //新增退出系统删除无标记记录（断电，报警，库房、车载时间间隔）
                     //service.deleteInvalidDataService did = new service.deleteInvalidDataService();
                     //did.deleteInvalidData();
@@ -752,7 +749,7 @@ namespace LBKJClient
                         port.Close();
                     }
                     System.Environment.Exit(0);
-                }
+                
             }
         }
         private void toolStripMenuItem5_Click(object sender, EventArgs e)

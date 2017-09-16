@@ -13,13 +13,13 @@ namespace LBKJClient.dao
             int measureNo = System.Math.Abs(id.GetHashCode());
             measureNo = Int32.Parse(measureNo.ToString().Substring(0, 5));
             int ret = 0;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-            String sql = "insert into lb_managehost_info (id,measureCode,hostName,hostAddress,CommunicationType,serialPort,portNumber,storeType,createTime,houseType,measureNo,tcp_ip_Port,networkType) values ('" + id + "','" + mh.measureCode + "', '" + mh.hostName + "', '" + mh.hostAddress + "', '" + mh.CommunicationType + "', '" + mh.serialPort + "', '" + mh.portNumber + "', '" + mh.storeType + "', '" + time + "', '" + mh.houseType + "','" + measureNo + "','" + mh.tcp_ip_Port + "','" + mh.networkType + "');alter table data_home add partition(PARTITION p" + measureNo + " VALUES in(" + measureNo + "))";
+            String sql = "insert into lb_managehost_info (id,measureCode,hostName,hostAddress,CommunicationType,serialPort,portNumber,storeType,createTime,houseType,measureNo,tcp_ip_Port,networkType,RecordM,WarningM,PhoneNo,State) values ('" + id + "','" + mh.measureCode + "', '" + mh.hostName + "', '" + mh.hostAddress + "', '" + mh.CommunicationType + "', '" + mh.serialPort + "', '" + mh.portNumber + "', '" + mh.storeType + "', '" + time + "', '" + mh.houseType + "','" + measureNo + "','" + mh.tcp_ip_Port + "','" + mh.networkType + "','" + mh.RecordM + "','" + mh.WarningM + "','" + mh.PhoneNo + "','" + mh.State + "');alter table data_home add partition(PARTITION p" + measureNo + " VALUES in(" + measureNo + "))";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
         public DataTable querymanageHostDao()
         {
-            String sql = "SELECT m.id,m.hostName,m.hostAddress,m.CommunicationType,m.serialPort,m.tcp_ip_Port,m.networkType,m.portNumber,m.storeType,m.measureCode,m.createTime,m.houseType,m.measureNo,h.name FROM lb_managehost_info m join lb_house_type h on m.houseType=h.id";
+            String sql = "SELECT m.id,m.hostName,m.hostAddress,m.CommunicationType,m.serialPort,m.tcp_ip_Port,m.networkType,m.portNumber,m.storeType,m.measureCode,m.createTime,m.houseType,m.measureNo,h.name,m.RecordM,m.WarningM,m.PhoneNo FROM lb_managehost_info m join lb_house_type h on m.houseType=h.id";
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);
@@ -43,7 +43,7 @@ namespace LBKJClient.dao
         public bool updatemanageHostDao(bean.manageHose mh)
         {
             int ret = 0;
-            String sql = "update lb_managehost_info set hostName='" + mh.hostName + "',hostAddress='" + mh.hostAddress + "',CommunicationType='" + mh.CommunicationType + "',serialPort='" + mh.serialPort + "',portNumber='" + mh.portNumber + "',storeType='" + mh.storeType + "',houseType='" + mh.houseType + "',tcp_ip_Port='" + mh.tcp_ip_Port + "',networkType='" + mh.networkType + "' where measureCode = '" + mh.measureCode + "'";
+            String sql = "update lb_managehost_info set hostName='" + mh.hostName + "',hostAddress='" + mh.hostAddress + "',CommunicationType='" + mh.CommunicationType + "',serialPort='" + mh.serialPort + "',portNumber='" + mh.portNumber + "',storeType='" + mh.storeType + "',houseType='" + mh.houseType + "',tcp_ip_Port='" + mh.tcp_ip_Port + "',networkType='" + mh.networkType + "',RecordM='" + mh.RecordM + "',WarningM='" + mh.WarningM + "',PhoneNo='" + mh.PhoneNo + "',State='" + mh.State + "' where measureCode = '" + mh.measureCode + "'";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
