@@ -123,7 +123,7 @@ namespace LBKJClient
             mpsp.textBox6.Text =meter;
             if (mpsp.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("测点(仪表)参数修改成功！");
+                MessageBox.Show("测点(仪表)参数修改成功！"); 
                 checkPointInfo();
                 //刷新首页
                 if (this.RefreshEvent != null)
