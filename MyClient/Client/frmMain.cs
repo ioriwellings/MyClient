@@ -91,39 +91,41 @@ namespace LBKJClient
         public frmMain()
         {
             InitializeComponent();
-         }
+        }
         private void frmMain_Load(object sender, EventArgs e)
         {
             if (hulie == 1)
             {
                 this.timer1.Start();
                 string power = "显示报告,库房平面图,分库浏览,库房管理,管理主机设置,数据库管理,查询登录日志,查询报警处理,查询报警记录,查询历史曲线,查询历史数据,密码修改,测点属性设置,报警设置,基本设置,修改标题,修改公司名称,用户管理";
-                frmLogin.listpower= power.Split(',').ToList();
+                frmLogin.listpower = power.Split(',').ToList();
             }
-            if (frmLogin.name!="admin") {
-            foreach (ToolStripMenuItem item in this.menuStrip1.Items)
+            if (frmLogin.name != "admin")
             {
-                if (item.Text != "帮助")
+                foreach (ToolStripMenuItem item in this.menuStrip1.Items)
                 {
-                    //遍历前三个中的子菜单
-                    foreach (ToolStripMenuItem item2 in item.DropDownItems)
-                    {   
-                        if (item2.Text!="退出系统" && item2.Text != "取消自动登录" && item2.Text != "菜单栏" && item2.Text != "工具栏" && item2.Text != "标题栏" && item2.Text != "全屏显示(Esc退出)" && item2.Text != "缩放" && item2.Text != "显示温度" && item2.Text != "显示湿度") {
-                            //权限中不包含这个下拉菜单
-                            if (!frmLogin.listpower.Contains(item2.Text))
+                    if (item.Text != "帮助")
+                    {
+                        //遍历前三个中的子菜单
+                        foreach (ToolStripMenuItem item2 in item.DropDownItems)
+                        {
+                            if (item2.Text != "退出系统" && item2.Text != "取消自动登录" && item2.Text != "菜单栏" && item2.Text != "工具栏" && item2.Text != "标题栏" && item2.Text != "全屏显示(Esc退出)" && item2.Text != "缩放" && item2.Text != "显示温度" && item2.Text != "显示湿度")
                             {
-                                item2.Visible = false; //看不见
-                            }
-                            else
-                            {
-                                item2.Visible = true; //看见 （可用）
+                                //权限中不包含这个下拉菜单
+                                if (!frmLogin.listpower.Contains(item2.Text))
+                                {
+                                    item2.Visible = false; //看不见
+                                }
+                                else
+                                {
+                                    item2.Visible = true; //看见 （可用）
+                                }
                             }
                         }
                     }
                 }
-            }
-            foreach (ToolStripLabel item in this.toolStrip1.Items)
-            {
+                foreach (ToolStripLabel item in this.toolStrip1.Items)
+                {
                     if (item.Text != "系统退出")
                     {
                         if (!frmLogin.listpower.Contains(item.Text))
@@ -135,8 +137,8 @@ namespace LBKJClient
                             item.Visible = true; //看见 （可用）
                         }
                     }
-             }
-          }
+                }
+            }
             privateFonts.AddFontFile(@str + @"/fonts/SIMYOU.TTF");//加载路径的字体
             getFromXml();
             rect = Screen.GetWorkingArea(this);
@@ -150,7 +152,7 @@ namespace LBKJClient
                 result = getresults.Split('-');
                 if (result[0] == "1")
                 {
-                    dtCom = mhs.queryManageHostCom();               
+                    dtCom = mhs.queryManageHostCom();
                 }
             }
             queryMeterIds();
@@ -160,47 +162,52 @@ namespace LBKJClient
             //以下是标题的操作
             cm = textFileUpdate(@str + filepath);
             tm = textFileUpdate(@str + filepath1);
-            if (cm != null && !"".Equals(cm)) {
+            if (cm != null && !"".Equals(cm))
+            {
                 companyName = cm;
             }
-            else {
+            else
+            {
                 textFile(@str + filepath, companyName);
             }
             if (tm != null && !"".Equals(tm))
             {
                 titlename = tm;
             }
-            else {
+            else
+            {
                 textFile(@str + filepath1, titlename);
             }
-      
+
             this.lblTitle.Text = companyName + titlename;
             this.lblTitle.ForeColor = Color.FromArgb(51, 51, 51);
             lblTitle.Font = new Font("微软雅黑", 26F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(134)));
             lblTitle.Left = (this.lbtitle.Width - this.lblTitle.Width) / 2;
             lblTitle.BringToFront();
-          //  backupDatabase();//数据库自动备份
+            //  backupDatabase();//数据库自动备份
             this.timer2.Interval = Int32.Parse(datasavetime) * 1000;
             this.timer2.Start();
-            this.timer5.Start();
         }
         private void queryMeterIds()
         {
             string ids = null;
             int flag = 3;
             dtcdinfo = dis.checkPointInfo(flag);
-            if (dtcdinfo.Rows.Count>0) {
-                for (int i=0; i< dtcdinfo.Rows.Count; i++) {
-                    ids+=":"+ dtcdinfo.Rows[i][1] + "-" + dtcdinfo.Rows[i][2]; 
+            if (dtcdinfo.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtcdinfo.Rows.Count; i++)
+                {
+                    ids += ":" + dtcdinfo.Rows[i][1] + "-" + dtcdinfo.Rows[i][2];
                 }
-                mids=ids.Substring(1);
-            }         
-                if (dtcdinfo1.Rows.Count>0)
+                mids = ids.Substring(1);
+            }
+            if (dtcdinfo1.Rows.Count > 0)
             {
                 //首页-查询测点的实时温湿度数据              
                 querywenshidu();
             }
-            else {
+            else
+            {
                 flowLayoutPanel1.Controls.Clear();
             }
         }
@@ -215,7 +222,7 @@ namespace LBKJClient
             node = xmlDoc.SelectSingleNode("config/datasavetime");
             datasavetime = node.InnerText;
             node = xmlDoc.SelectSingleNode("config/databasetimer");
-            times =Int32.Parse( node.InnerText);
+            times = Int32.Parse(node.InnerText);
             node = xmlDoc.SelectSingleNode("config/carsavetime");
             cartime = Int32.Parse(node.InnerText);
             node = xmlDoc.SelectSingleNode("config/datahousesavetime");
@@ -231,7 +238,7 @@ namespace LBKJClient
             toolStripMenuItem4.CheckState = CheckState.Unchecked;
             toolStripMenuItem5.CheckState = CheckState.Unchecked;
             toolStripMenuItem6.CheckState = CheckState.Unchecked;
-            
+
         }
 
         bool isbjShow;
@@ -248,12 +255,6 @@ namespace LBKJClient
             ///////////////////控制温湿度显示
             bool xswd = this.显示温度toolStripMenuItem.Checked;
             bool xssd = this.显示湿度toolStripMenuItem.Checked;
-            //////////////
-            //显示报告用
-            int COM = 1;
-            int TCP = 1;
-            int YUN = 1;
-
             //////////////
             //xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
@@ -360,58 +361,6 @@ namespace LBKJClient
                             DateTime dt1 = Convert.ToDateTime(dt.Rows[x]["devtime"].ToString());
                             DateTime dt2 = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                             TimeSpan ts = dt2.Subtract(dt1);
-                            /////////////////显示报告
-                            if (dt.Rows[x]["networkType"].ToString() == "COM" && COM == 1) {
-                                if (ts.TotalMinutes > 1) {
-                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                    rb.eventInfo = "COM传输异常！";
-                                    rb.type = "0";
-                                    lls.addReport(rb);
-                                   } else {
-                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                    rb.eventInfo = "COM传输正常！";
-                                    rb.type = "0";
-                                    lls.addReport(rb);
-                                     }
-                                COM++;
-                            }
-                            if (dt.Rows[x]["networkType"].ToString() == "TCP" && TCP == 1)
-                            {
-                                if (ts.TotalMinutes > 1)
-                                {
-                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                    rb.eventInfo = "TCP传输异常！";
-                                    rb.type = "1";
-                                    lls.addReport(rb);
-                                }
-                                else
-                                {
-                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                    rb.eventInfo = "TCP传输正常！";
-                                    rb.type = "1";
-                                    lls.addReport(rb);
-                                }
-                                TCP++;
-                            }
-                            if (dt.Rows[x]["networkType"].ToString() == "YUN" && YUN == 1)
-                            {
-                                if (ts.TotalMinutes > 1)
-                                {
-                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                    rb.eventInfo = "YUN传输异常！";
-                                    rb.type = "2";
-                                    lls.addReport(rb);
-                                }
-                                else
-                                {
-                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                    rb.eventInfo = "YUN传输正常！";
-                                    rb.type = "2";
-                                    lls.addReport(rb);
-                                }
-                                YUN++;
-                            }
-                            //////////////
                             if (ts.TotalMinutes >= double.Parse(overtime))
                             {
                                 font = new Font("微软雅黑", Convert.ToSingle((double)20 * 5.0));
@@ -714,7 +663,7 @@ namespace LBKJClient
 
         private void 退出系统ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            toolStripLabel7_Click(sender,e);
+            toolStripLabel7_Click(sender, e);
         }
 
         private void toolStripLabel1_Click_2(object sender, EventArgs e)
@@ -722,7 +671,7 @@ namespace LBKJClient
             if (basicsetup.ShowDialog() == DialogResult.OK)
             {
                 this.timer2.Stop();
-                frmMain_Load(sender,e);
+                frmMain_Load(sender, e);
             }
         }
 
@@ -731,6 +680,9 @@ namespace LBKJClient
             Exit exit = new Exit();
             if (exit.ShowDialog() == DialogResult.OK)
             {
+                //DialogResult result = MessageBox.Show("是否确认退出？退出后将不能获取和保存温湿度数据！", "操作提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                //if (result == DialogResult.Yes)
+                {
                     //新增退出系统删除无标记记录（断电，报警，库房、车载时间间隔）
                     //service.deleteInvalidDataService did = new service.deleteInvalidDataService();
                     //did.deleteInvalidData();
@@ -740,7 +692,8 @@ namespace LBKJClient
                     lb.name = frmLogin.name;
                     lb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     lb.eventInfo = "退出系统！";
-                    if (lb.name != "admin" && lb.name != "" && lb.name != null) {
+                    if (lb.name != "admin" && lb.name != "" && lb.name != null)
+                    {
                         llse.addCheckLog(lb);
                     }
                     saveToXmlsStoptime(DateTime.Now.ToString("yyMMddHHmmss"));
@@ -749,12 +702,12 @@ namespace LBKJClient
                         port.Close();
                     }
                     System.Environment.Exit(0);
-                
+                }
             }
         }
         private void toolStripMenuItem5_Click(object sender, EventArgs e)
         {
-            
+
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
             if (tsmi.Checked)
                 tsmi.CheckState = CheckState.Unchecked;
@@ -775,7 +728,7 @@ namespace LBKJClient
                 querywenshidu();
                 this.timer2.Start();
             }
-                
+
         }
 
         private void 默认大小ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -852,7 +805,7 @@ namespace LBKJClient
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            
+
             ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
             if (tsmi.Checked)
                 tsmi.CheckState = CheckState.Unchecked;
@@ -904,7 +857,7 @@ namespace LBKJClient
         {
             ChangeCompanyName changecompanyname = new ChangeCompanyName();
 
-            changecompanyname.textBox1.Text = textFileUpdate(@str+ filepath);
+            changecompanyname.textBox1.Text = textFileUpdate(@str + filepath);
 
             if (changecompanyname.ShowDialog() == DialogResult.OK)
             {
@@ -913,18 +866,20 @@ namespace LBKJClient
                     lblTitle.Text = changecompanyname.compName + tm;
                     cm = changecompanyname.compName;
                 }
-                else {
+                else
+                {
                     lblTitle.Text = changecompanyname.compName + titlename;
                     cm = changecompanyname.compName;
                 }
-               
+
                 textFile(@str + filepath, changecompanyname.compName);
 
                 lblTitle.Left = (this.lbtitle.Width - this.lblTitle.Width) / 2;
                 lblTitle.BringToFront();
             }
         }
-        private void textFile(string filepath,string name) {
+        private void textFile(string filepath, string name)
+        {
             FileStream myFs = myFs = new FileStream(@filepath, FileMode.Create);
             StreamWriter mySw = new StreamWriter(myFs);
             mySw.Write(name);
@@ -943,14 +898,14 @@ namespace LBKJClient
 
         private void 修改标题ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ChangeTitle changetitle= new ChangeTitle();
-            changetitle.titletextBox.Text=textFileUpdate(@str + filepath1);
+            ChangeTitle changetitle = new ChangeTitle();
+            changetitle.titletextBox.Text = textFileUpdate(@str + filepath1);
             if (changetitle.ShowDialog() == DialogResult.OK)
             {
                 if (cm != null && !"".Equals(cm))
                 {
                     lblTitle.Text = cm + changetitle.titleName;
-                    tm= changetitle.titleName;
+                    tm = changetitle.titleName;
                 }
                 else
                 {
@@ -967,7 +922,7 @@ namespace LBKJClient
 
         private void 基本设置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            toolStripLabel1_Click_2(sender,e);
+            toolStripLabel1_Click_2(sender, e);
         }
 
         private void 报警设置ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -984,7 +939,7 @@ namespace LBKJClient
 
         private void 查询历史数据ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.toolStripLabel3_Click(sender,e);
+            this.toolStripLabel3_Click(sender, e);
         }
 
         private void 查询历史曲线ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -999,18 +954,11 @@ namespace LBKJClient
 
         private void toolStripLabel4_Click(object sender, EventArgs e)
         {
-             graphcheck.ShowDialog();
+            graphcheck.ShowDialog();
         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            //////////////
-            //显示报告用
-            int COM = 1;
-            int TCP = 1;
-            int YUN = 1;
-
-            //////////////
             int kk = 0;
             string timeHouse = DateTime.Now.ToString("yyyy-MM-dd HH") + ":00:00";
             da = monitoringservice.rtmonitoring();
@@ -1134,62 +1082,6 @@ namespace LBKJClient
                         DateTime dt1 = Convert.ToDateTime(dtime);
                         DateTime dt2 = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                         TimeSpan ts = dt2.Subtract(dt1);
-                        /////////////////显示报告
-                        if (dt.Rows[i]["networkType"].ToString() == "COM" && COM == 1)
-                        {
-                            if (ts.TotalMinutes > 1)
-                            {
-                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                rb.eventInfo = "COM传输异常！";
-                                rb.type = "0";
-                                lls.addReport(rb);
-                            }
-                            else
-                            {
-                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                rb.eventInfo = "COM传输正常！";
-                                rb.type = "0";
-                                lls.addReport(rb);
-                            }
-                            COM++;
-                        }
-                        if (dt.Rows[i]["networkType"].ToString() == "TCP" && TCP == 1)
-                        {
-                            if (ts.TotalMinutes > 1)
-                            {
-                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                rb.eventInfo = "TCP传输异常！";
-                                rb.type = "1";
-                                lls.addReport(rb);
-                            }
-                            else
-                            {
-                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                rb.eventInfo = "TCP传输正常！";
-                                rb.type = "1";
-                                lls.addReport(rb);
-                            }
-                            TCP++;
-                        }
-                        if (dt.Rows[i]["networkType"].ToString() == "YUN" && YUN == 1)
-                        {
-                            if (ts.TotalMinutes > 1)
-                            {
-                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                rb.eventInfo = "YUN传输异常！";
-                                rb.type = "2";
-                                lls.addReport(rb);
-                            }
-                            else
-                            {
-                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                rb.eventInfo = "YUN传输正常！";
-                                rb.type = "2";
-                                lls.addReport(rb);
-                            }
-                            YUN++;
-                        }
-                        //////////////
                         if (ts.TotalMinutes >= double.Parse(overtime))
                         {
                             size = TextRenderer.MeasureText("- -      ", font);
@@ -1489,7 +1381,8 @@ namespace LBKJClient
         private void 管理主机设置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             manageHoseSet mhs = new manageHoseSet();//管理主机设置功能
-            if (result!=null) {
+            if (result != null)
+            {
                 mhs.comCode = result[1];
             }
             mhs.RefreshEvent += this.NeedRefresh;//注册事件
@@ -1510,14 +1403,15 @@ namespace LBKJClient
         }
         private void NeedRefreshs(object sender, EventArgs e)
         {
-            if (sender != null&&!"".Equals(sender)) { 
-            if (Int32.Parse(sender.ToString()) == 1)
+            if (sender != null && !"".Equals(sender))
             {
-                dtcdinfo1 = dis.checkPointInfo(0);
-                //重新加载本页面
-                this.timer2.Stop();
-                queryMeterIds();
-                this.timer2.Start();
+                if (Int32.Parse(sender.ToString()) == 1)
+                {
+                    dtcdinfo1 = dis.checkPointInfo(0);
+                    //重新加载本页面
+                    this.timer2.Stop();
+                    queryMeterIds();
+                    this.timer2.Start();
                 }
             }
             else
@@ -1529,10 +1423,12 @@ namespace LBKJClient
         }
         private void 密码修改ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (frmLogin.name=="admin") {
+            if (frmLogin.name == "admin")
+            {
                 MessageBox.Show("管理员账号密码不能被修改");
             }
-            else {
+            else
+            {
                 passWordUpdate pwu = new passWordUpdate();
                 pwu.ShowDialog();
             }
@@ -1540,7 +1436,7 @@ namespace LBKJClient
 
         private void toolStripLabel5_Click(object sender, EventArgs e)
         {
-            测点属性设置ToolStripMenuItem_Click(sender,e);
+            测点属性设置ToolStripMenuItem_Click(sender, e);
         }
 
         private void 用户管理ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1582,7 +1478,7 @@ namespace LBKJClient
                         System.IO.Directory.CreateDirectory(filepath);
                     try
                     {
-                        string []mysqlinfo = Properties.Settings.Default.mysqlInfo.Split(',');
+                        string[] mysqlinfo = Properties.Settings.Default.mysqlInfo.Split(',');
                         DoBackupNoauto(mysqlinfo[0], mysqlinfo[1], mysqlinfo[2], mysqlinfo[3], mysqlinfo[4], filepath);
                         textFile(@str + "/manualBackupTimes.txt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                         //MessageBox.Show("数据备份成功！备份到：" + @filepath + "的路径下");
@@ -1612,7 +1508,7 @@ namespace LBKJClient
                 //MessageBox.Show("恢复数据库成功!");
                 this.timer2.Stop();
                 frmMain_Load(sender, e);
-                
+
             }
         }
 
@@ -1644,7 +1540,7 @@ namespace LBKJClient
 
             if (this.WindowState == FormWindowState.Minimized)
             {
-                
+
             }
         }
         private void picb_DouClick(object sender, EventArgs e)
@@ -1674,7 +1570,7 @@ namespace LBKJClient
                 if (hostaddress != null && !"".Equals(hostaddress))
                 {
                     cs.textBox5.Text = hostaddress;
-                    cs.comboBox5.Text = dd.Rows[0]["serialPort"].ToString(); 
+                    cs.comboBox5.Text = dd.Rows[0]["serialPort"].ToString();
                 }
 
                 cs.comboBox3.Text = dtd.Rows[0]["CommunicationType"].ToString();
@@ -1727,20 +1623,24 @@ namespace LBKJClient
         //加密狗定时程序
         private void timer5_Tick(object sender, EventArgs e)
         {
-            int vv = 1;
-            if (IntPtr.Size == 4)
-            {
-                vv = NT88_X86.NTFindFirst("longbangrj716");
-            }
-            else
-            {
-                vv = NT88_X64.NTFindFirst("longbangrj716");
-            }
-            if (vv != 0)
-            {
-                this.timer1.Start();
-                this.timer5.Stop();
-            }
+            //int vv = 1;
+            ////int[] keyHandles = new int[8];
+            ////int[] keyNumber = new int[8];
+            ////SmartApp smart = new SmartApp();
+            ////vv = smart.SmartX1Find("GSPAutoMonitor", keyHandles, keyNumber);
+            //if (IntPtr.Size == 4)
+            //{
+            //    vv = NT88_X86.NTFindFirst("longbangrj716");
+            //}
+            //else
+            //{
+            //    vv = NT88_X64.NTFindFirst("longbangrj716");
+            //}
+            //if (vv != 0)
+            //{
+            //    MessageBox.Show("系统未检测到软件加密锁，软件将自动退出！请插入软件加密锁重新打开软件！");
+            //    System.Environment.Exit(0);
+            //}
         }
         private void notifyIcon1_Click(object sender, EventArgs e)
         {
@@ -1780,7 +1680,7 @@ namespace LBKJClient
                 }
                 catch (Exception exc)
                 {
-                    
+
                 }
             }
         }
@@ -1941,30 +1841,10 @@ namespace LBKJClient
         int djs = 1800;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            int vv = 1;
-
-            if (IntPtr.Size == 4)
-            {
-                vv = NT88_X86.NTFindFirst("longbangrj716");
-            }
-            else
-            {
-                vv = NT88_X64.NTFindFirst("longbangrj716");
-            }
-            if (vv == 0)
-            {
-                label1.Visible = false;
-                djs = 1800;
-                this.timer1.Stop();
-                this.timer5.Start();
-                return;
-            }
-
-            label1.Visible = true; 
             djs -= 1;
             if (djs != 0)
             {
-                label1.Text = "未检测到加密锁，距离试用30分钟结束时间还有: " + djs + " 秒";
+                label1.Text = "距离试用30分钟结束时间还有: " + djs + " 秒";
             }
             else
             {
@@ -2028,7 +1908,8 @@ namespace LBKJClient
             {
                 backfile = filepath + database + "_bak_newDatas" + ".sql";
             }
-            else {
+            else
+            {
                 backfile = filepath + database + "_bak_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".sql";
             }
             string cmdStr = "mysqldump -h" + host + " -P" + port + " -u" + user + " -p" + password + " " + database + " > " + backfile;
@@ -2036,10 +1917,12 @@ namespace LBKJClient
             try
             {
                 string reslut = RunCmd(str + "\\Lib", cmdStr);
-                if (reslut.IndexOf("error")==-1 && reslut.IndexOf("命令")==-1)
+                if (reslut.IndexOf("error") == -1 && reslut.IndexOf("命令") == -1)
                 {
                     MessageBox.Show("备份成功>" + backfile);
-                } else {
+                }
+                else
+                {
                     MessageBox.Show(reslut + "备份失败>" + backfile);
                 }
             }
@@ -2048,7 +1931,7 @@ namespace LBKJClient
                 MessageBox.Show(ex.ToString());
             }
         }
-        
+
         public string RunCmd(string workingDirectory, string command)
         {
             Process p = new Process();
