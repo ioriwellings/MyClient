@@ -38,7 +38,7 @@ namespace LBKJClient
             this.checkBox1.Checked = false;
                          }
             this.groupBox2.Visible = false;
-            this.groupBox1.Size = new Size(1347, 710);
+            this.groupBox1.Size = new Size(1900, 610);
             }
             //常规查询数据展现
             if (changeguicheck.ShowDialog() == DialogResult.OK)
@@ -46,11 +46,13 @@ namespace LBKJClient
                 this.dataGridView1.DataSource = null;
                 pagerControl1.OnPageChanged += new EventHandler(pagerControl_OnPageChanged);
                 if (changeguicheck.pageNo==0) {
-                    dtcount = cgs.changguicheck(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist, changeguicheck.measureNolist).Tables[0];
+                    dtcount = cgs.changguicheck(changeguicheck.time1,
+                        changeguicheck.time2, changeguicheck.cdlist, changeguicheck.measureNolist).Tables[0];
                     dtcount.Columns.Remove("measureNo");
                 }
                 else {
-                    dtcount = cgs.changguicheckGlzj(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist).Tables[0];
+                    dtcount = cgs.changguicheckGlzj(changeguicheck.time1,
+                        changeguicheck.time2, changeguicheck.cdlist).Tables[0];
                 }
                 if (dtcount.Rows.Count > 0)
                 {
@@ -76,12 +78,12 @@ namespace LBKJClient
             {      
                 this.groupBox2.Visible = false;
                 //this.groupBox1.Size = new Size(1507,653);
-                this.groupBox1.Size = new Size(1507, 710);
+                this.groupBox1.Size = new Size(1707, 710);
             }
             else {
                 showWarning();
                 //this.groupBox1.Size = new Size(1507,480)
-                this.groupBox1.Size = new Size(1507, 543);
+                this.groupBox1.Size = new Size(1707, 543);
                 this.groupBox2.Visible = true;
             }
             
