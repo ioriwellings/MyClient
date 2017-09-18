@@ -492,6 +492,10 @@ namespace LBKJClient
                     }
                     this.dataGridView1.Rows[i].Cells[6].Value = warningEvent; 
                 }
+                for (int i = 0; i < this.dataGridView1.Columns.Count; i++)
+                {
+                    this.dataGridView1.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
             }
             else
             {
