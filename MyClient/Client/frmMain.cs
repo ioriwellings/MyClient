@@ -1845,7 +1845,7 @@ namespace LBKJClient
 
         private void 全屏显示ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            base.FormBorderStyle = FormBorderStyle.None;
+            //base.FormBorderStyle = FormBorderStyle.None;
             this.menuStrip1.Visible = false;
             this.toolStrip1.Visible = false;
         }
@@ -1854,7 +1854,7 @@ namespace LBKJClient
         {
             if (e.KeyCode == Keys.Escape || e.KeyCode == Keys.F12)
             {
-                base.FormBorderStyle = FormBorderStyle.Sizable;
+               // base.FormBorderStyle = FormBorderStyle.Sizable;
                 this.menuStrip1.Visible = true;
                 this.toolStrip1.Visible = true;
             }

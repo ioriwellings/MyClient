@@ -34,7 +34,7 @@ namespace LBKJClient
             /////////////////////////设置主机信息
             int RecordM = int.Parse(this.numericUpDown7.Value.ToString());
             int WarningM = int.Parse(this.numericUpDown6.Value.ToString());
-            int PhoneNo = int.Parse(this.textBox5.Text.ToString());
+            string PhoneNo = this.textBox5.Text.ToString();
             int State = 1;
             ////////////////////////////////
 

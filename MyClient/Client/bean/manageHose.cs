@@ -33,7 +33,7 @@ namespace LBKJClient.bean
         //主机报警记录间隔（分）
         public int WarningM { get; set; }
         //主机短信报警手机号
-        public int PhoneNo { get; set; }
+        public string PhoneNo { get; set; }
         //是否需要设置主机记录、报警间隔，手机号（1需要）
         public int State { get; set; }
     }
