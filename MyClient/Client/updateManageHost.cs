@@ -37,6 +37,7 @@ namespace LBKJClient
             int WarningM = int.Parse(this.numericUpDown6.Value.ToString());
             string PhoneNo = this.textBox5.Text.ToString();
             int State = 1;
+            if (PhoneNo == "" || PhoneNo.Length != 11) { MessageBox.Show("请输入正确的手机号码！"); return; }
             ////////////////////////////////
             if (name!=null&&!"".Equals(name)&&cdnum!=null&& cktype!=null&& txxy!=null && kflx != null) {
                 mh = new bean.manageHose();
