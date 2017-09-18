@@ -480,7 +480,6 @@ C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\obj\x8
 C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\obj\x86\Debug\LBKJClient.warningHandleCheck.resources
 C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\obj\x86\Debug\LBKJClient.warningSetup.resources
 C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\obj\x86\Debug\LBKJClient.csproj.GenerateResource.Cache
-C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\obj\x86\Debug\LBKJClient.csprojResolveAssemblyReference.cache
 F:\langben\MyClient\Client\bin\x86\Debug\LBKJClient.exe.config
 F:\langben\MyClient\Client\bin\x86\Debug\LBKJClient.exe
 F:\langben\MyClient\Client\bin\x86\Debug\LBKJClient.pdb
@@ -528,3 +527,4 @@ F:\langben\MyClient\Client\obj\x86\Debug\LBKJClient.warningSetup.resources
 F:\langben\MyClient\Client\obj\x86\Debug\LBKJClient.csproj.GenerateResource.Cache
 F:\langben\MyClient\Client\obj\x86\Debug\LBKJClient.exe
 F:\langben\MyClient\Client\obj\x86\Debug\LBKJClient.pdb
+C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\obj\x86\Debug\LBKJClient.csprojResolveAssemblyReference.cache

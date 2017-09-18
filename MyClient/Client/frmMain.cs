@@ -187,6 +187,7 @@ namespace LBKJClient
             //  backupDatabase();//数据库自动备份
             this.timer2.Interval = Int32.Parse(datasavetime) * 1000;
             this.timer2.Start();
+            this.timer5.Start();
         }
         private void queryMeterIds()
         {
@@ -255,6 +256,12 @@ namespace LBKJClient
             ///////////////////控制温湿度显示
             bool xswd = this.显示温度toolStripMenuItem.Checked;
             bool xssd = this.显示湿度toolStripMenuItem.Checked;
+            //////////////
+            //显示报告用
+            int COM = 1;
+            int TCP = 1;
+            int YUN = 1;
+
             //////////////
             //xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
@@ -361,6 +368,62 @@ namespace LBKJClient
                             DateTime dt1 = Convert.ToDateTime(dt.Rows[x]["devtime"].ToString());
                             DateTime dt2 = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                             TimeSpan ts = dt2.Subtract(dt1);
+                            /////////////////显示报告
+                            if (dt.Rows[x]["networkType"].ToString() == "COM" && COM == 1)
+                            {
+                                if (ts.TotalMinutes > 1)
+                                {
+                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                    rb.eventInfo = "COM传输异常！";
+                                    rb.type = "0";
+                                    lls.addReport(rb);
+                                }
+                                else
+                                {
+                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                    rb.eventInfo = "COM传输正常！";
+                                    rb.type = "0";
+                                    lls.addReport(rb);
+                                }
+                                COM++;
+                            }
+                            if (dt.Rows[x]["networkType"].ToString() == "TCP" && TCP == 1)
+                            {
+                                if (ts.TotalMinutes > 1)
+                                {
+                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                    rb.eventInfo = "TCP传输异常！";
+                                    rb.type = "1";
+                                    lls.addReport(rb);
+                                }
+                                else
+                                {
+                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                    rb.eventInfo = "TCP传输正常！";
+                                    rb.type = "1";
+                                    lls.addReport(rb);
+                                }
+                                TCP++;
+                            }
+                            if (dt.Rows[x]["networkType"].ToString() == "YUN" && YUN == 1)
+                            {
+                                if (ts.TotalMinutes > 1)
+                                {
+                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                    rb.eventInfo = "YUN传输异常！";
+                                    rb.type = "2";
+                                    lls.addReport(rb);
+                                }
+                                else
+                                {
+                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                    rb.eventInfo = "YUN传输正常！";
+                                    rb.type = "2";
+                                    lls.addReport(rb);
+                                }
+                                YUN++;
+                            }
+                            //////////////
                             if (ts.TotalMinutes >= double.Parse(overtime))
                             {
                                 font = new Font("微软雅黑", Convert.ToSingle((double)20 * 5.0));
@@ -680,8 +743,8 @@ namespace LBKJClient
             Exit exit = new Exit();
             if (exit.ShowDialog() == DialogResult.OK)
             {
-                //DialogResult result = MessageBox.Show("是否确认退出？退出后将不能获取和保存温湿度数据！", "操作提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                //if (result == DialogResult.Yes)
+                DialogResult result = MessageBox.Show("是否确认退出？退出后将不能获取和保存温湿度数据！", "操作提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
                 {
                     //新增退出系统删除无标记记录（断电，报警，库房、车载时间间隔）
                     //service.deleteInvalidDataService did = new service.deleteInvalidDataService();
@@ -959,6 +1022,13 @@ namespace LBKJClient
 
         private void timer2_Tick(object sender, EventArgs e)
         {
+            //////////////
+            //显示报告用
+            int COM = 1;
+            int TCP = 1;
+            int YUN = 1;
+
+            //////////////
             int kk = 0;
             string timeHouse = DateTime.Now.ToString("yyyy-MM-dd HH") + ":00:00";
             da = monitoringservice.rtmonitoring();
@@ -1082,6 +1152,62 @@ namespace LBKJClient
                         DateTime dt1 = Convert.ToDateTime(dtime);
                         DateTime dt2 = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                         TimeSpan ts = dt2.Subtract(dt1);
+                        /////////////////显示报告
+                        if (dt.Rows[i]["networkType"].ToString() == "COM" && COM == 1)
+                        {
+                            if (ts.TotalMinutes > 1)
+                            {
+                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                rb.eventInfo = "COM传输异常！";
+                                rb.type = "0";
+                                lls.addReport(rb);
+                            }
+                            else
+                            {
+                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                rb.eventInfo = "COM传输正常！";
+                                rb.type = "0";
+                                lls.addReport(rb);
+                            }
+                            COM++;
+                        }
+                        if (dt.Rows[i]["networkType"].ToString() == "TCP" && TCP == 1)
+                        {
+                            if (ts.TotalMinutes > 1)
+                            {
+                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                rb.eventInfo = "TCP传输异常！";
+                                rb.type = "1";
+                                lls.addReport(rb);
+                            }
+                            else
+                            {
+                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                rb.eventInfo = "TCP传输正常！";
+                                rb.type = "1";
+                                lls.addReport(rb);
+                            }
+                            TCP++;
+                        }
+                        if (dt.Rows[i]["networkType"].ToString() == "YUN" && YUN == 1)
+                        {
+                            if (ts.TotalMinutes > 1)
+                            {
+                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                rb.eventInfo = "YUN传输异常！";
+                                rb.type = "2";
+                                lls.addReport(rb);
+                            }
+                            else
+                            {
+                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                rb.eventInfo = "YUN传输正常！";
+                                rb.type = "2";
+                                lls.addReport(rb);
+                            }
+                            YUN++;
+                        }
+                        //////////////
                         if (ts.TotalMinutes >= double.Parse(overtime))
                         {
                             size = TextRenderer.MeasureText("- -      ", font);
@@ -1623,24 +1749,20 @@ namespace LBKJClient
         //加密狗定时程序
         private void timer5_Tick(object sender, EventArgs e)
         {
-            //int vv = 1;
-            ////int[] keyHandles = new int[8];
-            ////int[] keyNumber = new int[8];
-            ////SmartApp smart = new SmartApp();
-            ////vv = smart.SmartX1Find("GSPAutoMonitor", keyHandles, keyNumber);
-            //if (IntPtr.Size == 4)
-            //{
-            //    vv = NT88_X86.NTFindFirst("longbangrj716");
-            //}
-            //else
-            //{
-            //    vv = NT88_X64.NTFindFirst("longbangrj716");
-            //}
-            //if (vv != 0)
-            //{
-            //    MessageBox.Show("系统未检测到软件加密锁，软件将自动退出！请插入软件加密锁重新打开软件！");
-            //    System.Environment.Exit(0);
-            //}
+            int vv = 1;
+            if (IntPtr.Size == 4)
+            {
+                vv = NT88_X86.NTFindFirst("longbangrj716");
+            }
+            else
+            {
+                vv = NT88_X64.NTFindFirst("longbangrj716");
+            }
+            if (vv != 0)
+            {
+                this.timer1.Start();
+                this.timer5.Stop();
+            }
         }
         private void notifyIcon1_Click(object sender, EventArgs e)
         {
@@ -1841,10 +1963,30 @@ namespace LBKJClient
         int djs = 1800;
         private void timer1_Tick(object sender, EventArgs e)
         {
+            int vv = 1;
+
+            if (IntPtr.Size == 4)
+            {
+                vv = NT88_X86.NTFindFirst("longbangrj716");
+            }
+            else
+            {
+                vv = NT88_X64.NTFindFirst("longbangrj716");
+            }
+            if (vv == 0)
+            {
+                label1.Visible = false;
+                djs = 1800;
+                this.timer1.Stop();
+                this.timer5.Start();
+                return;
+            }
+
+            label1.Visible = true;
             djs -= 1;
             if (djs != 0)
             {
-                label1.Text = "距离试用30分钟结束时间还有: " + djs + " 秒";
+                label1.Text = "未检测到加密锁，距离试用30分钟结束时间还有: " + djs + " 秒";
             }
             else
             {
