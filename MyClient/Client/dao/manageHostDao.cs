@@ -55,7 +55,7 @@ namespace LBKJClient.dao
             ret = DbHelperMySQL.ExecuteSql(sql);
             if (ret > 0)
             {
-                string sql1 = "update lb_managehost_info set portNumber='" + ret.ToString() + "' where measureCode = '" + mh.measureCode + "'";
+                string sql1 = "update lb_managehost_info set portNumber='" + ret.ToString() + "',State=1 where measureCode = '" + mh.measureCode + "'";
                 cd = DbHelperMySQL.ExecuteSql(sql1);
             }
             return cd == 0 ? false : true;

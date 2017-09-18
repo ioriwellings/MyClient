@@ -173,7 +173,7 @@ namespace LBKJClient.dao
         public bool updateWsdByHouseCode(bean.houseInfo hi)
         {
             int ret = 0;        
-            String sql = "update lb_device_information set t_high='" + hi.t_high + "',t_low='" + hi.t_low + "',h_high='" + hi.h_high + "',h_low='" + hi.h_low + "',housetype='" + hi.isUsed + "' where house_code='" + hi.id + "'";
+            String sql = "update lb_device_information set t_high='" + hi.t_high + "',t_low='" + hi.t_low + "',h_high='" + hi.h_high + "',h_low='" + hi.h_low + "',housetype='" + hi.isUsed + "',State=1 where house_code='" + hi.id + "'";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
@@ -224,7 +224,7 @@ namespace LBKJClient.dao
         public bool updateAllIformationDao(bean.deviceInformation di)
         {
             int ret = 0;
-            String sql = "update lb_device_information set t_high='" + di.t_high + "',t_low='" + di.t_low + "',h_high='" + di.h_high + "',h_low='" + di.h_low + "' where 1=1";
+            String sql = "update lb_device_information set t_high='" + di.t_high + "',t_low='" + di.t_low + "',h_high='" + di.h_high + "',h_low='" + di.h_low + "',State=1 where 1=1";
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }
