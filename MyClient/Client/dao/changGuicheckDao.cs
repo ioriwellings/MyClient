@@ -445,8 +445,15 @@ WHERE ";
             {
                 sql += "  where a.measureCode='" + glzj + "'";
             }
+            if (PageIndex == -1 && PageSize == -1)
+            {
+                sql += " and  mcc = '0'and warningistrue='2' or warningistrue='3' or warnState='1' or warnState='3' ";
+            }
             sql += " order by a.devtime DESC";
-            sql += " limit " + PageIndex + "," + PageSize + "";
+            if (PageIndex != -1 && PageSize != -1)
+            {
+                sql += " limit " + PageIndex + "," + PageSize + "";
+            }
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);

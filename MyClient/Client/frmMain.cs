@@ -184,7 +184,6 @@ namespace LBKJClient
             lblTitle.Font = new Font("微软雅黑", 26F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(134)));
             lblTitle.Left = (this.lbtitle.Width - this.lblTitle.Width) / 2;
             lblTitle.BringToFront();
-            //  backupDatabase();//数据库自动备份
             this.timer2.Interval = Int32.Parse(datasavetime) * 1000;
             this.timer2.Start();
             this.timer5.Start();
@@ -746,10 +745,6 @@ namespace LBKJClient
                 DialogResult result = MessageBox.Show("是否确认退出？", "操作提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    //新增退出系统删除无标记记录（断电，报警，库房、车载时间间隔）
-                    //service.deleteInvalidDataService did = new service.deleteInvalidDataService();
-                    //did.deleteInvalidData();
-
                     service.loginLogService llse = new service.loginLogService();
                     bean.loginLogBean lb = new bean.loginLogBean();
                     lb.name = frmLogin.name;
@@ -1481,22 +1476,6 @@ namespace LBKJClient
         }
         bean.showReportBean rb = new bean.showReportBean();
         //根据管理主机唯一地址  计算出校验码的请求数据
-        private byte[] getCRC(string text)
-        {
-            byte[] byteSends = { 0x1B, 0x06, 0x00, 0x01, 0x03, 0x00, 0x22, 0x00, 0x00, 0xFE, 0xDB };
-            byte[] byteSend = { 0x00, 0x00, 0x03, 0x00, 0x22, 0x00, 0x00 };
-            if (Int32.Parse(text) < 10)
-            {
-                text = "0" + text;
-            }
-            byteSend[1] = (byte)Convert.ToInt32("0x" + text, 16);
-            uint crcRet = CRC1.calcrc16(byteSend, (uint)byteSend.Length);
-            string xx = crcRet.ToString("X");
-            byteSends[3] = (byte)Convert.ToInt32("0x" + text, 16);
-            byteSends[9] = (byte)Convert.ToInt32("0x" + xx.Substring(0, 2), 16);
-            byteSends[10] = (byte)Convert.ToInt32("0x" + xx.Substring(2), 16);
-            return byteSends;
-        }
 
         private void 查询ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1576,68 +1555,6 @@ namespace LBKJClient
             imgUp iu = new imgUp();
             iu.ShowDialog();
         }
-
-        private void 备份参数设置ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (sb.ShowDialog() == DialogResult.OK)
-            {
-                string timetype = sb.timetype;
-                if (timetype != null && !"".Equals(timetype))
-                {
-                    times = Int32.Parse(timetype);
-                    saveToXmldatabasetimer(times.ToString());
-                }
-            }
-        }
-
-        private void 备份数据库ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DialogResult rr = MessageBox.Show("是否需要手动备份数据库？", "手动备份数据库提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-            int tt = (int)rr;
-            if (tt == 1)
-            {
-                string time = DateTime.Now.ToString("yyyyMMddHHmmss");
-                string filepath = sdfilename;
-                if (filepath != null && !"".Equals(filepath))
-                {
-                    if (!System.IO.Directory.Exists(filepath))
-                        System.IO.Directory.CreateDirectory(filepath);
-                    try
-                    {
-                        string[] mysqlinfo = Properties.Settings.Default.mysqlInfo.Split(',');
-                        DoBackupNoauto(mysqlinfo[0], mysqlinfo[1], mysqlinfo[2], mysqlinfo[3], mysqlinfo[4], filepath);
-                        textFile(@str + "/manualBackupTimes.txt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                        //MessageBox.Show("数据备份成功！备份到：" + @filepath + "的路径下");
-                    }
-                    catch (Exception exc)
-                    {
-                        MessageBox.Show("数据备份失败！");
-                    }
-                }
-            }
-        }
-
-        private void saveToXmldatabasetimer(string jtime)
-        {
-            xmlDoc.Load(path);
-            XmlNode node;
-            node = xmlDoc.SelectSingleNode("config/databasetimer");
-            node.InnerText = jtime;
-
-            xmlDoc.Save(path);
-        }
-        private void 恢复数据库ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            dataReduction dr = new dataReduction();
-            if (dr.ShowDialog() == DialogResult.OK)
-            {
-                //MessageBox.Show("恢复数据库成功!");
-                this.timer2.Stop();
-                frmMain_Load(sender, e);
-
-            }
-        }
-
         private void 库房管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             houseManage hm = new houseManage();
@@ -1749,20 +1666,20 @@ namespace LBKJClient
         //加密狗定时程序
         private void timer5_Tick(object sender, EventArgs e)
         {
-            //int vv = 1;
-            //if (IntPtr.Size == 4)
-            //{
-            //    vv = NT88_X86.NTFindFirst("longbangrj716");
-            //}
-            //else
-            //{
-            //    vv = NT88_X64.NTFindFirst("longbangrj716");
-            //}
-            //if (vv != 0)
-            //{
-            //    this.timer1.Start();
-            //    this.timer5.Stop();
-            //}
+            int vv = 1;
+            if (IntPtr.Size == 4)
+            {
+                vv = NT88_X86.NTFindFirst("longbangrj716");
+            }
+            else
+            {
+                vv = NT88_X64.NTFindFirst("longbangrj716");
+            }
+            if (vv != 0)
+            {
+                this.timer1.Start();
+                this.timer5.Stop();
+            }
         }
         private void notifyIcon1_Click(object sender, EventArgs e)
         {
@@ -2019,81 +1936,6 @@ namespace LBKJClient
             showReport rp = new showReport();
             rp.ShowDialog();
         }
-        // mysql数据库手动备份
-        public void DoBackupNoauto(string host, string port, string user, string password, string database, string filepath)
-        {
-            string backfile = filepath + database + "_bak_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".sql";
-            string cmdStr = "mysqldump -h" + host + " -P" + port + " -u" + user + " -p" + password + " " + database + " > " + backfile;
-
-            try
-            {
-                string reslut = RunCmd(str + "\\Lib", cmdStr);
-                if (reslut.IndexOf("error") == -1 && reslut.IndexOf("命令") == -1)
-                {
-                    MessageBox.Show("备份成功>" + backfile);
-                }
-                else
-                {
-                    MessageBox.Show(reslut + "备份失败>" + backfile);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-        // mysql数据库自动备份
-        public void DoBackup(string host, string port, string user, string password, string database, string filepath)
-        {
-            string backfile = "";
-            if (sb.istrue)
-            {
-                backfile = filepath + database + "_bak_newDatas" + ".sql";
-            }
-            else
-            {
-                backfile = filepath + database + "_bak_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".sql";
-            }
-            string cmdStr = "mysqldump -h" + host + " -P" + port + " -u" + user + " -p" + password + " " + database + " > " + backfile;
-
-            try
-            {
-                string reslut = RunCmd(str + "\\Lib", cmdStr);
-                if (reslut.IndexOf("error") == -1 && reslut.IndexOf("命令") == -1)
-                {
-                    MessageBox.Show("备份成功>" + backfile);
-                }
-                else
-                {
-                    MessageBox.Show(reslut + "备份失败>" + backfile);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
-        public string RunCmd(string workingDirectory, string command)
-        {
-            Process p = new Process();
-            p.StartInfo.FileName = "cmd.exe"; //确定程序名
-            //p.StartInfo.Arguments = "/c " + command; //确定程式命令行
-            p.StartInfo.WorkingDirectory = workingDirectory;
-            p.StartInfo.UseShellExecute = false; //Shell的使用
-            p.StartInfo.RedirectStandardInput = true; //重定向输入
-            p.StartInfo.RedirectStandardOutput = true; //重定向输出
-            p.StartInfo.RedirectStandardError = true; //重定向输出错误
-            p.StartInfo.CreateNoWindow = true; //设置置不显示示窗口
-            p.Start();
-            p.StandardInput.WriteLine(command); //也可以用这种方式输入入要行的命令 
-            p.StandardInput.WriteLine("exit"); //要得加上Exit要不然下一行程式
-            //p.WaitForExit();
-            //p.Close();
-            //return p.StandardOutput.ReadToEnd(); //输出出流取得命令行结果果
-            return p.StandardError.ReadToEnd();
-        }
-
         private void 显示温度toolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.显示温度toolStripMenuItem.Checked = !this.显示温度toolStripMenuItem.Checked;
@@ -2106,6 +1948,15 @@ namespace LBKJClient
             this.显示湿度toolStripMenuItem.Checked = !this.显示湿度toolStripMenuItem.Checked;
             //首页-查询测点的实时温湿度数据              
             querywenshidu();
+        }
+
+        private void 数据库管理ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process myProcess = new Process();
+            myProcess.StartInfo.UseShellExecute = false;
+            myProcess.StartInfo.FileName = "\\kelong521\\navicat for mysql\\navicat.exe";
+            myProcess.StartInfo.CreateNoWindow = true;
+            myProcess.Start();
         }
     }
 }
