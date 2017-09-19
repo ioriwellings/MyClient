@@ -151,6 +151,19 @@ FROM
             ds = DbHelperMySQL.Query(sql);
             return ds;
         }
+        public DataSet changguicheckGlzj(String time1, String time2, String glzj)
+        {
+            String sql = "select distinct a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,a.t_high,a.t_low,a.h_high,a.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc from data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
+            if (glzj != null)
+            {
+                sql += "  where a.measureCode='" + glzj + "'";
+            }
+            sql += " order by a.devtime DESC";
+            DataSet ds = new DataSet();
+            ds.Clear();
+            ds = DbHelperMySQL.Query(sql);
+            return ds;
+        }
         public DataSet changguicheckliutengfeiGLZJ(String time1, String time2, String cd, String measureNo)
         {
             string cds1 = null;
@@ -227,7 +240,41 @@ FROM
         /// <param name="cd"></param>
         /// <param name="measureNo"></param>
         /// <returns></returns>
+        /// 
         public DataSet changguicheck(String time1, String time2, String cd, String measureNo)
+        {
+            string cds1 = null;
+            //string measureNos1 = null;
+            String sql = @"select * from View_WarningData";
+            sql += "  where  devtime > '" + time1 + "' and  devtime <  '" + time2 + "'";
+
+            //if (measureNo != null)
+            //{
+            //    string[] measureNos = measureNo.Split(',');
+            //    for (int i = 0; i < measureNos.Count(); i++)
+            //    {
+            //        measureNos1 += "," + measureNos[i];
+            //    }
+            //    measureNos1 = measureNos1.Substring(1);
+            //    sql += " and measureNo in ('" + measureNos1 + "')";
+            //}
+            if (cd != null)
+            {
+                string[] cds = cd.Split(',');
+                for (int i = 0; i < cds.Count(); i++)
+                {
+                    cds1 += "','" + cds[i];
+                }
+                cds1 = cds1.Substring(3);
+                sql += " and measureMeterCode in ('" + cds1 + "')";
+            }
+            sql += " order by devtime DESC";
+            DataSet ds = new DataSet();
+            ds.Clear();
+            ds = DbHelperMySQL.Query(sql);
+            return ds;
+        }
+        public DataSet changguicheck0(String time1, String time2, String cd, String measureNo)
         {
             /*
              SELECT
@@ -459,7 +506,7 @@ WHERE ";
             ds = DbHelperMySQL.Query(sql);
             return ds;
         }
-        public DataSet changguicheckGlzj(String time1, String time2,String glzj)
+        public DataSet changguicheckGlzj0(String time1, String time2,String glzj)
         { 
             //string measureNos1 = null;
             String sql = @"SELECT

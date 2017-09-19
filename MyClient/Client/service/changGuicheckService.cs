@@ -14,6 +14,10 @@ namespace LBKJClient.service
         {
             return checkdao.changguicheck(time1, time2,cd, measureNo);
         }
+        public DataSet changguicheck0(String time1, String time2, String cd, String measureNo)
+        {
+            return checkdao.changguicheck0(time1, time2, cd, measureNo);
+        }
         public DataSet changguicheckliutengfeiPDF(String time1, String time2, String cd, String measureNo)
         {
             return checkdao.changguicheckliutengfeiPDF(time1, time2, cd, measureNo);
@@ -33,6 +37,10 @@ namespace LBKJClient.service
         public DataSet changguicheckGlzjliutengfei(String time1, String time2, String glzj)
         {
             return checkdao.changguicheckGlzjliutengfei(time1, time2, glzj);
+        }
+        public DataSet changguicheckGlzj0(String time1, String time2, String glzj)
+        {
+            return checkdao.changguicheckGlzj0(time1, time2, glzj);
         }
         public DataSet changguicheckGlzj(String time1, String time2, String glzj)
         {

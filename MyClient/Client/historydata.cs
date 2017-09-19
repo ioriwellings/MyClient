@@ -59,13 +59,13 @@ namespace LBKJClient
                 DataTable dtcountliutengfei = null;
                 if (changeguicheck.pageNo == 0)
                 {
-                    dtcountliutengfei = cgs.changguicheck(changeguicheck.time1,
+                    dtcountliutengfei = cgs.changguicheck0(changeguicheck.time1,
                         changeguicheck.time2, changeguicheck.cdlist, changeguicheck.measureNolist).Tables[0];
                   
                 }
                 else
                 {
-                    dtcountliutengfei = cgs.changguicheckGlzj(changeguicheck.time1,
+                    dtcountliutengfei = cgs.changguicheckGlzj0(changeguicheck.time1,
                         changeguicheck.time2, changeguicheck.cdlist).Tables[0];
                 }
                 if (dtcountliutengfei.Rows[0][0].ToString() != "0")
