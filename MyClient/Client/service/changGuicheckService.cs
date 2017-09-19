@@ -22,6 +22,10 @@ namespace LBKJClient.service
         {
             return checkdao.changguicheckliutengfei(time1, time2, cd, measureNo);
         }
+        public DataSet changguicheckliutengfeiGLZJ(String time1, String time2, String cd, String measureNo)
+        {
+            return checkdao.changguicheckliutengfeiGLZJ(time1, time2, cd, measureNo);
+        }
         public DataTable changguicheckFenye(String time1, String time2, String cd, int PageIndex, int PageSize, String measureNo)
         {
             return checkdao.changguicheckFenye(time1, time2, cd, PageIndex, PageSize,measureNo);

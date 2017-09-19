@@ -151,6 +151,73 @@ FROM
             ds = DbHelperMySQL.Query(sql);
             return ds;
         }
+        public DataSet changguicheckliutengfeiGLZJ(String time1, String time2, String cd, String measureNo)
+        {
+            string cds1 = null;
+            //string measureNos1 = null;
+            String sql = @"SELECT DISTINCT
+	`a`.`measureCode` AS `measureCode`,
+	`a`.`meterNo` AS `meterNo`,
+	`a`.`temperature` AS `temperature`,
+	`a`.`humidity` AS `humidity`,
+	`a`.`devtime` AS `devtime`,
+	`b`.`terminalname` AS `terminalname`,
+	`a`.`t_high` AS `t_high`,
+	`a`.`t_low` AS `t_low`,
+	`a`.`h_high` AS `h_high`,
+	`a`.`h_low` AS `h_low`,
+	`a`.`warnState` AS `warnState`,
+	`a`.`measureMeterCode` AS `measureMeterCode`,
+	`a`.`warningistrue` AS `warningistrue`,
+	`a`.`carinterval` AS `carinterval`,
+	`a`.`houseinterval` AS `houseinterval`,
+	(
+		CASE
+		WHEN (`a`.`mcc` = '1') THEN
+			'空库'
+		ELSE
+			'非空库'
+		END
+	) AS `housetype`,
+	`a`.`mcc` AS `mcc`
+	 
+FROM
+	(
+		`lb_warning_data` `a`
+		JOIN `lb_device_information` `b` ON (
+			(
+				(
+					`a`.`measureCode` = `b`.`measureCode`
+				)
+				AND (
+					`a`.`meterNo` = `b`.`meterNo`
+				)
+			)
+		)
+	) ";
+            sql += "  where  devtime > '" + time1 + "' and  devtime <  '" + time2 + "'";
+
+            //if (measureNo != null)
+            //{
+            //    string[] measureNos = measureNo.Split(',');
+            //    for (int i = 0; i < measureNos.Count(); i++)
+            //    {
+            //        measureNos1 += "," + measureNos[i];
+            //    }
+            //    measureNos1 = measureNos1.Substring(1);
+            //    sql += " and measureNo in ('" + measureNos1 + "')";
+            //}
+            if (measureNo != null)
+            {
+                sql += " and measureNo = '" + measureNo + "'";
+            }
+            sql += " order by devtime DESC";
+            DataSet ds = new DataSet();
+            ds.Clear();
+            ds = DbHelperMySQL.Query(sql);
+            return ds;
+        }
+
 
         /// <summary>
         /// 视图，统计的数据 View_WarningData
@@ -445,15 +512,9 @@ WHERE ";
             {
                 sql += "  where a.measureCode='" + glzj + "'";
             }
-            if (PageIndex == -1 && PageSize == -1)
-            {
-                sql += " and  mcc = '0'and warningistrue='2' or warningistrue='3' or warnState='1' or warnState='3' ";
-            }
             sql += " order by a.devtime DESC";
-            if (PageIndex != -1 && PageSize != -1)
-            {
-                sql += " limit " + PageIndex + "," + PageSize + "";
-            }
+            sql += " limit " + PageIndex + "," + PageSize + "";
+
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);

@@ -146,10 +146,8 @@ namespace LBKJClient
             }
             else
             {
-                //dd = cgs.changguicheckGlzj(changeguicheck.time1,
-                //    changeguicheck.time2, changeguicheck.cdlist).Tables[0];
-                dd = cgs.changguicheckGlzjFenye(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist, -1, -1);
-
+                dd = cgs.changguicheckliutengfeiGLZJ(changeguicheck.time1,
+                    changeguicheck.time2, changeguicheck.cdlist, changeguicheck.measureNolist).Tables[0];
             }
 
 
