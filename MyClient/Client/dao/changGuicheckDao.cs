@@ -604,7 +604,7 @@ WHERE ";
             DataSet ds = new DataSet();
             ds.Clear();
             String sql = "";
-            sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode and a.terminalname like CONCAT('%', '" + code + "','%')";
+            sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType,b.measureNo from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode and a.terminalname like CONCAT('%', '" + code + "','%')";
             ds = DbHelperMySQL.Query(sql);
             return ds;
         }
