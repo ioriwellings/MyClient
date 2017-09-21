@@ -12,7 +12,6 @@ namespace LBKJClient
 {
     public partial class warningForm : Form
     {
-        string TarStr = "yyyyMMddHHmmss";
         IFormatProvider format = new System.Globalization.CultureInfo("zh-CN");
         DataTable dt= new DataTable();
         DataTable dtcount = new DataTable();
@@ -62,12 +61,14 @@ namespace LBKJClient
         {
             time1 = this.dateTimePicker1.Text.ToString();
             time2 = this.dateTimePicker2.Text.ToString();
+            //measureMeterCode
             cd = this.comboBox1.SelectedValue.ToString();
 
             if (cd != "" && !"".Equals(cd))
             {
                 this.dataGridView1.DataSource = null;
                 pagerControl1.OnPageChanged += new EventHandler(pagerControl1_OnPageChanged);
+                //报警数据表lb_warning_data查询出所选时段所选测点的报警数据dtcount
                 dtcount = wcs.warningcheck(time1, time2, cd);
                 LoadData();
 
@@ -105,14 +106,6 @@ namespace LBKJClient
                     sdsx = double.Parse(this.dtcount.Rows[i][9].ToString());
                     sdxx = double.Parse(this.dtcount.Rows[i][10].ToString());
                     warningTime = dtcount.Rows[i][11].ToString();
-                    //if (warningTime != null && !"".Equals(warningTime))
-                    //{
-                    //    this.dataGridView1.Rows[i].Cells[11].Value = "已处理";
-                    //}
-                    //else
-                    //{
-                    //    this.dataGridView1.Rows[i].Cells[11].Value = "未处理";
-                    //}
                     if (wd > wdsx)
                     {
                         this.dtcount.Rows[i][12] = Math.Round(wd - wdsx, 1).ToString("0.0");
@@ -147,10 +140,6 @@ namespace LBKJClient
                     {
                         warningEvent = "解除报警 ";
                         this.dtcount.Rows[i][11] = "";
-                    }
-                    else
-                    {
-
                     }
                     this.dtcount.Rows[i][6] = warningEvent;
                 }
@@ -236,11 +225,6 @@ namespace LBKJClient
                       table.AddCell(new Phrase(dts.Rows[rowNum][columNum].ToString(), font));
                     }
                 }
-                //cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                //cell.UseAscender = (true);
-                //cell.UseDescender = (true);
-                //cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                //cell.HorizontalAlignment = Element.ALIGN_CENTER;
                 doc.Add(table);
                 //关闭document 
                 doc.Close();
@@ -263,14 +247,6 @@ namespace LBKJClient
 
         private void button2_Click(object sender, EventArgs e)
         {
-            bool istrue = false;
-            double temperature;
-            double humidity;
-            double t_high;
-            double t_low;
-            double h_high;
-            double h_low;
-            string time="";
             if (dataGridView1.RowCount > 0) { 
             string warn = this.dataGridView1.SelectedRows[0].Cells[11].Value.ToString();
             if (!"已处理".Equals(warn))
@@ -279,40 +255,8 @@ namespace LBKJClient
                 wh.Text = this.dataGridView1.SelectedRows[0].Cells[1].Value.ToString() + "报警处理";
                 wh.label2.Text = frmLogin.name;
                 wh.textBox1.Text = this.dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                
-                string timew = this.dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                string code = this.dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
-                string meter = this.dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
-                DataTable dtData = wcs.checkData(timew, code, meter);
-                    if (dtData != null && dtData.Rows.Count > 0)
-                    {
-                        for (int i = 0; i < dtData.Rows.Count; i++)
-                        {
-                            temperature = Double.Parse( dtData.Rows[i]["temperature"].ToString());
-                            humidity = Double.Parse(dtData.Rows[i]["humidity"].ToString());
-                            t_high = Double.Parse(dtData.Rows[i]["t_high"].ToString());
-                            t_low = Double.Parse(dtData.Rows[i]["t_low"].ToString());
-                            h_high = Double.Parse(dtData.Rows[i]["h_high"].ToString());
-                            h_low = Double.Parse(dtData.Rows[i]["h_low"].ToString());
-
-                            if (temperature <= t_high && temperature >= t_low && humidity <= h_high && humidity >= h_low) {
-                                time = dtData.Rows[i]["devtime"].ToString();
-                                istrue = true;
-                                break;
-                            }
-                        }
-                        if (!istrue) {
-                            time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        }
-                    }
-                    else {
-                        time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                    }
-                    //wh.textBox2.Text = time;
-                    //wh.dateTimePicker1.Value =Convert.ToDateTime(time);
-                    wh.dateTimePicker1.Value = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-
-                    wh.textBox5.Text = this.dataGridView1.SelectedRows[0].Cells[2].Value.ToString() + "_" + this.dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
+                wh.dateTimePicker1.Value = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                wh.textBox5.Text = this.dataGridView1.SelectedRows[0].Cells[2].Value.ToString() + "_" + this.dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
                 if (wh.ShowDialog() == DialogResult.OK)
                 {
                     button1_Click(sender, e);
@@ -337,17 +281,15 @@ namespace LBKJClient
                 string hostcode = this.dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
                 string metercode = this.dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
                 string time = this.dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                string name = this.dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
                 service.warningCheckService wcs = new service.warningCheckService();
                 DataTable dtw = wcs.warningCheck(hostcode+"_"+metercode, time);
                 if (dtw.Rows.Count > 0)
                 {
                     warningHandle wh = new warningHandle();
-                    wh.label2.Text = frmLogin.name;
+                    wh.Text = this.dataGridView1.SelectedRows[0].Cells[1].Value.ToString() + "报警处理";
+                    wh.label2.Text = dtw.Rows[0][1].ToString();
                     wh.textBox1.Text = time;
-                    //wh.textBox2.Text = dtw.Rows[0][3].ToString();
-                    //wh.dateTimePicker1.Value= Convert.ToDateTime(dtw.Rows[0][3].ToString());
-                    wh.dateTimePicker1.Value = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                    wh.dateTimePicker1.Value = Convert.ToDateTime(dtw.Rows[0][3].ToString());
                     wh.textBox3.Text = dtw.Rows[0][4].ToString();
                     wh.textBox4.Text = dtw.Rows[0][5].ToString();
                     wh.richTextBox1.Text = dtw.Rows[0][6].ToString();
@@ -438,15 +380,7 @@ namespace LBKJClient
                     sdsx = double.Parse(this.dataGridView1.Rows[i].Cells[9].Value.ToString());
                     sdxx = double.Parse(this.dataGridView1.Rows[i].Cells[10].Value.ToString());
                     warningTime = dt.Rows[i][11].ToString();
-                    //if (warningTime != null && !"".Equals(warningTime))
-                    //{
-                    //    this.dataGridView1.Rows[i].Cells[11].Value = "已处理";
-                    //}
-                    //else
-                    //{
-                    //    this.dataGridView1.Rows[i].Cells[11].Value = "未处理";
-                    //    this.dataGridView1.Rows[i].Cells[11].Style.ForeColor = Color.Red;
-                    //}
+
                     if (wd > wdsx)
                     {
                         this.dataGridView1.Rows[i].Cells[12].Value = Math.Round(wd - wdsx, 1).ToString("0.0");
