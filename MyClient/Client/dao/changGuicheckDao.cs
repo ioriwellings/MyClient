@@ -448,7 +448,12 @@ WHERE ";
 
             if (cd != null)
             {
-
+                string[] cds = cd.Split(',');
+                for (int i = 0; i < cds.Count(); i++)
+                {
+                    cds1 += "','" + cds[i];
+                }
+                cds1 = cds1.Substring(3);
                 sql += " and measureMeterCode in ('" + cds1 + "')";
             }
             sql += " and  mcc = '0'and warningistrue='2' or warningistrue='3' or warnState='1' or warnState='3' ";
