@@ -9,8 +9,8 @@ namespace LBKJClient
 {
     public partial class changGuiCheck : Form
     {
-        public DataTable dt=null;
-        public string cdlist=null;
+        public DataTable dt = null;
+        public string cdlist = null;
         public string measureNolist = null;
         public string time1 = null;
         public string time2 = null;
@@ -36,7 +36,7 @@ namespace LBKJClient
             this.tabControl1.TabPages[0].Controls.Clear();
             this.tabControl1.TabPages[1].Controls.Clear();
             //让默认的日期时间减一天
-            this.dateTimePicker1.Value=this.dateTimePicker2.Value.AddDays(-1);
+            this.dateTimePicker1.Value = this.dateTimePicker2.Value.AddDays(-1);
             //查询所有测点或主机编号信息
             service.changGuicheckService cgs = new service.changGuicheckService();
             DataTable dta = cgs.checkcedianAll(null).Tables[0];
@@ -95,11 +95,12 @@ namespace LBKJClient
             time1 = this.dateTimePicker1.Text.ToString();
             time2 = this.dateTimePicker2.Text.ToString();
             int page = this.tabControl1.SelectedIndex;
-            
+
             String cd = null;
             String cd1 = null;
             String measureNo = null;
-            if (page == 0) {
+            if (page == 0)
+            {
                 foreach (Control ctr in this.tabControl1.TabPages[0].Controls)
                 {
                     //判断该控件是不是CheckBox
@@ -112,14 +113,17 @@ namespace LBKJClient
                             cd += "," + ck.Tag.ToString().Split('-')[0];
                             measureNo += "," + ck.Tag.ToString().Split('-')[1];
                             string measureCode = "";
-                            measureCode += "_" + ck.Tag.ToString().Split('_')[0];                          
+                            measureCode += "_" + ck.Tag.ToString().Split('_')[0];
                             measureCode = measureCode.Substring(1);
                             DataTable dd = mhs.queryManageHoststoreType(measureCode);
-
-                            if (!"车载".Equals(dd.Rows[0]["storeType"].ToString()))
+                            if (dd != null && dd.Rows != null && dd.Rows.Count > 0)
                             {
-                                cartime = 30;
+                                if (!"车载".Equals(dd.Rows[0]["storeType"].ToString()))
+                                {
+                                    cartime = 30;
+                                }
                             }
+
                         }
                     }
                 }
@@ -128,7 +132,8 @@ namespace LBKJClient
                     cd = cd.Substring(1);
                     measureNo = measureNo.Substring(1);
                     //历史数据查询分页准备参数
-                    if (flag==1) {
+                    if (flag == 1)
+                    {
                         cdlist = cd;
                         measureNolist = measureNo;
                         pageNo = 0;
@@ -138,8 +143,9 @@ namespace LBKJClient
                         return;
                     }
                     dts = cgs.changguicheck(time1, time2, cd, measureNo).Tables[0];
-                    
-                    if (dts.Rows.Count > 0) {
+
+                    if (dts.Rows.Count > 0)
+                    {
                         DataRow[] dr1 = dts.Select("warningistrue='2' or warningistrue = '1' or warningistrue='3' or warnState = '3' or warnState = '1'");
                         DataRow[] dr2 = null;
                         if (cartime == 30)
@@ -170,7 +176,7 @@ namespace LBKJClient
                                 dtss.ImportRow(row); // 将DataRow添加到DataTable中
                             }
                         }
-                        if (dtss!=null&&dtss.Rows.Count > 0)
+                        if (dtss != null && dtss.Rows.Count > 0)
                         {
                             DataView dv = dtss.DefaultView;//虚拟视图
                             dv.Sort = "devtime asc";
@@ -187,7 +193,9 @@ namespace LBKJClient
                     MessageBox.Show("未选择要查询的数据，请重新查询！");
                     return;
                 }
-            } else if (page==1) {
+            }
+            else if (page == 1)
+            {
                 foreach (Control ctr1 in this.tabControl1.TabPages[1].Controls)
                 {
                     //判断该控件是不是CheckBox
@@ -197,8 +205,8 @@ namespace LBKJClient
                         CheckBox ck1 = ctr1 as CheckBox;
                         if (ck1.Checked)
                         {
-                           string [] ck2= ck1.Tag.ToString().Split('_');
-                           string measureCode = ck2[0];
+                            string[] ck2 = ck1.Tag.ToString().Split('_');
+                            string measureCode = ck2[0];
                             measureNo = ck2[1];
                             cd = measureCode;
                             if (!"车载".Equals(ck2[1].ToString()))
@@ -289,19 +297,20 @@ namespace LBKJClient
             {
                 MessageBox.Show("无查询项，请重新查询！");
             }
-            if (dt!=null&&dt.Rows.Count > 0)
+            if (dt != null && dt.Rows.Count > 0)
             {
                 this.DialogResult = DialogResult.OK;
                 this.Hide();
             }
-            else {
+            else
+            {
                 MessageBox.Show("没有此时间段的数据，请重新查询！");
             }
-       }
+        }
 
         private void tabPage2_Click(object sender, EventArgs e)
         {
-            
+
         }
         private void getFromXml()
         {
@@ -309,7 +318,7 @@ namespace LBKJClient
             xmlDoc.Load(path);
             XmlNode node;
             node = xmlDoc.SelectSingleNode("config/carsavetime");
-            cartime =Int32.Parse( node.InnerText);
+            cartime = Int32.Parse(node.InnerText);
             node = xmlDoc.SelectSingleNode("config/databasetimer");
             databasetimer = Int32.Parse(node.InnerText);
         }
@@ -319,22 +328,23 @@ namespace LBKJClient
             int page = this.tabControl1.SelectedIndex;
             if (page == 0)
             {
-                    //判断该控件是不是CheckBox
-                  if (this.checkBox1.Checked)
-                 {
-                         foreach (Control ctr in this.tabControl1.TabPages[0].Controls)
-                          {
-                            //判断该控件是不是CheckBox
-                              if (ctr is CheckBox)
-                               {
-                                 //将ctr转换成CheckBox并赋值给ck
-                                 CheckBox ck = ctr as CheckBox;
-                                  ck.Checked = true;
-                              }
-                         }
+                //判断该控件是不是CheckBox
+                if (this.checkBox1.Checked)
+                {
+                    foreach (Control ctr in this.tabControl1.TabPages[0].Controls)
+                    {
+                        //判断该控件是不是CheckBox
+                        if (ctr is CheckBox)
+                        {
+                            //将ctr转换成CheckBox并赋值给ck
+                            CheckBox ck = ctr as CheckBox;
+                            ck.Checked = true;
+                        }
+                    }
 
                 }
-                else {
+                else
+                {
                     foreach (Control ctr in this.tabControl1.TabPages[0].Controls)
                     {
                         //判断该控件是不是CheckBox
@@ -360,7 +370,8 @@ namespace LBKJClient
                 this.textBox1.Visible = false;
                 this.button3.Visible = false;
             }
-            else {
+            else
+            {
                 this.checkBox1.Visible = true;
                 this.label4.Visible = true;
                 this.textBox1.Visible = true;
@@ -375,7 +386,7 @@ namespace LBKJClient
                 if (ctr1 is CheckBox)
                 {
                     //将ctr转换成CheckBox并赋值给ck
-                    (ctr1 as CheckBox).Checked= ctr1 == sender ? true : false;
+                    (ctr1 as CheckBox).Checked = ctr1 == sender ? true : false;
                 }
             }
         }

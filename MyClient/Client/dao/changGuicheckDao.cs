@@ -89,7 +89,7 @@ FROM
 	`a`.`temperature` AS `temperature`,
 	`a`.`humidity` AS `humidity`,
 	`a`.`devtime` AS `devtime`,
-	`b`.`terminalname` AS `terminalname`,
+	`a`.`terminalname` AS `terminalname`,
 	`a`.`t_high` AS `t_high`,
 	`a`.`t_low` AS `t_low`,
 	`a`.`h_high` AS `h_high`,
@@ -110,19 +110,9 @@ FROM
 	`a`.`mcc` AS `mcc`
 	 
 FROM
-	(
+	
 		`lb_warning_data` `a`
-		JOIN `lb_device_information` `b` ON (
-			(
-				(
-					`a`.`measureCode` = `b`.`measureCode`
-				)
-				AND (
-					`a`.`meterNo` = `b`.`meterNo`
-				)
-			)
-		)
-	) ";
+		  ";
             sql += "  where  devtime > '" + time1 + "' and  devtime <  '" + time2 + "'";
 
             //if (measureNo != null)
@@ -153,7 +143,8 @@ FROM
         }
         public DataSet changguicheckGlzj(String time1, String time2, String glzj)
         {
-            String sql = "select distinct a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,a.t_high,a.t_low,a.h_high,a.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc from data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
+            String sql = @"select distinct a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,a.t_high,a.t_low,a.h_high,a.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc
+from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
             if (glzj != null)
             {
                 sql += "  where a.measureCode='" + glzj + "'";
@@ -174,7 +165,7 @@ FROM
 	`a`.`temperature` AS `temperature`,
 	`a`.`humidity` AS `humidity`,
 	`a`.`devtime` AS `devtime`,
-	`b`.`terminalname` AS `terminalname`,
+	`a`.`terminalname` AS `terminalname`,
 	`a`.`t_high` AS `t_high`,
 	`a`.`t_low` AS `t_low`,
 	`a`.`h_high` AS `h_high`,
@@ -195,19 +186,8 @@ FROM
 	`a`.`mcc` AS `mcc`
 	 
 FROM
-	(
 		`lb_warning_data` `a`
-		JOIN `lb_device_information` `b` ON (
-			(
-				(
-					`a`.`measureCode` = `b`.`measureCode`
-				)
-				AND (
-					`a`.`meterNo` = `b`.`meterNo`
-				)
-			)
-		)
-	) ";
+	  ";
             sql += "  where  devtime > '" + time1 + "' and  devtime <  '" + time2 + "'";
 
             //if (measureNo != null)
@@ -451,7 +431,7 @@ WHERE ";
 
                 sql += " and measureMeterCode in ('" + cds1 + "')";
             }
-            sql += " and  mcc = '0'and warningistrue='2' or warningistrue='3' or warnState='1' or warnState='3' ";
+            sql += " and  (mcc = '0'and warningistrue='2' or warningistrue='3' or warnState='1' or warnState='3') ";
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);
@@ -460,20 +440,48 @@ WHERE ";
         public DataTable changguicheckFenye(String time1, String time2, String cd, int PageIndex, int PageSize, String measureNo)
         {
             string cds1 = null;
-            string measureNos1 = null;
+         
             PageIndex = (PageIndex - 1) * PageSize;
-            String sql = @"select * from View_WarningData";
+            String sql = @"SELECT DISTINCT
+	`a`.`measureCode` AS `measureCode`,
+	`a`.`meterNo` AS `meterNo`,
+	`a`.`temperature` AS `temperature`,
+	`a`.`humidity` AS `humidity`,
+	`a`.`devtime` AS `devtime`,
+	`a`.`terminalname` AS `terminalname`,
+	`a`.`t_high` AS `t_high`,
+	`a`.`t_low` AS `t_low`,
+	`a`.`h_high` AS `h_high`,
+	`a`.`h_low` AS `h_low`,
+	`a`.`warnState` AS `warnState`,
+	`a`.`measureMeterCode` AS `measureMeterCode`,
+	`a`.`warningistrue` AS `warningistrue`,
+	`a`.`carinterval` AS `carinterval`,
+	`a`.`houseinterval` AS `houseinterval`,
+	(
+		CASE
+		WHEN (`a`.`mcc` = '1') THEN
+			'空库'
+		ELSE
+			'非空库'
+		END
+	) AS `housetype`,
+	`a`.`mcc` AS `mcc`,
+	`a`.`measureNo` AS `measureNo`
+FROM 
+		`data_home` `a`
+	   ";
 
             if (measureNo != null)
             {
                 sql += "  where  devtime > '" + time1 + "' and  devtime <  '" + time2 + "' ";
-                string[] measureNos = measureNo.Split(',');
-                for (int i = 0; i < measureNos.Count(); i++)
-                {
-                    measureNos1 += "','" + measureNos[i];
-                }
-                measureNos1 = measureNos1.Substring(3);
-                sql += " and measureNo in ('" + measureNos1 + "')";
+                //string[] measureNos = measureNo.Split(',');
+                //for (int i = 0; i < measureNos.Count(); i++)
+                //{
+                //    measureNos1 += "','" + measureNos[i];
+                //}
+                //measureNos1 = measureNos1.Substring(3);
+                //sql += " and measureNo in ('" + measureNos1 + "')";
             }
             if (cd != null)
             {
@@ -495,10 +503,11 @@ WHERE ";
 
         public DataSet changguicheckGlzjliutengfei(String time1, String time2, String glzj)
         {
-            String sql = "select distinct a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,a.t_high,a.t_low,a.h_high,a.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc from data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
+            String sql = @"select distinct a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,a.terminalname,a.t_high,a.t_low,a.h_high,a.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc 
+from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
             if (glzj != null)
             {
-                sql += "  where a.measureCode='" + glzj + "'";
+                sql += "  and a.measureCode='" + glzj + "'";
             }
             sql += " order by a.devtime DESC";
             DataSet ds = new DataSet();
@@ -544,7 +553,7 @@ WHERE ";
             {
                 sql += "  and measureCode='" + glzj + "'";
             }
-            sql += " and  mcc = '0'and warningistrue='2' or warningistrue='3' or warnState='1' or warnState='3' ";
+            sql += " and  (mcc = '0'and warningistrue='2' or warningistrue='3' or warnState='1' or warnState='3') ";
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);
@@ -554,10 +563,11 @@ WHERE ";
         public DataTable changguicheckGlzjFenye(String time1, String time2, String glzj, int PageIndex, int PageSize)
         {
             PageIndex = (PageIndex - 1) * PageSize;
-            String sql = "select distinct a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,a.t_high,a.t_low,a.h_high,a.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc from data_home a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
+            String sql = @"select distinct a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,a.terminalname,a.t_high,a.t_low,a.h_high,a.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc 
+from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
             if (glzj != null)
             {
-                sql += "  where a.measureCode='" + glzj + "'";
+                sql += "  and a.measureCode='" + glzj + "'";
             }
             sql += " order by a.devtime DESC";
             sql += " limit " + PageIndex + "," + PageSize + "";

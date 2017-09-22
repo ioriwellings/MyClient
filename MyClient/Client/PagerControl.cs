@@ -134,7 +134,8 @@ namespace LBKJClient
             lblPageCount.Text = PageCount.ToString();
             lblTotalCount.Text = RecordCount.ToString();
             txtPageSize.Text = PageSize.ToString();
-
+            txtPageSize.ReadOnly = true;
+            tbxGo.ReadOnly = true;
             if (callEvent && OnPageChanged != null)
             {
                 OnPageChanged(this, null);//当前分页数字改变时，触发委托事件
