@@ -428,7 +428,12 @@ WHERE ";
 
             if (cd != null)
             {
-
+                string[] cds = cd.Split(',');
+                for (int i = 0; i < cds.Count(); i++)
+                {
+                    cds1 += "','" + cds[i];
+                }
+                cds1 = cds1.Substring(3);
                 sql += " and measureMeterCode in ('" + cds1 + "')";
             }
             sql += " and  (mcc = '0'and warningistrue='2' or warningistrue='3' or warnState='1' or warnState='3') ";
@@ -614,7 +619,7 @@ from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 
             DataSet ds = new DataSet();
             ds.Clear();
             String sql = "";
-            sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode and a.terminalname like CONCAT('%', '" + code + "','%')";
+            sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType,b.measureNo from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode and a.terminalname like CONCAT('%', '" + code + "','%')";
             ds = DbHelperMySQL.Query(sql);
             return ds;
         }

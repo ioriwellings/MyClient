@@ -1666,20 +1666,20 @@ namespace LBKJClient
         //加密狗定时程序
         private void timer5_Tick(object sender, EventArgs e)
         {
-            //int vv = 1;
-            //if (IntPtr.Size == 4)
-            //{
-            //    vv = NT88_X86.NTFindFirst("longbangrj716");
-            //}
-            //else
-            //{
-            //    vv = NT88_X64.NTFindFirst("longbangrj716");
-            //}
-            //if (vv != 0)
-            //{
-            //    this.timer1.Start();
-            //    this.timer5.Stop();
-            //}
+            int vv = 1;
+            if (IntPtr.Size == 4)
+            {
+                vv = NT88_X86.NTFindFirst("longbangrj716");
+            }
+            else
+            {
+                vv = NT88_X64.NTFindFirst("longbangrj716");
+            }
+            if (vv != 0)
+            {
+                this.timer1.Start();
+                this.timer5.Stop();
+            }
         }
         private void notifyIcon1_Click(object sender, EventArgs e)
         {
@@ -1880,37 +1880,37 @@ namespace LBKJClient
         int djs = 1800;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //int vv = 1;
+            int vv = 1;
 
-            //if (IntPtr.Size == 4)
-            //{
-            //    vv = NT88_X86.NTFindFirst("longbangrj716");
-            //}
-            //else
-            //{
-            //    vv = NT88_X64.NTFindFirst("longbangrj716");
-            //}
-            //if (vv == 0)
-            //{
-            //    label1.Visible = false;
-            //    djs = 1800;
-            //    this.timer1.Stop();
-            //    this.timer5.Start();
-            //    return;
-            //}
+            if (IntPtr.Size == 4)
+            {
+                vv = NT88_X86.NTFindFirst("longbangrj716");
+            }
+            else
+            {
+                vv = NT88_X64.NTFindFirst("longbangrj716");
+            }
+            if (vv == 0)
+            {
+                label1.Visible = false;
+                djs = 1800;
+                this.timer1.Stop();
+                this.timer5.Start();
+                return;
+            }
 
-            //label1.Visible = true;
-            //djs -= 1;
-            //if (djs != 0)
-            //{
-            //    label1.Text = "未检测到加密锁，距离试用30分钟结束时间还有: " + djs + " 秒";
-            //}
-            //else
-            //{
-            //    this.timer1.Stop();
-            //    MessageBox.Show("软件系统试用时间结束，软件将自动退出！");
-            //    System.Environment.Exit(0);
-            //}
+            label1.Visible = true;
+            djs -= 1;
+            if (djs != 0)
+            {
+                label1.Text = "未检测到加密锁，距离试用30分钟结束时间还有: " + djs + " 秒";
+            }
+            else
+            {
+                this.timer1.Stop();
+                MessageBox.Show("软件系统试用时间结束，软件将自动退出！");
+                System.Environment.Exit(0);
+            }
         }
 
         private void 菜单栏ToolStripMenuItem_Click(object sender, EventArgs e)
