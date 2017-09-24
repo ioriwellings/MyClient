@@ -72,7 +72,7 @@ FROM
                 cds1 = cds1.Substring(3);
                 sql += " and measureMeterCode in ('" + cds1 + "')";
             }
-            sql += " order by devtime DESC";
+            sql += " order by devtime,meterNo DESC";
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);
@@ -498,7 +498,7 @@ FROM
                 cds1 = cds1.Substring(3);
                 sql += " and measureMeterCode in ('" + cds1 + "')";
             }
-            sql += " order by devtime DESC";
+            sql += " order by devtime DESC,meterNo ";
             sql += " limit " + PageIndex + "," + PageSize + "";
             DataSet ds = new DataSet();
             ds.Clear();
@@ -514,7 +514,7 @@ from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 
             {
                 sql += "  and a.measureCode='" + glzj + "'";
             }
-            sql += " order by a.devtime DESC";
+            sql += " order by a.devtime,a.meterNo DESC";
             DataSet ds = new DataSet();
              
             ds = DbHelperMySQL.Query(sql);
@@ -574,7 +574,7 @@ from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 
             {
                 sql += "  and a.measureCode='" + glzj + "'";
             }
-            sql += " order by a.devtime DESC";
+            sql += " order by a.devtime DESC,meterNo ";
             sql += " limit " + PageIndex + "," + PageSize + "";
 
             DataSet ds = new DataSet();
