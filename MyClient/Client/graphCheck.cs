@@ -160,14 +160,15 @@ namespace LBKJClient
 
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {                    
-                        series1.Points.AddXY(dt.Rows[i]["devtime"], dt.Rows[i]["temperature"]);
+                        series1.Points.AddXY(Convert.ToDateTime( dt.Rows[i]["devtime"]).ToString("yyyy-MM-dd HH:mm"), dt.Rows[i]["temperature"]);
+                        series2.Points.AddXY(Convert.ToDateTime(dt.Rows[i]["devtime"]).ToString("yyyy-MM-dd HH:mm"), dt.Rows[i]["humidity"]);
+                        avgHumidity += double.Parse(dt.Rows[i]["humidity"].ToString());
                     }
                     
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        series2.Points.AddXY(dt.Rows[i]["devtime"], dt.Rows[i]["humidity"]);
-                        avgHumidity +=double.Parse(dt.Rows[i]["humidity"].ToString());
-                    }
+                    //for (int i = 0; i < dt.Rows.Count; i++)
+                    //{
+                        
+                    //}
 
                     if (avgHumidity / dt.Rows.Count == 0)
                     {
@@ -358,8 +359,8 @@ namespace LBKJClient
 
                             for (int j = 0; j < drs.Length; j++)
                             {
-                                series1.Points.AddXY(drs[j]["devtime"], drs[j]["temperature"]);
-                                series2.Points.AddXY(drs[j]["devtime"], drs[j]["humidity"]);
+                                series1.Points.AddXY(Convert.ToDateTime(drs[j]["devtime"]).ToString("yyyy-MM-dd HH:mm"), drs[j]["temperature"]);
+                                series2.Points.AddXY(Convert.ToDateTime(drs[j]["devtime"]).ToString("yyyy-MM-dd HH:mm"), drs[j]["humidity"]);
                                 
                             }
                             chart1.Series.Add(series1);
