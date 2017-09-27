@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using LBKJClient.bean;
+using System.Linq;
 
 namespace LBKJClient.dao
 {
@@ -33,7 +34,7 @@ namespace LBKJClient.dao
             ds = DbHelperMySQL.Query(sql);
             return ds.Tables[0];
         }
-        public bool addUser(bean.UserInfo ui )
+        public bool addUser(bean.UserInfo ui, String cd)
         {
             if (ui.Enable==0) {
                 ui.Enable = 1;
@@ -44,17 +45,43 @@ namespace LBKJClient.dao
             String sql = "select * from userinfo where name='"+ui.UserName+"'";
             ret = DbHelperMySQL.ExecuteSql(sql);
             string id = Result.GetNewId();
-                if (ret== -1) {
-                    string sql1 = "insert into userinfo (id,name,pwd,enable,createTime,power) values ('" + id + "','" + ui.UserName + "', '" + ui.Pwd + "', '" + ui.Enable + "', '" + time + "', '" + ui.Power + "')";
-                    rt = DbHelperMySQL.ExecuteSql(sql1);
+            if (ret == -1)
+            {
+                string sql1 = "insert into userinfo (id,name,pwd,enable,createTime,power) values ('" + id + "','" + ui.UserName + "', '" + ui.Pwd + "', '" + ui.Enable + "', '" + time + "', '" + ui.Power + "')";
+                rt = DbHelperMySQL.ExecuteSql(sql1);
+
+                if (cd != null)
+                {
+                    string terminalnames = null;
+                    string[] terminalnames0 = cd.Split(new char[] { ',' });
+                    for (int i = 0; i < terminalnames0.Count(); i++)
+                    {
+                        terminalnames += "','" + terminalnames0[i];
+                    }
+                    terminalnames = terminalnames.Substring(3);
+                    String sql0 = "update lb_device_information set imei='" + ui.UserName + "' where terminalname in ('" + terminalnames + "')";
+                    DbHelperMySQL.ExecuteSql(sql0);
                 }
+            }
 
             return rt == 0 ? false : true;
         }
-        public bool updateUser(bean.UserInfo ui)
+        public bool updateUser(bean.UserInfo ui, String cd)
         {
             int ret = 0;
             String sql = "update userinfo set name='" + ui.UserName + "',enable='" + ui.Enable + "',power='"+ui.Power+"' where id='" +ui.Id+ "'";
+            if (cd != null)
+            {
+                string terminalnames = null;
+                string[] terminalnames0 = cd.Split(new char[] { ',' });
+                for (int i = 0; i < terminalnames0.Count(); i++)
+                {
+                    terminalnames += "','" + terminalnames0[i];
+                }
+                terminalnames = terminalnames.Substring(3);
+                String sql0 = "update lb_device_information set imei='" + ui.UserName + "' where terminalname in ('" + terminalnames + "')";
+                DbHelperMySQL.ExecuteSql(sql0);
+            }
             ret = DbHelperMySQL.ExecuteSql(sql);
             return ret == 0 ? false : true;
         }

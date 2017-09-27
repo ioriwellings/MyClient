@@ -599,7 +599,7 @@ WHERE ";
             }
             else
             {
-                sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType,b.measureNo from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode order by  a.measureCode,a.meterNo";
+                sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType,b.measureNo,a.imei from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode order by  a.measureCode,a.meterNo";
             }
             ds = DbHelperMySQL.Query(sql);
             return ds;
