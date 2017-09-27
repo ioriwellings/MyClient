@@ -643,7 +643,7 @@ from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 
             }
             else
             {
-                sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType,b.measureNo from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode order by  a.measureCode,a.meterNo";
+                sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType,b.measureNo,a.imei from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode order by  a.measureCode,a.meterNo";
             }
             ds = DbHelperMySQL.Query(sql);
             return ds;

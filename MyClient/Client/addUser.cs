@@ -22,7 +22,20 @@ namespace LBKJClient
             string str = Application.StartupPath;//项目路径
             this.button1.BackgroundImage = Image.FromFile(@str + "/images/insert.png");
             this.button2.BackgroundImage = Image.FromFile(@str + "/images/close.png");
-            
+            ///新增测点权限分配
+            service.changGuicheckService cgs = new service.changGuicheckService();
+            DataTable dta = cgs.checkcedianAll(null).Tables[0];
+
+            int t = dta.Rows.Count;
+            if (t > 0)
+            {
+                for (int i = 0; i < t; i++)
+                {
+                    string tag = dta.Rows[i]["terminalname"].ToString();
+                    this.checkedListBox1.Items.Add(tag);
+                }
+            }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -36,6 +49,8 @@ namespace LBKJClient
             string pwd = this.textBox2.Text;
             string pwd1 = this.textBox3.Text;
             string power = "";
+            String cd = null;
+
             if (name!=null&&!"".Equals(name)&& pwd.Equals(pwd1)) {
                 foreach (Control ctr in this.groupBox2.Controls)
                 {
@@ -49,16 +64,26 @@ namespace LBKJClient
                         }
                     }
                 }
+
+                for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                {
+                    if (checkedListBox1.GetItemChecked(i))
+                    {
+                        cd += "," + checkedListBox1.GetItemText(checkedListBox1.Items[i]);
+                    }
+                }
+
                 if (power != null && !"".Equals(power))
                 {
                     power = power.Substring(1);
+                    cd = cd.Substring(1);
                     bean.UserInfo ui = new bean.UserInfo();
                     ui.UserName = name;
                     ui.Pwd = MemoryPassword.MyEncrypt.EncryptDES(pwd);
                     ui.Power = power;
                     ui.Enable = 1;
                     service.UserService us = new service.UserService();
-                    bool istrue = us.addUser(ui);
+                    bool istrue = us.addUser(ui, cd);
                     if (istrue)
                     {
                         this.Hide();

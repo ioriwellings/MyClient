@@ -29,13 +29,13 @@ namespace LBKJClient.service
         {
             return user.listUser();
         }
-        public bool addUser(bean.UserInfo ui)
+        public bool addUser(bean.UserInfo ui, String cd)
         {
-            return user.addUser(ui);
+            return user.addUser(ui, cd);
         }
-        public bool updateUser(bean.UserInfo ui)
+        public bool updateUser(bean.UserInfo ui, String cd)
         {
-            return user.updateUser(ui);
+            return user.updateUser(ui, cd);
         }
     }
 }
