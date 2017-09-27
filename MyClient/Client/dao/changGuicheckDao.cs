@@ -225,8 +225,33 @@ FROM
         {
             string cds1 = null;
             //string measureNos1 = null;
-            String sql = @"select * from View_WarningData";
-            sql += "  where  devtime > '" + time1 + "' and  devtime <  '" + time2 + "'";
+            String sql = @"SELECT DISTINCT
+	a.measureCode,
+	a.meterNo,
+	a.temperature,
+	a.humidity,
+	a.devtime,
+	a.terminalname,
+	a.t_high,
+	a.t_low,
+	a.h_high,
+	a.h_low,
+	a.warnState,
+	a.measureMeterCode,
+	a.warningistrue,
+	a.carinterval,
+	a.houseinterval,
+	CASE
+WHEN a.mcc = '1' THEN
+	'空库'
+ELSE
+	'非空库'
+END AS housetype,
+ a.mcc,
+ a.measureNo
+FROM
+	data_home a ";
+            sql += "  where  a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
 
             //if (measureNo != null)
             //{
@@ -246,9 +271,9 @@ FROM
                     cds1 += "','" + cds[i];
                 }
                 cds1 = cds1.Substring(3);
-                sql += " and measureMeterCode in ('" + cds1 + "')";
+                sql += " and a.measureMeterCode in ('" + cds1 + "')";
             }
-            sql += " order by devtime DESC";
+            sql += " order by a.devtime DESC";
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);
