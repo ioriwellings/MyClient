@@ -1884,7 +1884,7 @@ namespace LBKJClient
 
             if (IntPtr.Size == 4)
             {
-                vv = NT88_X86.NTFindFirst("longbangrj716");
+                //vv = NT88_X86.NTFindFirst("longbangrj716");
             }
             else
             {

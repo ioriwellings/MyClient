@@ -159,7 +159,7 @@ namespace LBKJClient
                     chart1.Series.Clear();
 
                     for (int i = 0; i < dt.Rows.Count; i++)
-                    {
+                    {                    
                         series1.Points.AddXY(dt.Rows[i]["devtime"], dt.Rows[i]["temperature"]);
                     }
                     
@@ -231,7 +231,15 @@ namespace LBKJClient
             service.chartsCheck cc = new service.chartsCheck();
             time1 = this.dateTimePicker1.Text.ToString();
             time2 = this.dateTimePicker2.Text.ToString();
+            DateTime t1 = DateTime.Parse(time1);
+            DateTime t2 = DateTime.Parse(time2);
+            TimeSpan span = t2.Subtract(t1);
 
+            if (span.Days > 7)
+            {
+                MessageBox.Show("你好，不能查询超过一个星期的数据!");
+                return;
+            }
             if (!"--请选择--".Equals(this.comboBox1.Text))
             {
                 if (comboBox1.SelectedValue!=null) {

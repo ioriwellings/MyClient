@@ -49,9 +49,9 @@ namespace LBKJClient
                 DateTime t2 = DateTime.Parse(changeguicheck.time2);
                 TimeSpan span = t2.Subtract(t1);
                
-                if (span.Days> 180)
+                if (span.Days> 90)
                 {
-                    MessageBox.Show("你好，不能查询超过半年的数据!");
+                    MessageBox.Show("你好，不能查询超过三个月的数据!");
                     return;
                 }
                 this.dataGridView1.DataSource = null;
@@ -451,17 +451,17 @@ namespace LBKJClient
                 dts.Columns.Remove("t_low");
                 dts.Columns.Remove("h_high");
                 dts.Columns.Remove("h_low");
-
+               
                 PdfPCell cell;
-
+                //写入标题
                 for (int i = 0; i < columnsnames.Length; i++)
                 {
                     cell = new PdfPCell(new Phrase(columnsnames[i], font));
                     table.AddCell(cell);
                 }
                 for (int rowNum = 0; rowNum != dts.Rows.Count; rowNum++)
-                {
-                    table.AddCell(new Phrase((rowNum + 1).ToString(), font));
+                {                  
+                    table.AddCell(new Phrase((rowNum+1).ToString(), font));
                     for (int columNum = 0; columNum != dts.Columns.Count; columNum++)
                     {
                         table.AddCell(new Phrase(dts.Rows[rowNum][columNum].ToString(), font));

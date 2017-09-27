@@ -143,11 +143,11 @@ FROM
         }
         public DataSet changguicheckGlzj(String time1, String time2, String glzj)
         {
-            String sql = @"select distinct a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,a.t_high,a.t_low,a.h_high,a.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc
+            String sql = @"select distinct a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,a.terminalname,a.t_high,a.t_low,a.h_high,a.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc
 from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
             if (glzj != null)
             {
-                sql += "  where a.measureCode='" + glzj + "'";
+                sql += "  and a.measureCode='" + glzj + "'";
             }
             sql += " order by a.devtime DESC";
             DataSet ds = new DataSet();
@@ -508,8 +508,42 @@ FROM
 
         public DataSet changguicheckGlzjliutengfei(String time1, String time2, String glzj)
         {
-            String sql = @"select distinct a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,a.terminalname,a.t_high,a.t_low,a.h_high,a.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc 
+            String sql = @"select distinct 
+a.measureCode,
+a.meterNo,
+a.temperature,
+a.humidity,
+a.devtime,
+a.terminalname,
+a.t_high,
+a.t_low,
+a.h_high,
+a.h_low,
+a.warnState,
+a.measureMeterCode,
+a.warningistrue,
+case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc 
 from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
+            #region 原版
+//            String sql = @"select distinct 
+//a.measureCode,
+//a.meterNo,
+//a.temperature,
+//a.humidity,
+//a.devtime,
+//a.terminalname,
+//a.t_high,
+//a.t_low,
+//a.h_high,
+//a.h_low,
+//a.warnState,
+//a.measureMeterCode,
+//a.warningistrue,
+//a.carinterval,
+//a.houseinterval,
+//case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc 
+//from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
+            #endregion
             if (glzj != null)
             {
                 sql += "  and a.measureCode='" + glzj + "'";

@@ -30,6 +30,7 @@ namespace LBKJClient
             time1 = this.dateTimePicker1.Text.ToString();
             time2 = this.dateTimePicker2.Text.ToString();
             service.warningCheckService wcs = new service.warningCheckService();
+            
             dt = wcs.warningHandlecheck(time1,time2);
             service.deviceInformationService ds = new service.deviceInformationService();
             DataTable dts= ds.selectHouseTypeK();
@@ -40,12 +41,21 @@ namespace LBKJClient
                         if (dts.Rows[i]["measureMeterCode"].ToString()== dt.Rows[j]["measureMeterCode"].ToString()) {
                             dt.Rows[i].Delete();
                         }
+                        
                     }
                 }
                 dt.AcceptChanges();
             }
             if (dt.Rows.Count > 0)
             {
+                
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                   
+                    string a= Convert.ToDateTime(dt.Rows[i]["handleTime"]).ToString("yyyy/MM/dd HH:mm:ss");//格式转换 
+                    dt.Rows[i]["handleTime"] = a;                                                                                     //dt.Rows[i]["warningTime"] =                                                                                      //dt.Rows[i]["warningTime"] = 
+                }
+                
                 dt.Columns["warningTime"].SetOrdinal(6);
                 this.dataGridView1.DataSource = dt;
                 this.dataGridView1.Columns[0].Visible = false;
@@ -58,13 +68,13 @@ namespace LBKJClient
                 this.dataGridView1.Columns[7].Visible = false;
                 this.dataGridView1.Columns[8].Visible = false;
                 this.dataGridView1.Columns[9].HeaderCell.Value = "测点名称";
-                this.dataGridView1.Columns[1].Width = 80;
-                this.dataGridView1.Columns[2].Width = 120;
+                this.dataGridView1.Columns[1].Width = 90;
+                this.dataGridView1.Columns[2].Width = 180;
                 this.dataGridView1.Columns[3].Width = 150;
                 this.dataGridView1.Columns[4].Width = 150;
                 this.dataGridView1.Columns[5].Width = 270;
-                this.dataGridView1.Columns[6].Width = 120;
-                this.dataGridView1.Columns[9].Width = 120;
+                this.dataGridView1.Columns[6].Width = 150;
+                this.dataGridView1.Columns[9].Width = 250;
                 this.dataGridView1.RowsDefaultCellStyle.ForeColor = Color.Black;
                 for (int count = 0; (count <= (this.dataGridView1.Rows.Count - 2)); count++)
                 {

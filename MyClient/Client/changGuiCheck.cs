@@ -87,6 +87,11 @@ namespace LBKJClient
             this.Hide();
         }
 
+        /// <summary>
+        /// 查询按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             DataTable dts = null;
