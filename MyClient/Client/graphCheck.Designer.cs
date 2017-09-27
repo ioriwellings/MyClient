@@ -339,7 +339,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 7;
-            this.label2.Text = "多侧点查询";
+            this.label2.Text = "多测点查询";
             this.label2.Click += new System.EventHandler(this.label2_Click_1);
             // 
             // graphCheck

@@ -1666,20 +1666,20 @@ namespace LBKJClient
         //加密狗定时程序
         private void timer5_Tick(object sender, EventArgs e)
         {
-            int vv = 1;
-            if (IntPtr.Size == 4)
-            {
-                vv = NT88_X86.NTFindFirst("longbangrj716");
-            }
-            else
-            {
-                vv = NT88_X64.NTFindFirst("longbangrj716");
-            }
-            if (vv != 0)
-            {
-                this.timer1.Start();
-                this.timer5.Stop();
-            }
+            //int vv = 1;
+            //if (IntPtr.Size == 4)
+            //{
+            //    vv = NT88_X86.NTFindFirst("longbangrj716");
+            //}
+            //else
+            //{
+            //    vv = NT88_X64.NTFindFirst("longbangrj716");
+            //}
+            //if (vv != 0)
+            //{
+            //    this.timer1.Start();
+            //    this.timer5.Stop();
+            //}
         }
         private void notifyIcon1_Click(object sender, EventArgs e)
         {

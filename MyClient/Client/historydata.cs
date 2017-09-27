@@ -21,7 +21,7 @@ namespace LBKJClient
         {
             InitializeComponent();
             this.groupBox2.Visible = false;
-            this.groupBox1.Size = new Size(1347, 710);
+            this.groupBox1.Size = new Size(1900, 710);
         }
 
         private void historydata_Load(object sender, EventArgs e)
@@ -71,9 +71,9 @@ namespace LBKJClient
                 if (dtcountliutengfei.Rows[0][0].ToString() != "0")
                 {
                    
-                    this.label3.Text = "总数据量：" + dtcountliutengfei.Rows[0][0].ToString() + " 条";
+                    this.label3.Text = "总数据量：" + dtcountliutengfei.Rows[0][0].ToString() + "条";
                
-                    this.label4.Text = "报警数据：" + dtcountliutengfei.Rows[1][0].ToString() + " 条";
+                    this.label4.Text = "报警数据：" + dtcountliutengfei.Rows[1][0].ToString() + "条";
                     DataTable dtd = new DataTable();
                     dtd.Columns.Add("title", typeof(string));
                     dtd.Columns.Add("wdcz", typeof(double));
@@ -111,6 +111,7 @@ namespace LBKJClient
                 else
                 {
                     pagerControl1.DrawControl(0);
+                   
                     MessageBox.Show("当前时段未查询出数据！");
                 }
             }
@@ -123,13 +124,13 @@ namespace LBKJClient
             {
                 this.groupBox2.Visible = false;
                 //this.groupBox1.Size = new Size(1507,653);
-                this.groupBox1.Size = new Size(1707, 710);
+                this.groupBox1.Size = new Size(1900, 710);
             }
             else
             {
                 showWarning();
                 //this.groupBox1.Size = new Size(1507,480)
-                this.groupBox1.Size = new Size(1707, 543);
+                this.groupBox1.Size = new Size(1900, 543);
                 this.groupBox2.Visible = true;
             }
 
