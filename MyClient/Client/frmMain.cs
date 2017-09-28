@@ -256,10 +256,10 @@ namespace LBKJClient
             bool xswd = this.显示温度toolStripMenuItem.Checked;
             bool xssd = this.显示湿度toolStripMenuItem.Checked;
             //////////////
-            //显示报告用
-            int COM = 1;
-            int TCP = 1;
-            int YUN = 1;
+            ////显示报告用
+            //int COM = 1;
+            //int TCP = 1;
+            //int YUN = 1;
 
             //////////////
             //xmlDoc = new XmlDocument();
@@ -367,62 +367,62 @@ namespace LBKJClient
                             DateTime dt1 = Convert.ToDateTime(dt.Rows[x]["devtime"].ToString());
                             DateTime dt2 = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                             TimeSpan ts = dt2.Subtract(dt1);
-                            /////////////////显示报告
-                            if (dt.Rows[x]["networkType"].ToString() == "COM" && COM == 1)
-                            {
-                                if (ts.TotalMinutes > 1)
-                                {
-                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                    rb.eventInfo = "COM传输异常！";
-                                    rb.type = "0";
-                                    lls.addReport(rb);
-                                }
-                                else
-                                {
-                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                    rb.eventInfo = "COM传输正常！";
-                                    rb.type = "0";
-                                    lls.addReport(rb);
-                                }
-                                COM++;
-                            }
-                            if (dt.Rows[x]["networkType"].ToString() == "TCP" && TCP == 1)
-                            {
-                                if (ts.TotalMinutes > 1)
-                                {
-                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                    rb.eventInfo = "TCP传输异常！";
-                                    rb.type = "1";
-                                    lls.addReport(rb);
-                                }
-                                else
-                                {
-                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                    rb.eventInfo = "TCP传输正常！";
-                                    rb.type = "1";
-                                    lls.addReport(rb);
-                                }
-                                TCP++;
-                            }
-                            if (dt.Rows[x]["networkType"].ToString() == "YUN" && YUN == 1)
-                            {
-                                if (ts.TotalMinutes > 1)
-                                {
-                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                    rb.eventInfo = "YUN传输异常！";
-                                    rb.type = "2";
-                                    lls.addReport(rb);
-                                }
-                                else
-                                {
-                                    rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                    rb.eventInfo = "YUN传输正常！";
-                                    rb.type = "2";
-                                    lls.addReport(rb);
-                                }
-                                YUN++;
-                            }
-                            //////////////
+                            ///////////////////显示报告
+                            //if (dt.Rows[x]["networkType"].ToString() == "COM" && COM == 1)
+                            //{
+                            //    if (ts.TotalMinutes > 1)
+                            //    {
+                            //        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                            //        rb.eventInfo = "COM传输异常！";
+                            //        rb.type = "0";
+                            //        lls.addReport(rb);
+                            //    }
+                            //    else
+                            //    {
+                            //        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                            //        rb.eventInfo = "COM传输正常！";
+                            //        rb.type = "0";
+                            //        lls.addReport(rb);
+                            //    }
+                            //    COM++;
+                            //}
+                            //if (dt.Rows[x]["networkType"].ToString() == "TCP" && TCP == 1)
+                            //{
+                            //    if (ts.TotalMinutes > 1)
+                            //    {
+                            //        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                            //        rb.eventInfo = "TCP传输异常！";
+                            //        rb.type = "1";
+                            //        lls.addReport(rb);
+                            //    }
+                            //    else
+                            //    {
+                            //        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                            //        rb.eventInfo = "TCP传输正常！";
+                            //        rb.type = "1";
+                            //        lls.addReport(rb);
+                            //    }
+                            //    TCP++;
+                            //}
+                            //if (dt.Rows[x]["networkType"].ToString() == "YUN" && YUN == 1)
+                            //{
+                            //    if (ts.TotalMinutes > 1)
+                            //    {
+                            //        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                            //        rb.eventInfo = "YUN传输异常！";
+                            //        rb.type = "2";
+                            //        lls.addReport(rb);
+                            //    }
+                            //    else
+                            //    {
+                            //        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                            //        rb.eventInfo = "YUN传输正常！";
+                            //        rb.type = "2";
+                            //        lls.addReport(rb);
+                            //    }
+                            //    YUN++;
+                            //}
+                            ////////////////
                             if (ts.TotalMinutes >= double.Parse(overtime))
                             {
                                 font = new Font("微软雅黑", Convert.ToSingle((double)20 * 5.0));
@@ -944,7 +944,7 @@ namespace LBKJClient
             mySw.Close();
             myFs.Close();
         }
-        private string textFileUpdate(string filepath)
+        public string textFileUpdate(string filepath)
         {
             FileStream myFs = myFs = new FileStream(@filepath, FileMode.Open);
             StreamReader sd = new StreamReader(myFs);
@@ -1019,9 +1019,9 @@ namespace LBKJClient
         {
             //////////////
             //显示报告用
-            int COM = 1;
-            int TCP = 1;
-            int YUN = 1;
+            //int COM = 1;
+            //int TCP = 1;
+            //int YUN = 1;
 
             //////////////
             int kk = 0;
@@ -1148,60 +1148,60 @@ namespace LBKJClient
                         DateTime dt2 = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                         TimeSpan ts = dt2.Subtract(dt1);
                         /////////////////显示报告
-                        if (dt.Rows[i]["networkType"].ToString() == "COM" && COM == 1)
-                        {
-                            if (ts.TotalMinutes > 1)
-                            {
-                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                rb.eventInfo = "COM传输异常！";
-                                rb.type = "0";
-                                lls.addReport(rb);
-                            }
-                            else
-                            {
-                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                rb.eventInfo = "COM传输正常！";
-                                rb.type = "0";
-                                lls.addReport(rb);
-                            }
-                            COM++;
-                        }
-                        if (dt.Rows[i]["networkType"].ToString() == "TCP" && TCP == 1)
-                        {
-                            if (ts.TotalMinutes > 1)
-                            {
-                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                rb.eventInfo = "TCP传输异常！";
-                                rb.type = "1";
-                                lls.addReport(rb);
-                            }
-                            else
-                            {
-                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                rb.eventInfo = "TCP传输正常！";
-                                rb.type = "1";
-                                lls.addReport(rb);
-                            }
-                            TCP++;
-                        }
-                        if (dt.Rows[i]["networkType"].ToString() == "YUN" && YUN == 1)
-                        {
-                            if (ts.TotalMinutes > 1)
-                            {
-                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                rb.eventInfo = "YUN传输异常！";
-                                rb.type = "2";
-                                lls.addReport(rb);
-                            }
-                            else
-                            {
-                                rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                rb.eventInfo = "YUN传输正常！";
-                                rb.type = "2";
-                                lls.addReport(rb);
-                            }
-                            YUN++;
-                        }
+                        //if (dt.Rows[i]["networkType"].ToString() == "COM" && COM == 1)
+                        //{
+                        //    if (ts.TotalMinutes > 1)
+                        //    {
+                        //        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        //        rb.eventInfo = "COM传输异常！";
+                        //        rb.type = "0";
+                        //        lls.addReport(rb);
+                        //    }
+                        //    else
+                        //    {
+                        //        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        //        rb.eventInfo = "COM传输正常！";
+                        //        rb.type = "0";
+                        //        lls.addReport(rb);
+                        //    }
+                        //    COM++;
+                        //}
+                        //if (dt.Rows[i]["networkType"].ToString() == "TCP" && TCP == 1)
+                        //{
+                        //    if (ts.TotalMinutes > 1)
+                        //    {
+                        //        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        //        rb.eventInfo = "TCP传输异常！";
+                        //        rb.type = "1";
+                        //        lls.addReport(rb);
+                        //    }
+                        //    else
+                        //    {
+                        //        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        //        rb.eventInfo = "TCP传输正常！";
+                        //        rb.type = "1";
+                        //        lls.addReport(rb);
+                        //    }
+                        //    TCP++;
+                        //}
+                        //if (dt.Rows[i]["networkType"].ToString() == "YUN" && YUN == 1)
+                        //{
+                        //    if (ts.TotalMinutes > 1)
+                        //    {
+                        //        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        //        rb.eventInfo = "YUN传输异常！";
+                        //        rb.type = "2";
+                        //        lls.addReport(rb);
+                        //    }
+                        //    else
+                        //    {
+                        //        rb.createTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        //        rb.eventInfo = "YUN传输正常！";
+                        //        rb.type = "2";
+                        //        lls.addReport(rb);
+                        //    }
+                        //    YUN++;
+                        //}
                         //////////////
                         if (ts.TotalMinutes >= double.Parse(overtime))
                         {
@@ -1666,20 +1666,20 @@ namespace LBKJClient
         //加密狗定时程序
         private void timer5_Tick(object sender, EventArgs e)
         {
-            //int vv = 1;
-            //if (IntPtr.Size == 4)
-            //{
-            //    vv = NT88_X86.NTFindFirst("longbangrj716");
-            //}
-            //else
-            //{
-            //    vv = NT88_X64.NTFindFirst("longbangrj716");
-            //}
-            //if (vv != 0)
-            //{
-            //    this.timer1.Start();
-            //    this.timer5.Stop();
-            //}
+            int vv = 1;
+            if (IntPtr.Size == 4)
+            {
+                vv = NT88_X86.NTFindFirst("longbangrj716");
+            }
+            else
+            {
+                vv = NT88_X64.NTFindFirst("longbangrj716");
+            }
+            if (vv != 0)
+            {
+                this.timer1.Start();
+                this.timer5.Stop();
+            }
         }
         private void notifyIcon1_Click(object sender, EventArgs e)
         {

@@ -13,7 +13,7 @@ namespace LBKJClient
     public partial class warningForm : Form
     {
         IFormatProvider format = new System.Globalization.CultureInfo("zh-CN");
-        DataTable dt= new DataTable();
+        DataTable dt = new DataTable();
         DataTable dtcount = new DataTable();
         service.warningCheckService wcs = new service.warningCheckService();
         string time1 = null;
@@ -50,13 +50,18 @@ namespace LBKJClient
             newRow.AcceptChanges();
             int DeptIndex = this.comboBox1.FindString("全部监测点");
             if (DeptIndex != -1)
-            this.comboBox1.SelectedIndex = DeptIndex;
+                this.comboBox1.SelectedIndex = DeptIndex;
             this.comboBox1.DisplayMember = "terminalname";//显示给用户的数据集表项
             this.comboBox1.ValueMember = "measureMeterCode";//操作时获取的值
-            this.comboBox1.Text="--请选择--";
+            this.comboBox1.Text = "--请选择--";
 
         }
 
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             time1 = this.dateTimePicker1.Text.ToString();
@@ -76,7 +81,7 @@ namespace LBKJClient
         }
         private void label1_Click(object sender, EventArgs e)
         {
-            if (dtcount!=null&&dtcount.Rows.Count > 0)
+            if (dtcount != null && dtcount.Rows.Count > 0)
             {
                 double wd;
                 double sd;
@@ -143,34 +148,34 @@ namespace LBKJClient
                     }
                     this.dtcount.Rows[i][6] = warningEvent;
                 }
-               
-                    string localFilePath = String.Empty;
-                    SaveFileDialog fileDialog = new SaveFileDialog();
 
-                    fileDialog.InitialDirectory = "C://";
+                string localFilePath = String.Empty;
+                SaveFileDialog fileDialog = new SaveFileDialog();
 
-                    fileDialog.Filter = "txt files (*.db)|*.db|All files (*.*)|*.*";
+                fileDialog.InitialDirectory = "C://";
 
-                    //设置文件名称：
-                    fileDialog.FileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "报警数据查询结果.pdf";
+                fileDialog.Filter = "txt files (*.db)|*.db|All files (*.*)|*.*";
 
-                    fileDialog.FilterIndex = 2;
+                //设置文件名称：
+                fileDialog.FileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "报警数据查询结果.pdf";
 
-                    fileDialog.RestoreDirectory = true;
-                    if (fileDialog.ShowDialog() == DialogResult.OK)
+                fileDialog.FilterIndex = 2;
 
-                    {   //获得文件路径
-                        localFilePath = fileDialog.FileName.ToString();
-                        CreateTable(dtcount, localFilePath);
-                        MessageBox.Show("恭喜，PDF文件生产成功!");
-                    }
+                fileDialog.RestoreDirectory = true;
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+
+                {   //获得文件路径
+                    localFilePath = fileDialog.FileName.ToString();
+                    CreateTable(dtcount, localFilePath);
+                    MessageBox.Show("恭喜，PDF文件生产成功!");
+                }
             }
             else
             {
                 MessageBox.Show("无报警数据，请先查询报警数据后再生成PDF文件!");
             }
         }
-        private void CreateTable(DataTable dts,string path)
+        private void CreateTable(DataTable dts, string path)
         {
             //定义一个Document，并设置页面大小为A4，竖向 
             Document doc = new Document(PageSize.A4);
@@ -221,20 +226,20 @@ namespace LBKJClient
                 {
                     table.AddCell(new Phrase((rowNum + 1).ToString(), font));
                     for (int columNum = 0; columNum != dts.Columns.Count; columNum++)
-                    {  
-                      table.AddCell(new Phrase(dts.Rows[rowNum][columNum].ToString(), font));
+                    {
+                        table.AddCell(new Phrase(dts.Rows[rowNum][columNum].ToString(), font));
                     }
                 }
                 doc.Add(table);
                 //关闭document 
                 doc.Close();
                 //打开PDF，看效果 
-                    DialogResult result = MessageBox.Show("是否打开PDF文件！", "操作提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
-                    {
-                       Process.Start(path);
-                    }
+                DialogResult result = MessageBox.Show("是否打开PDF文件！", "操作提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    Process.Start(path);
                 }
+            }
             catch (DocumentException de)
             {
                 Console.WriteLine(de.Message); Console.ReadKey();
@@ -247,26 +252,27 @@ namespace LBKJClient
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.RowCount > 0) { 
-            string warn = this.dataGridView1.SelectedRows[0].Cells[11].Value.ToString();
-            if (!"已处理".Equals(warn))
+            if (dataGridView1.RowCount > 0)
             {
-                warningHandle wh = new warningHandle();
-                wh.Text = this.dataGridView1.SelectedRows[0].Cells[1].Value.ToString() + "报警处理";
-                wh.label2.Text = frmLogin.name;
-                wh.textBox1.Text = this.dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                wh.dateTimePicker1.Value = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                wh.textBox5.Text = this.dataGridView1.SelectedRows[0].Cells[2].Value.ToString() + "_" + this.dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
-                if (wh.ShowDialog() == DialogResult.OK)
+                string warn = this.dataGridView1.SelectedRows[0].Cells[11].Value.ToString();
+                if (!"已处理".Equals(warn))
                 {
-                    button1_Click(sender, e);
+                    warningHandle wh = new warningHandle();
+                    wh.Text = this.dataGridView1.SelectedRows[0].Cells[1].Value.ToString() + "报警处理";
+                    wh.label2.Text = frmLogin.name;
+                    wh.textBox1.Text = this.dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                    wh.dateTimePicker1.Value = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                    wh.textBox5.Text = this.dataGridView1.SelectedRows[0].Cells[2].Value.ToString() + "_" + this.dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
+                    if (wh.ShowDialog() == DialogResult.OK)
+                    {
+                        button1_Click(sender, e);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("报警已处理，报警处理详情请去报警处理功能中查看！");
                 }
             }
-            else
-            {
-                MessageBox.Show("报警已处理，报警处理详情请去报警处理功能中查看！");
-            }
-        }
             else
             {
                 MessageBox.Show("无报警数据！");
@@ -275,14 +281,14 @@ namespace LBKJClient
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            string bs=this.dataGridView1.SelectedRows[0].Cells[11].Value.ToString();
+            string bs = this.dataGridView1.SelectedRows[0].Cells[11].Value.ToString();
             if (!"未处理".Equals(bs))
             {
                 string hostcode = this.dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
                 string metercode = this.dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
                 string time = this.dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
                 service.warningCheckService wcs = new service.warningCheckService();
-                DataTable dtw = wcs.warningCheck(hostcode+"_"+metercode, time);
+                DataTable dtw = wcs.warningCheck(hostcode + "_" + metercode, time);
                 if (dtw.Rows.Count > 0)
                 {
                     warningHandle wh = new warningHandle();
@@ -298,21 +304,25 @@ namespace LBKJClient
                     wh.Show();
                 }
             }
-            else {
+            else
+            {
                 MessageBox.Show("报警未处理！请先处理报警信息。");
             }
-            
+
         }
 
-      private void pagerControl1_OnPageChanged(object sender, EventArgs e)
+        private void pagerControl1_OnPageChanged(object sender, EventArgs e)
         {
             LoadData();
         }
-      private void LoadData()
+        /// <summary>
+        /// 数据绑定
+        /// </summary>
+        private void LoadData()
         {
             this.dataGridView1.DataSource = null;
             pagerControl1.DrawControl(dtcount.Rows.Count);//数据总条数
-            dt = wcs.warningcheckfenye(time1, time2, cd,pagerControl1.PageIndex,pagerControl1.PageSize);
+            dt = wcs.warningcheckfenye(time1, time2, cd, pagerControl1.PageIndex, pagerControl1.PageSize);
             if (dt != null && dt.Rows.Count > 0)
             {
                 int num = dt.Rows.Count;
@@ -424,7 +434,7 @@ namespace LBKJClient
                     {
                         this.dataGridView1.Rows[i].Cells[6].Style.ForeColor = Color.Red;
                     }
-                    this.dataGridView1.Rows[i].Cells[6].Value = warningEvent; 
+                    this.dataGridView1.Rows[i].Cells[6].Value = warningEvent;
                 }
                 for (int i = 0; i < this.dataGridView1.Columns.Count; i++)
                 {
@@ -435,6 +445,26 @@ namespace LBKJClient
             {
                 MessageBox.Show("当前测点无数据，请重新查询！");
             };
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

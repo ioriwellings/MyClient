@@ -87,6 +87,11 @@ namespace LBKJClient
             this.Hide();
         }
 
+        /// <summary>
+        /// 查询按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             DataTable dts = null;
@@ -139,8 +144,12 @@ namespace LBKJClient
                         this.Close();
                         return;
                     }
-                    dts = cgs.changguicheck(time1, time2, cd, measureNo).Tables[0];
-                    
+                    dts = cgs.changguicheck(time1, time2, cd, measureNo).Tables[0];                  
+                    if (dts.Rows.Count > 1000)
+                    {
+                        MessageBox.Show("查询出的数据不可超过1000条，重新选择查询条件！");
+                        return;
+                    }
                     if (dts.Rows.Count > 0) {
                         //DataRow[] dr1 = dts.Select("warningistrue='2' or warningistrue = '1' or warningistrue='3' or warnState = '3' or warnState = '1'");
                         //DataRow[] dr2 = null;
@@ -236,6 +245,11 @@ namespace LBKJClient
                         return;
                     }
                     DataTable dts1 = cgs.changguicheckGlzj(time1, time2, cd).Tables[0];
+                    if (dts1.Rows.Count > 1000)
+                    {
+                        MessageBox.Show("查询出的数据不可超过1000条，重新选择查询条件！");
+                        return;
+                    }
                     if (dts1.Rows.Count > 0)
                     {
                         DataView dv = dts1.DefaultView;//虚拟视图

@@ -143,11 +143,11 @@ FROM
         }
         public DataSet changguicheckGlzj(String time1, String time2, String glzj)
         {
-            String sql = @"select distinct a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,b.terminalname,a.t_high,a.t_low,a.h_high,a.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc
+            String sql = @"select distinct a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,a.terminalname,a.t_high,a.t_low,a.h_high,a.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc
 from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
             if (glzj != null)
             {
-                sql += "  where a.measureCode='" + glzj + "'";
+                sql += "  and a.measureCode='" + glzj + "'";
             }
             sql += " order by a.devtime DESC";
             DataSet ds = new DataSet();
@@ -225,8 +225,33 @@ FROM
         {
             string cds1 = null;
             //string measureNos1 = null;
-            String sql = @"select * from View_WarningData";
-            sql += "  where  devtime > '" + time1 + "' and  devtime <  '" + time2 + "'";
+            String sql = @"SELECT DISTINCT
+	a.measureCode,
+	a.meterNo,
+	a.temperature,
+	a.humidity,
+	a.devtime,
+	a.terminalname,
+	a.t_high,
+	a.t_low,
+	a.h_high,
+	a.h_low,
+	a.warnState,
+	a.measureMeterCode,
+	a.warningistrue,
+	a.carinterval,
+	a.houseinterval,
+	CASE
+WHEN a.mcc = '1' THEN
+	'空库'
+ELSE
+	'非空库'
+END AS housetype,
+ a.mcc,
+ a.measureNo
+FROM
+	data_home a ";
+            sql += "  where  a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
 
             //if (measureNo != null)
             //{
@@ -246,9 +271,9 @@ FROM
                     cds1 += "','" + cds[i];
                 }
                 cds1 = cds1.Substring(3);
-                sql += " and measureMeterCode in ('" + cds1 + "')";
+                sql += " and a.measureMeterCode in ('" + cds1 + "')";
             }
-            sql += " order by devtime DESC";
+            sql += " order by a.devtime DESC";
             DataSet ds = new DataSet();
             ds.Clear();
             ds = DbHelperMySQL.Query(sql);
@@ -508,8 +533,42 @@ FROM
 
         public DataSet changguicheckGlzjliutengfei(String time1, String time2, String glzj)
         {
-            String sql = @"select distinct a.measureCode,a.meterNo,a.temperature,a.humidity,a.devtime,a.terminalname,a.t_high,a.t_low,a.h_high,a.h_low,a.warnState,a.measureMeterCode,a.warningistrue,a.carinterval,a.houseinterval,case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc 
+            String sql = @"select distinct 
+a.measureCode,
+a.meterNo,
+a.temperature,
+a.humidity,
+a.devtime,
+a.terminalname,
+a.t_high,
+a.t_low,
+a.h_high,
+a.h_low,
+a.warnState,
+a.measureMeterCode,
+a.warningistrue,
+case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc 
 from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
+            #region 原版
+//            String sql = @"select distinct 
+//a.measureCode,
+//a.meterNo,
+//a.temperature,
+//a.humidity,
+//a.devtime,
+//a.terminalname,
+//a.t_high,
+//a.t_low,
+//a.h_high,
+//a.h_low,
+//a.warnState,
+//a.measureMeterCode,
+//a.warningistrue,
+//a.carinterval,
+//a.houseinterval,
+//case when a.mcc = '1' then '空库' else '非空库' end as housetype,a.mcc 
+//from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "'";
+            #endregion
             if (glzj != null)
             {
                 sql += "  and a.measureCode='" + glzj + "'";
@@ -609,7 +668,7 @@ from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 
             }
             else
             {
-                sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType,b.measureNo from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode order by  a.measureCode,a.meterNo";
+                sql = "select a.measureCode,a.meterNo,a.terminalname,b.storeType,b.measureNo,a.imei from lb_device_information a join lb_managehost_info b on a.measureCode = b.measureCode order by  a.measureCode,a.meterNo";
             }
             ds = DbHelperMySQL.Query(sql);
             return ds;

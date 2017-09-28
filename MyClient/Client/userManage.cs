@@ -82,7 +82,8 @@ namespace LBKJClient
                 updateUser up = new updateUser();
                 up.textBox1.Text = name;
                 up.textBox2.Text = id;
-                up.comboBox1.Text = enable;
+                if (enable == "启用") { up.comboBox1.Text = "1"; } else { up.comboBox1.Text = "0"; }
+                //up.comboBox1.Text = enable;
                 if (name == "admin")
                 {
                     foreach (Control ctr in up.groupBox2.Controls)
