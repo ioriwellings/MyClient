@@ -230,7 +230,7 @@ namespace LBKJClient
                             measureCode = measureCode.Substring(1);
                             cd = measureCode;
                             // measureNo分区号
-                            measureNo = ck2[1];                          
+                            measureNo = ck2[ck2.Length - 1];                          
                             //if (!"车载".Equals(ck2[1].ToString()))
                             //{
                             //    cartime = 30;
@@ -244,6 +244,7 @@ namespace LBKJClient
                     if (flag == 1)
                     {
                         cdlist = cd;
+                        measureNolist = measureNo;
                         pageNo = 1;
                         //houseorcartime = cartime;
                         this.DialogResult = DialogResult.OK;
