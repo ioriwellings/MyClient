@@ -225,11 +225,14 @@ namespace LBKJClient
                             string measureCode = ck2[0];
                             cd = measureCode;
                             // measureNo分区号
-                            measureNo = ck2[1];                          
+                           
+                            measureNo = ck2[1];
+                            measureNolist = measureNo;
                             //if (!"车载".Equals(ck2[1].ToString()))
                             //{
                             //    cartime = 30;
                             //}
+                            break;
                         }
                     }
                 }
