@@ -944,7 +944,7 @@ namespace LBKJClient
             mySw.Close();
             myFs.Close();
         }
-        private string textFileUpdate(string filepath)
+        public string textFileUpdate(string filepath)
         {
             FileStream myFs = myFs = new FileStream(@filepath, FileMode.Open);
             StreamReader sd = new StreamReader(myFs);

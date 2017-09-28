@@ -15,7 +15,7 @@ namespace LBKJClient
         changGuiCheck changeguicheck;
         service.changGuicheckService cgs = new service.changGuicheckService();
         DataTable dd = null;
-      
+
         int flag = 0;
         public historydata()
         {
@@ -48,10 +48,10 @@ namespace LBKJClient
                 DateTime t1 = DateTime.Parse(changeguicheck.time1);
                 DateTime t2 = DateTime.Parse(changeguicheck.time2);
                 TimeSpan span = t2.Subtract(t1);
-               
-                if (span.Days> 32)
+
+                if (span.Days > 90)
                 {
-                    MessageBox.Show("你好，不能查询超过一个月的数据!");
+                    MessageBox.Show("你好，不能查询超过三个月的数据!");
                     return;
                 }
                 this.dataGridView1.DataSource = null;
@@ -61,7 +61,6 @@ namespace LBKJClient
                 {
                     dtcountliutengfei = cgs.changguicheck0(changeguicheck.time1,
                         changeguicheck.time2, changeguicheck.cdlist, changeguicheck.measureNolist).Tables[0];
-                  
                 }
                 else
                 {
@@ -70,9 +69,9 @@ namespace LBKJClient
                 }
                 if (dtcountliutengfei.Rows[0][0].ToString() != "0")
                 {
-                   
+
                     this.label3.Text = "总数据量：" + dtcountliutengfei.Rows[0][0].ToString() + "条";
-               
+
                     this.label4.Text = "报警数据：" + dtcountliutengfei.Rows[1][0].ToString() + "条";
                     DataTable dtd = new DataTable();
                     dtd.Columns.Add("title", typeof(string));
@@ -111,7 +110,7 @@ namespace LBKJClient
                 else
                 {
                     pagerControl1.DrawControl(0);
-                   
+
                     MessageBox.Show("当前时段未查询出数据！");
                 }
             }
@@ -154,12 +153,12 @@ namespace LBKJClient
 
             if (dd != null)
             {
-               
+
                 //DataRow[] dr1 = dd1.Select("mcc = '0' and warningistrue='2' or warningistrue='3' or warnState='1' or warnState='3'");
 
                 if (dd.Rows.Count > 0)
                 {
-                  
+
                     dd.Columns.RemoveAt(14);
                     dd.Columns.RemoveAt(13);
                     dd.Columns.RemoveAt(12);
@@ -288,12 +287,12 @@ namespace LBKJClient
             {
                 MessageBox.Show("你好，请在常规查询中输入条件!");
                 return;
-            } 
+            }
             else
             {
                 dtss = cgs.changguicheckGlzjliutengfei(changeguicheck.time1,
                     changeguicheck.time2, changeguicheck.cdlist).Tables[0];
-            } 
+            }
             if (dtss != null && dtss.Rows.Count > 0)
             {
                 dtss.Columns.Remove("warnState");
@@ -406,7 +405,9 @@ namespace LBKJClient
                 //载入字体 
                 string str = Application.StartupPath;//项目路径                          
                 BaseFont baseFT = BaseFont.CreateFont(@str + "/fonts/simhei.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-
+                string filepath = "/companynemInfo.txt";
+                frmMain fm = new frmMain();
+                string name = fm.textFileUpdate(@str + filepath);
                 iTextSharp.text.Font fonttitle = new iTextSharp.text.Font(baseFT, 16); //标题字体 Paragraph 
                 iTextSharp.text.Font font = new iTextSharp.text.Font(baseFT, 10);//内容字体
                 Paragraph pdftitle = null;
@@ -418,8 +419,8 @@ namespace LBKJClient
                 if (flag == 1)
                 {
                     table = new PdfPTable(10);
-                    table.WidthPercentage = 100;//table占宽度百分比 100%
-                    pdftitle = new Paragraph(frmMain.companyName + "历史报警数据查询结果" + "\r\n" + "(" + changeguicheck.time1 + "-" + changeguicheck.time2 + ")", fonttitle);
+                    table.WidthPercentage = 100;//table占宽度百分比 100%                                      
+                    pdftitle = new Paragraph(name + "历史报警数据查询结果" + "\r\n" + "(" + changeguicheck.time1 + "-" + changeguicheck.time2 + ")", fonttitle);
                     table.SetWidths(new int[] { 5, 20, 15, 15, 5, 7, 7, 14, 8, 8 });
                     columnsnames = new string[] { "序号", "采集时间", "设备标识", "管理主机编号", "仪表编号", "温度", "湿度", "报警事件", "温度差值", "湿度差值" };
                     flag = 0;
@@ -428,7 +429,7 @@ namespace LBKJClient
                 else
                 {
                     table = new PdfPTable(8);
-                    pdftitle = new Paragraph(frmMain.companyName + "历史数据查询结果" + "\r\n" + "(" + changeguicheck.time1 + "-" + changeguicheck.time2 + ")", fonttitle);
+                    pdftitle = new Paragraph(name + "历史数据查询结果" + "\r\n" + "(" + changeguicheck.time1 + "-" + changeguicheck.time2 + ")", fonttitle);
                     table.SetWidths(new int[] { 5, 20, 15, 20, 10, 10, 10, 10 });
                     dts.Columns.Remove("measureMeterCode");
                     dts.Columns.Remove("warningistrue");
@@ -451,7 +452,7 @@ namespace LBKJClient
                 dts.Columns.Remove("t_low");
                 dts.Columns.Remove("h_high");
                 dts.Columns.Remove("h_low");
-               
+
                 PdfPCell cell;
                 //写入标题
                 for (int i = 0; i < columnsnames.Length; i++)
@@ -460,8 +461,8 @@ namespace LBKJClient
                     table.AddCell(cell);
                 }
                 for (int rowNum = 0; rowNum != dts.Rows.Count; rowNum++)
-                {                  
-                    table.AddCell(new Phrase((rowNum+1).ToString(), font));
+                {
+                    table.AddCell(new Phrase((rowNum + 1).ToString(), font));
                     for (int columNum = 0; columNum != dts.Columns.Count; columNum++)
                     {
                         table.AddCell(new Phrase(dts.Rows[rowNum][columNum].ToString(), font));
@@ -524,7 +525,6 @@ namespace LBKJClient
         {
             DataTable dtt = null;
             this.dataGridView1.DataSource = null;
-
             if (changeguicheck.pageNo == 0)
             {
                 dtt = cgs.changguicheckFenye(changeguicheck.time1, changeguicheck.time2, changeguicheck.cdlist, pagerControl1.PageIndex, pagerControl1.PageSize, changeguicheck.measureNolist);
