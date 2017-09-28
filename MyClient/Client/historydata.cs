@@ -49,9 +49,9 @@ namespace LBKJClient
                 DateTime t2 = DateTime.Parse(changeguicheck.time2);
                 TimeSpan span = t2.Subtract(t1);
                
-                if (span.Days> 90)
+                if (span.Days> 32)
                 {
-                    MessageBox.Show("你好，不能查询超过三个月的数据!");
+                    MessageBox.Show("你好，不能查询超过一个月的数据!");
                     return;
                 }
                 this.dataGridView1.DataSource = null;
