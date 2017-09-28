@@ -48,7 +48,7 @@ namespace LBKJClient
         {
             string id = this.textBox2.Text;
             string name = this.textBox1.Text;
-            string sy = this.comboBox1.Text;
+            string sy = this.comboBox1.Text;           
             string power = "";
             String cd = null;
             if (name != null && !"".Equals(name))
