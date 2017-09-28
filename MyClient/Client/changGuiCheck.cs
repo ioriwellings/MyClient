@@ -244,6 +244,7 @@ namespace LBKJClient
                     if (flag == 1)
                     {
                         cdlist = cd;
+                        measureNolist = null;
                         measureNolist = measureNo;
                         pageNo = 1;
                         //houseorcartime = cartime;
