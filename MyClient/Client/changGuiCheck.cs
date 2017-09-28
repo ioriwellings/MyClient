@@ -220,12 +220,17 @@ namespace LBKJClient
                         CheckBox ck1 = ctr1 as CheckBox;
                         if (ck1.Checked)
                         {
-                            string[] ck2= ck1.Tag.ToString().Split('_');
-                            // measureCode主机号
-                            string measureCode = ck2[0];
+                            ////////
+                            string[] ck2 = ck1.Tag.ToString().Split('_');
+                            string measureCode = "";
+                            for (int i = 0; i < ck2.Length - 1; i++)
+                            {
+                                measureCode += "_" + ck2[i];
+                            }
+                            measureCode = measureCode.Substring(1);
                             cd = measureCode;
                             // measureNo分区号
-                            measureNo = ck2[1];                          
+                            measureNo = ck2[ck2.Length - 1];                          
                             //if (!"车载".Equals(ck2[1].ToString()))
                             //{
                             //    cartime = 30;
