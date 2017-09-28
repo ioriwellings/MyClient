@@ -527,7 +527,6 @@ F:\langben\MyClient\Client\obj\x86\Debug\LBKJClient.warningSetup.resources
 F:\langben\MyClient\Client\obj\x86\Debug\LBKJClient.csproj.GenerateResource.Cache
 F:\langben\MyClient\Client\obj\x86\Debug\LBKJClient.exe
 F:\langben\MyClient\Client\obj\x86\Debug\LBKJClient.pdb
-C:\Users\a\Desktop\单机版情况说明\2.0\展示程序\MyClient\Client\obj\x86\Debug\LBKJClient.csprojResolveAssemblyReference.cache
 F:\langben\2.0\MyClient\Client\bin\x86\Debug\LBKJClient.exe.config
 F:\langben\2.0\MyClient\Client\bin\x86\Debug\LBKJClient.exe
 F:\langben\2.0\MyClient\Client\bin\x86\Debug\LBKJClient.pdb
