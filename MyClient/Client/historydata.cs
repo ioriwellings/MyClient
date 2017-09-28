@@ -293,6 +293,11 @@ namespace LBKJClient
                 dtss = cgs.changguicheckGlzjliutengfei(changeguicheck.time1,
                     changeguicheck.time2, changeguicheck.cdlist).Tables[0];
             }
+            if (dtss.Rows.Count>10000)
+            {
+                MessageBox.Show("你好，PDF导出数据不能大于10000条!");
+                return;
+            }
             if (dtss != null && dtss.Rows.Count > 0)
             {
                 dtss.Columns.Remove("warnState");
