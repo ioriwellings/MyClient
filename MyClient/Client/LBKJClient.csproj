@@ -387,6 +387,12 @@
     <Compile Include="utils\HttpClient.cs" />
     <Compile Include="utils\Result.cs" />
     <Compile Include="utils\SQLiteHelper.cs" />
+    <Compile Include="warningForm2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="warningForm2.Designer.cs">
+      <DependentUpon>warningForm2.cs</DependentUpon>
+    </Compile>
     <Compile Include="warningForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -555,6 +561,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="userManage.resx">
       <DependentUpon>userManage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="warningForm2.resx">
+      <DependentUpon>warningForm2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="warningForm.resx">
       <DependentUpon>warningForm.cs</DependentUpon>

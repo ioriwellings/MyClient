@@ -155,7 +155,7 @@ from data_home a where a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 
             ds = DbHelperMySQL.Query(sql);
             return ds;
         }
-        public DataSet changguicheckliutengfeiGLZJ(String time1, String time2, String cd, String measureNo)
+        public DataSet changguicheckliutengfeiGLZJ(String time1, String time2, String measureNo)
         {
             string cds1 = null;
             //string measureNos1 = null;

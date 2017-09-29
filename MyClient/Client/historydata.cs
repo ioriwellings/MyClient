@@ -140,14 +140,30 @@ namespace LBKJClient
             DataTable dd = null;
             if (changeguicheck.pageNo == 0)
             {
+                //warningForm2 wf = new warningForm2();//报警查询功能
+                //wf.time1 = changeguicheck.time1;
+                //wf.time2 = changeguicheck.time2;
+                //wf.cdlist = changeguicheck.cdlist;
+                //wf.measureNolist = changeguicheck.measureNolist;
+                //wf.pageNo = 0;
+                //wf.ShowDialog();
+
                 dd = cgs.changguicheckliutengfei(changeguicheck.time1,
                     changeguicheck.time2, changeguicheck.cdlist, changeguicheck.measureNolist).Tables[0];
 
             }
             else
             {
+                //warningForm2 wf = new warningForm2();//报警查询功能
+                //wf.time1 = changeguicheck.time1;
+                //wf.time2 = changeguicheck.time2;
+                //wf.cdlist = changeguicheck.cdlist;
+                //wf.measureNolist = changeguicheck.measureNolist;
+                //wf.pageNo = 1;
+                //wf.ShowDialog();
+
                 dd = cgs.changguicheckliutengfeiGLZJ(changeguicheck.time1,
-                    changeguicheck.time2, changeguicheck.cdlist, changeguicheck.measureNolist).Tables[0];
+                    changeguicheck.time2, changeguicheck.measureNolist).Tables[0];
             }
 
 

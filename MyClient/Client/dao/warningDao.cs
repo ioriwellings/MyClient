@@ -37,6 +37,23 @@ namespace LBKJClient.dao
             ds = DbHelperMySQL.Query(sql);
             return ds.Tables[0];
         }
+        public DataTable warningheckfenyeliutengfei(String time1, String time2, String cd, int PageIndex, int PageSize)
+        {
+            String sql = "";
+            PageIndex = (PageIndex - 1) * PageSize;
+            if (cd != null && cd != "0")
+            {
+                sql = @"select distinct a.devtime,b.terminalname,a.measureCode,a.meterNo,a.temperature,a.humidity,a.warnState,a.t_high,a.t_low,a.h_high,a.h_low,case when h.warningTime != ''  then   '已处理'  else  '未处理'  END as  warningTime,'0.0' wdcz,'0.0'sdcz from lb_warning_data a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.mcc != '1' and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "' and a.measureMeterCode='" + cd + "' and b.housetype <> 1 left join lb_warning_handle h on h.measureMeterCode=a.measureMeterCode and h.warningTime=a.devtime  where  a.warnState = '1' or a.warnState = '3' or a.warningistrue = '2' or a.warningistrue = '3' limit " + PageIndex + "," + PageSize + "";
+            }
+            else
+            {
+                sql = @"select distinct a.devtime,b.terminalname,a.measureCode,a.meterNo,a.temperature,a.humidity,a.warnState,a.t_high,a.t_low,a.h_high,a.h_low,case when h.warningTime != ''  then   '已处理'  else  '未处理'  END as  warningTime,'0.0' wdcz,'0.0'sdcz from lb_warning_data a join lb_device_information b on a.measureCode=b.measureCode and a.meterNo=b.meterNo and a.mcc != '1' and a.devtime > '" + time1 + "' and  a.devtime <  '" + time2 + "' and b.housetype != 1 left join lb_warning_handle h on h.measureMeterCode=a.measureMeterCode and h.warningTime=a.devtime  where  a.warnState = '1' or a.warnState = '3' or a.warningistrue = '2' or a.warningistrue = '3' limit " + PageIndex + "," + PageSize + "";
+            }
+            DataSet ds = new DataSet();
+            ds.Clear();
+            ds = DbHelperMySQL.Query(sql);
+            return ds.Tables[0];
+        }
         public bool addWarningHandleInfo(bean.warningHandleBean whb)
         {
             string id = Result.GetNewId();

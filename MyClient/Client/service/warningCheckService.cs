@@ -18,6 +18,10 @@ namespace LBKJClient.service
         {
             return warningdao.warningheckfenye(time1, time2, cd, PageIndex, PageSize);
         }
+        public DataTable warningcheckfenyeliutengfei(String time1, String time2, String cd, int PageIndex, int PageSize)
+        {
+            return warningdao.warningheckfenyeliutengfei(time1, time2, cd, PageIndex, PageSize);
+        }
         public bool addWarningHandleInfo(bean.warningHandleBean whb)
         {
             return warningdao.addWarningHandleInfo(whb);
