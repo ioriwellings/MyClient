@@ -426,9 +426,11 @@ namespace LBKJClient
                 //载入字体 
                 string str = Application.StartupPath;//项目路径                          
                 BaseFont baseFT = BaseFont.CreateFont(@str + "/fonts/simhei.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+
                 string filepath = "/companynemInfo.txt";
                 frmMain fm = new frmMain();
                 string name = fm.textFileUpdate(@str + filepath);
+
                 iTextSharp.text.Font fonttitle = new iTextSharp.text.Font(baseFT, 16); //标题字体 Paragraph 
                 iTextSharp.text.Font font = new iTextSharp.text.Font(baseFT, 10);//内容字体
                 Paragraph pdftitle = null;
