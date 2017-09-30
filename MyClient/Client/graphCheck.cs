@@ -247,6 +247,12 @@ namespace LBKJClient
                 string cd = this.comboBox1.SelectedValue.ToString();
                 string[] measuremeter = cd.Split('_');
                 string measure = "";
+
+                    string str = Application.StartupPath;//项目路径    
+                    string filepath = "/companynemInfo.txt";
+                    frmMain fm = new frmMain();
+                    string name = fm.textFileUpdate(@str + filepath);
+
                     for (int i = 0; i < measuremeter.Length - 1; i++)
                     {
                         measure += "_" + measuremeter[i];
@@ -256,7 +262,7 @@ namespace LBKJClient
 
                     dt = cc.chartschecksService(time1, time2, measure, meter);
                 chart1.Titles.RemoveAt(0);
-                chart1.Titles.Add(frmMain.companyName + time1 + "--" + time2 + "温湿度数据曲线图");
+                chart1.Titles.Add(name + time1 + "--" + time2 + "温湿度数据曲线图");
                 chart1.Titles[0].ForeColor = Color.Green;
                 if (dt != null && dt.Rows.Count > 0)
                 {
@@ -323,10 +329,16 @@ namespace LBKJClient
 
                     DataTable dtt = changeguicheck.dt;
                     string []cds= changeguicheck.cdlist.Split(',');
+
+                    string str = Application.StartupPath;//项目路径    
+                    string filepath = "/companynemInfo.txt";
+                    frmMain fm = new frmMain();
+                    string name = fm.textFileUpdate(@str + filepath);
+
                     if (cds.Length > 0)
                     {
                         chart1.Titles.RemoveAt(0);
-                        chart1.Titles.Add(frmMain.companyName + changeguicheck.time1 + "--" + changeguicheck.time2 + "温湿度数据曲线图");
+                        chart1.Titles.Add(name + changeguicheck.time1 + "--" + changeguicheck.time2 + "温湿度数据曲线图");
                         chart1.Titles[0].ForeColor = Color.Green;
                         double t1 = double.Parse(dtt.Compute("Max(temperature)", "true").ToString());
                         double t2 = double.Parse(dtt.Compute("Min(temperature)", "true").ToString());
