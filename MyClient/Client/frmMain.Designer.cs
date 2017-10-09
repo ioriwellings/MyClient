@@ -81,7 +81,6 @@
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.默认大小ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
-            this.显示报告ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助主题ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -300,7 +299,7 @@
             // 
             this.数据库管理ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("数据库管理ToolStripMenuItem.Image")));
             this.数据库管理ToolStripMenuItem.Name = "数据库管理ToolStripMenuItem";
-            this.数据库管理ToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.数据库管理ToolStripMenuItem.Size = new System.Drawing.Size(162, 24);
             this.数据库管理ToolStripMenuItem.Text = "数据库管理";
             this.数据库管理ToolStripMenuItem.Click += new System.EventHandler(this.数据库管理ToolStripMenuItem_Click);
             // 
@@ -312,7 +311,7 @@
             this.区域视图管理ToolStripMenuItem,
             this.巡检视图管理ToolStripMenuItem});
             this.视图管理ToolStripMenuItem.Name = "视图管理ToolStripMenuItem";
-            this.视图管理ToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.视图管理ToolStripMenuItem.Size = new System.Drawing.Size(162, 24);
             this.视图管理ToolStripMenuItem.Text = "视图管理";
             this.视图管理ToolStripMenuItem.Visible = false;
             // 
@@ -344,21 +343,21 @@
             // 
             this.管理主机设置ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("管理主机设置ToolStripMenuItem.Image")));
             this.管理主机设置ToolStripMenuItem.Name = "管理主机设置ToolStripMenuItem";
-            this.管理主机设置ToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.管理主机设置ToolStripMenuItem.Size = new System.Drawing.Size(162, 24);
             this.管理主机设置ToolStripMenuItem.Text = "管理主机设置";
             this.管理主机设置ToolStripMenuItem.Click += new System.EventHandler(this.管理主机设置ToolStripMenuItem_Click);
             // 
             // 配置ToolStripMenuItem
             // 
             this.配置ToolStripMenuItem.Name = "配置ToolStripMenuItem";
-            this.配置ToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.配置ToolStripMenuItem.Size = new System.Drawing.Size(162, 24);
             this.配置ToolStripMenuItem.Text = "配置";
             this.配置ToolStripMenuItem.Visible = false;
             // 
             // 龙邦上传ToolStripMenuItem
             // 
             this.龙邦上传ToolStripMenuItem.Name = "龙邦上传ToolStripMenuItem";
-            this.龙邦上传ToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.龙邦上传ToolStripMenuItem.Size = new System.Drawing.Size(162, 24);
             this.龙邦上传ToolStripMenuItem.Text = "龙邦上传";
             this.龙邦上传ToolStripMenuItem.Visible = false;
             // 
@@ -366,7 +365,7 @@
             // 
             this.库房管理ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("库房管理ToolStripMenuItem.Image")));
             this.库房管理ToolStripMenuItem.Name = "库房管理ToolStripMenuItem";
-            this.库房管理ToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
+            this.库房管理ToolStripMenuItem.Size = new System.Drawing.Size(162, 24);
             this.库房管理ToolStripMenuItem.Text = "库房管理";
             this.库房管理ToolStripMenuItem.Click += new System.EventHandler(this.库房管理ToolStripMenuItem_Click);
             // 
@@ -387,8 +386,7 @@
             this.单实线ToolStripMenuItem,
             this.多实时曲线ToolStripMenuItem,
             this.全屏显示ToolStripMenuItem,
-            this.resizeToolStripMenuItem,
-            this.显示报告ToolStripMenuItem});
+            this.resizeToolStripMenuItem});
             this.视图ToolStripMenuItem.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.视图ToolStripMenuItem.Name = "视图ToolStripMenuItem";
             this.视图ToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
@@ -400,7 +398,7 @@
             this.菜单栏ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.菜单栏ToolStripMenuItem.Name = "菜单栏ToolStripMenuItem";
             this.菜单栏ToolStripMenuItem.ShowShortcutKeys = false;
-            this.菜单栏ToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.菜单栏ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.菜单栏ToolStripMenuItem.Text = "菜单栏";
             this.菜单栏ToolStripMenuItem.Click += new System.EventHandler(this.菜单栏ToolStripMenuItem_Click);
             // 
@@ -409,7 +407,7 @@
             this.工具栏ToolStripMenuItem.Checked = true;
             this.工具栏ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.工具栏ToolStripMenuItem.Name = "工具栏ToolStripMenuItem";
-            this.工具栏ToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.工具栏ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.工具栏ToolStripMenuItem.Text = "工具栏";
             this.工具栏ToolStripMenuItem.Click += new System.EventHandler(this.工具栏ToolStripMenuItem_Click);
             // 
@@ -418,7 +416,7 @@
             this.状态栏ToolStripMenuItem.Checked = true;
             this.状态栏ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.状态栏ToolStripMenuItem.Name = "状态栏ToolStripMenuItem";
-            this.状态栏ToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.状态栏ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.状态栏ToolStripMenuItem.Text = "状态栏";
             this.状态栏ToolStripMenuItem.Visible = false;
             // 
@@ -427,7 +425,7 @@
             this.标题栏ToolStripMenuItem.Checked = true;
             this.标题栏ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.标题栏ToolStripMenuItem.Name = "标题栏ToolStripMenuItem";
-            this.标题栏ToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.标题栏ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.标题栏ToolStripMenuItem.Text = "标题栏";
             this.标题栏ToolStripMenuItem.Click += new System.EventHandler(this.标题栏ToolStripMenuItem_Click);
             // 
@@ -436,7 +434,7 @@
             this.显示温度toolStripMenuItem.Checked = true;
             this.显示温度toolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.显示温度toolStripMenuItem.Name = "显示温度toolStripMenuItem";
-            this.显示温度toolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.显示温度toolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.显示温度toolStripMenuItem.Text = "显示温度";
             this.显示温度toolStripMenuItem.Click += new System.EventHandler(this.显示温度toolStripMenuItem_Click);
             // 
@@ -445,28 +443,28 @@
             this.显示湿度toolStripMenuItem.Checked = true;
             this.显示湿度toolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.显示湿度toolStripMenuItem.Name = "显示湿度toolStripMenuItem";
-            this.显示湿度toolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.显示湿度toolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.显示湿度toolStripMenuItem.Text = "显示湿度";
             this.显示湿度toolStripMenuItem.Click += new System.EventHandler(this.显示湿度toolStripMenuItem_Click);
             // 
             // 监测点视图ToolStripMenuItem
             // 
             this.监测点视图ToolStripMenuItem.Name = "监测点视图ToolStripMenuItem";
-            this.监测点视图ToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.监测点视图ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.监测点视图ToolStripMenuItem.Text = "监测点视图";
             this.监测点视图ToolStripMenuItem.Visible = false;
             // 
             // 温湿度视图ToolStripMenuItem
             // 
             this.温湿度视图ToolStripMenuItem.Name = "温湿度视图ToolStripMenuItem";
-            this.温湿度视图ToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.温湿度视图ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.温湿度视图ToolStripMenuItem.Text = "温湿度视图";
             this.温湿度视图ToolStripMenuItem.Visible = false;
             // 
             // 分组视图ToolStripMenuItem
             // 
             this.分组视图ToolStripMenuItem.Name = "分组视图ToolStripMenuItem";
-            this.分组视图ToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.分组视图ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.分组视图ToolStripMenuItem.Text = "分组视图";
             this.分组视图ToolStripMenuItem.Visible = false;
             // 
@@ -474,7 +472,7 @@
             // 
             this.分库浏览ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("分库浏览ToolStripMenuItem.Image")));
             this.分库浏览ToolStripMenuItem.Name = "分库浏览ToolStripMenuItem";
-            this.分库浏览ToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.分库浏览ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.分库浏览ToolStripMenuItem.Text = "分库浏览";
             this.分库浏览ToolStripMenuItem.Click += new System.EventHandler(this.分库浏览ToolStripMenuItem_Click);
             // 
@@ -482,21 +480,21 @@
             // 
             this.库房平面图ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("库房平面图ToolStripMenuItem.Image")));
             this.库房平面图ToolStripMenuItem.Name = "库房平面图ToolStripMenuItem";
-            this.库房平面图ToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.库房平面图ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.库房平面图ToolStripMenuItem.Text = "库房平面图";
             this.库房平面图ToolStripMenuItem.Click += new System.EventHandler(this.库房平面图ToolStripMenuItem_Click);
             // 
             // 单实线ToolStripMenuItem
             // 
             this.单实线ToolStripMenuItem.Name = "单实线ToolStripMenuItem";
-            this.单实线ToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.单实线ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.单实线ToolStripMenuItem.Text = "单实时曲线";
             this.单实线ToolStripMenuItem.Visible = false;
             // 
             // 多实时曲线ToolStripMenuItem
             // 
             this.多实时曲线ToolStripMenuItem.Name = "多实时曲线ToolStripMenuItem";
-            this.多实时曲线ToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.多实时曲线ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.多实时曲线ToolStripMenuItem.Text = "多实时曲线";
             this.多实时曲线ToolStripMenuItem.Visible = false;
             // 
@@ -504,7 +502,7 @@
             // 
             this.全屏显示ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("全屏显示ToolStripMenuItem.Image")));
             this.全屏显示ToolStripMenuItem.Name = "全屏显示ToolStripMenuItem";
-            this.全屏显示ToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.全屏显示ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.全屏显示ToolStripMenuItem.Text = "全屏显示(Esc退出)";
             this.全屏显示ToolStripMenuItem.Click += new System.EventHandler(this.全屏显示ToolStripMenuItem_Click);
             // 
@@ -519,7 +517,7 @@
             this.toolStripMenuItem6});
             this.resizeToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("resizeToolStripMenuItem.Image")));
             this.resizeToolStripMenuItem.Name = "resizeToolStripMenuItem";
-            this.resizeToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
+            this.resizeToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.resizeToolStripMenuItem.Text = "缩放";
             // 
             // toolStripMenuItem2
@@ -571,13 +569,6 @@
             this.toolStripMenuItem6.Size = new System.Drawing.Size(134, 24);
             this.toolStripMenuItem6.Text = "90%";
             this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
-            // 
-            // 显示报告ToolStripMenuItem
-            // 
-            this.显示报告ToolStripMenuItem.Name = "显示报告ToolStripMenuItem";
-            this.显示报告ToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
-            this.显示报告ToolStripMenuItem.Text = "显示报告";
-            this.显示报告ToolStripMenuItem.Click += new System.EventHandler(this.显示报告ToolStripMenuItem_Click);
             // 
             // 帮助ToolStripMenuItem
             // 
@@ -924,7 +915,6 @@
         public System.Windows.Forms.Timer timerGetdeviceinfo;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ToolStripMenuItem 显示报告ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 显示温度toolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 显示湿度toolStripMenuItem;
     }

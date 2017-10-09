@@ -50,7 +50,7 @@ namespace LBKJClient.dao
                 string sql1 = "insert into userinfo (id,name,pwd,enable,createTime,power) values ('" + id + "','" + ui.UserName + "', '" + ui.Pwd + "', '" + ui.Enable + "', '" + time + "', '" + ui.Power + "')";
                 rt = DbHelperMySQL.ExecuteSql(sql1);
 
-                if (cd != null)
+                if (cd != null && cd != "")
                 {
                     string terminalnames = null;
                     string[] terminalnames0 = cd.Split(new char[] { ',' });

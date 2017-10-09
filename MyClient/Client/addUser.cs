@@ -76,7 +76,8 @@ namespace LBKJClient
                 if (power != null && !"".Equals(power))
                 {
                     power = power.Substring(1);
-                    cd = cd.Substring(1);
+                    if (cd != null && cd != "")
+                        cd = cd.Substring(1);
                     bean.UserInfo ui = new bean.UserInfo();
                     ui.UserName = name;
                     ui.Pwd = MemoryPassword.MyEncrypt.EncryptDES(pwd);
