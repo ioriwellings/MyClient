@@ -604,8 +604,31 @@ namespace LBKJClient
 
                 this.dataGridView1.AllowUserToAddRows = false;
                 this.dataGridView1.RowsDefaultCellStyle.ForeColor = Color.Black;
+                for (int i = 0; i < this.dataGridView1.Columns.Count; i++)
+                {
+                    this.dataGridView1.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
 
                 //  int row = this.dataGridView1.Rows.Count;//得到总行数    
+                int row = this.dataGridView1.Rows.Count;//得到总行数    
+                for (int i = 0; i < row; i++)//得到总行数并在之内循环    
+                {
+                    double ww = double.Parse(this.dataGridView1.Rows[i].Cells[4].Value.ToString());
+                    double w1 = double.Parse(this.dataGridView1.Rows[i].Cells[6].Value.ToString());
+                    double w2 = double.Parse(this.dataGridView1.Rows[i].Cells[7].Value.ToString());
+                    double hh = double.Parse(this.dataGridView1.Rows[i].Cells[5].Value.ToString());
+                    double h1 = double.Parse(this.dataGridView1.Rows[i].Cells[8].Value.ToString());
+                    double h2 = double.Parse(this.dataGridView1.Rows[i].Cells[9].Value.ToString());
+
+                    if (ww > w1 || ww < w2)
+                    {
+                        this.dataGridView1.Rows[i].Cells[4].Style.ForeColor = Color.Red;
+                    }
+                    if (hh > h1 || hh < h2)
+                    {
+                        this.dataGridView1.Rows[i].Cells[5].Style.ForeColor = Color.Red;
+                    }
+                }
 
             }
         }
