@@ -253,8 +253,8 @@ namespace LBKJClient
         private void querywenshidu()
         {
             ///////////////////控制温湿度显示
-            bool xswd = this.显示温度toolStripMenuItem.Checked;
-            bool xssd = this.显示湿度toolStripMenuItem.Checked;
+            //bool xswd = this.显示温度toolStripMenuItem.Checked;
+            //bool xssd = this.显示湿度toolStripMenuItem.Checked;
             //////////////
             ////显示报告用
             //int COM = 1;
@@ -444,69 +444,28 @@ namespace LBKJClient
                                     r = new Rectangle((bit.Width - size.Width) / 2 - 130, 190, size.Width, size.Height);
                                     if (kk == 1)
                                     {
-                                        if (xswd)
-                                        {
-                                            g.DrawString(a.ToString("0.0") + "     ", font, Brushes.Gray, r, format);
-                                        }
-                                        else
-                                        {
-                                            g.DrawString("- -      ", font, Brushes.Gray, r, format);
-                                        };
+
+                                        g.DrawString("- -      ", font, Brushes.Gray, r, format);
                                         isbjShow = false;
                                     }
                                     else
                                     {
-                                        if (xswd)
-                                        {
-                                            if (a > b || a < c)
-                                            {
-                                                g.DrawString(a.ToString("0.0") + "     ", font, Brushes.Red, r, format);
-                                                isbjShow = true;
-                                            }
-                                            else
-                                            {
-                                                g.DrawString(a.ToString("0.0") + "     ", font, Brushes.Blue, r, format);
-                                            }
-                                        }
-                                        else
-                                        {
                                             g.DrawString("- -      ", font, Brushes.Gray, r, format);
                                             isbjShow = false;
-                                        };
                                     }
                                     size = TextRenderer.MeasureText(d.ToString("0.0") + "    ", font);
                                     r = new Rectangle((bit.Width - size.Width) / 2 - 130, 410, size.Width, size.Height);
                                     if (kk == 1)
                                     {
-                                        if (xssd)
-                                        {
-                                            g.DrawString(d.ToString("0.0") + "    ", font, Brushes.Gray, r, format);
-                                        }
-                                        else
-                                        {
-                                            g.DrawString("- -      ", font, Brushes.Gray, r, format);
-                                        };
+
+                                        g.DrawString("- -      ", font, Brushes.Gray, r, format);
                                         isbjShow = false;
                                     }
                                     else
                                     {
-                                        if (xssd)
-                                        {
-                                            if (d > e1 || d < f)
-                                            {
-                                                g.DrawString(d.ToString("0.0") + "    ", font, Brushes.Red, r, format);
-                                                isbjShow = true;
-                                            }
-                                            else
-                                            {
-                                                g.DrawString(d.ToString("0.0") + "    ", font, Brushes.Blue, r, format);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            g.DrawString("- -      ", font, Brushes.Gray, r, format);
-                                            isbjShow = false;
-                                        };
+
+                                        g.DrawString("- -      ", font, Brushes.Gray, r, format);
+                                        isbjShow = false;
                                     }
                                 }
                                 else
@@ -516,41 +475,12 @@ namespace LBKJClient
                                     {
                                         size = TextRenderer.MeasureText("0.0      ", font);
                                         r = new Rectangle((bit.Width - size.Width) / 2 - 130, 190, size.Width, size.Height);
-                                        if (xswd)
-                                        {
-                                            if (a > b || a < c)
-                                            {
-                                                g.DrawString("0.0      ", font, Brushes.Red, r, format);
-                                            }
-                                            else
-                                            {
-                                                g.DrawString("0.0      ", font, Brushes.Blue, r, format);
-                                            }
-                                            isbjShow = true;
-                                        }
-                                        else
-                                        {
-                                            g.DrawString("- -      ", font, Brushes.Gray, r, format);
-                                            isbjShow = false;
-                                        };
+                                        g.DrawString("- -      ", font, Brushes.Gray, r, format);
+                                        isbjShow = false;
                                         size = TextRenderer.MeasureText("0.0      ", font);
                                         r = new Rectangle((bit.Width - size.Width) / 2 - 130, 410, size.Width, size.Height);
-                                        if (xssd)
-                                        {
-                                            if (d > e1 || d < f)
-                                            {
-                                                g.DrawString("0.0      ", font, Brushes.Red, r, format);
-                                            }
-                                            else
-                                            {
-                                                g.DrawString("0.0      ", font, Brushes.Blue, r, format);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            g.DrawString("- -      ", font, Brushes.Gray, r, format);
-                                            isbjShow = false;
-                                        };
+                                        g.DrawString("- -      ", font, Brushes.Gray, r, format);
+                                        isbjShow = false;
                                     }
                                     else
                                     {
@@ -558,101 +488,24 @@ namespace LBKJClient
                                         {
                                             size = TextRenderer.MeasureText("0.0      ", font);
                                             r = new Rectangle((bit.Width - size.Width) / 2 - 130, 190, size.Width, size.Height);
-                                            if (xswd)
-                                            {
-                                                g.DrawString("0.0      ", font, Brushes.Gray, r, format);
-                                            }
-                                            else
-                                            {
-                                                g.DrawString("- -      ", font, Brushes.Gray, r, format);
-                                                isbjShow = false;
-                                            };
+                                            g.DrawString("- -      ", font, Brushes.Gray, r, format);
+                                            isbjShow = false;
                                             size = TextRenderer.MeasureText(d.ToString("0.0") + "    ", font);
                                             r = new Rectangle((bit.Width - size.Width) / 2 - 130, 410, size.Width, size.Height);
-                                            if (xssd)
-                                            {
-                                                if (d > e1 || d < f)
-                                                {
-                                                    if (kk == 1)
-                                                    {
-                                                        g.DrawString(d.ToString("0.0") + "    ", font, Brushes.Gray, r, format);
-                                                        isbjShow = false;
-                                                    }
-                                                    else
-                                                    {
-                                                        g.DrawString(d.ToString("0.0") + "    ", font, Brushes.Red, r, format);
-                                                        isbjShow = true;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    if (kk == 1)
-                                                    {
-                                                        g.DrawString(d.ToString("0.0") + "    ", font, Brushes.Gray, r, format);
-                                                        isbjShow = false;
-                                                    }
-                                                    else
-                                                    {
-                                                        g.DrawString(d.ToString("0.0") + "    ", font, Brushes.Blue, r, format);
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                g.DrawString("- -      ", font, Brushes.Gray, r, format);
-                                                isbjShow = false;
-                                            };
+                                            g.DrawString("- -      ", font, Brushes.Gray, r, format);
+                                            isbjShow = false;
                                         }
 
                                         if (d == 0)
                                         {
                                             size = TextRenderer.MeasureText("0.0    ", font);
                                             r = new Rectangle((bit.Width - size.Width) / 2 - 130, 410, size.Width, size.Height);
-                                            if (xssd)
-                                            {
-
-                                                g.DrawString("0.0    ", font, Brushes.Gray, r, format);
-                                            }
-                                            else
-                                            {
-                                                g.DrawString("- -      ", font, Brushes.Gray, r, format);
-                                                isbjShow = false;
-                                            };
+                                            g.DrawString("- -      ", font, Brushes.Gray, r, format);
+                                            isbjShow = false;
                                             size = TextRenderer.MeasureText(a.ToString("0.0") + "     ", font);
                                             r = new Rectangle((bit.Width - size.Width) / 2 - 130, 190, size.Width, size.Height);
-                                            if (xswd)
-                                            {
-                                                if (a > b || a < c)
-                                                {
-                                                    if (kk == 1)
-                                                    {
-                                                        g.DrawString(a.ToString("0.0") + "     ", font, Brushes.Gray, r, format);
-                                                        isbjShow = false;
-                                                    }
-                                                    else
-                                                    {
-                                                        g.DrawString(a.ToString("0.0") + "     ", font, Brushes.Red, r, format);
-                                                        isbjShow = true;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    if (kk == 1)
-                                                    {
-                                                        g.DrawString(a.ToString("0.0") + "     ", font, Brushes.Gray, r, format);
-                                                        isbjShow = false;
-                                                    }
-                                                    else
-                                                    {
-                                                        g.DrawString(a.ToString("0.0") + "     ", font, Brushes.Blue, r, format);
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                g.DrawString("- -      ", font, Brushes.Gray, r, format);
-                                                isbjShow = false;
-                                            };
+                                            g.DrawString("- -      ", font, Brushes.Gray, r, format);
+                                            isbjShow = false;
                                         }
                                     }
                                 }
@@ -1930,26 +1783,6 @@ namespace LBKJClient
             this.标题栏ToolStripMenuItem.Checked = !this.标题栏ToolStripMenuItem.Checked;
             this.lbtitle.Visible = this.标题栏ToolStripMenuItem.Checked;
         }
-
-        private void 显示报告ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            showReport rp = new showReport();
-            rp.ShowDialog();
-        }
-        private void 显示温度toolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.显示温度toolStripMenuItem.Checked = !this.显示温度toolStripMenuItem.Checked;
-            //首页-查询测点的实时温湿度数据              
-            querywenshidu();
-        }
-
-        private void 显示湿度toolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.显示湿度toolStripMenuItem.Checked = !this.显示湿度toolStripMenuItem.Checked;
-            //首页-查询测点的实时温湿度数据              
-            querywenshidu();
-        }
-
         private void 数据库管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process myProcess = new Process();

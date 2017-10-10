@@ -64,8 +64,6 @@
             this.工具栏ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.状态栏ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.标题栏ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.显示温度toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.显示湿度toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.监测点视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.温湿度视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.分组视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -376,8 +374,6 @@
             this.工具栏ToolStripMenuItem,
             this.状态栏ToolStripMenuItem,
             this.标题栏ToolStripMenuItem,
-            this.显示温度toolStripMenuItem,
-            this.显示湿度toolStripMenuItem,
             this.监测点视图ToolStripMenuItem,
             this.温湿度视图ToolStripMenuItem,
             this.分组视图ToolStripMenuItem,
@@ -428,24 +424,6 @@
             this.标题栏ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.标题栏ToolStripMenuItem.Text = "标题栏";
             this.标题栏ToolStripMenuItem.Click += new System.EventHandler(this.标题栏ToolStripMenuItem_Click);
-            // 
-            // 显示温度toolStripMenuItem
-            // 
-            this.显示温度toolStripMenuItem.Checked = true;
-            this.显示温度toolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.显示温度toolStripMenuItem.Name = "显示温度toolStripMenuItem";
-            this.显示温度toolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.显示温度toolStripMenuItem.Text = "显示温度";
-            this.显示温度toolStripMenuItem.Click += new System.EventHandler(this.显示温度toolStripMenuItem_Click);
-            // 
-            // 显示湿度toolStripMenuItem
-            // 
-            this.显示湿度toolStripMenuItem.Checked = true;
-            this.显示湿度toolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.显示湿度toolStripMenuItem.Name = "显示湿度toolStripMenuItem";
-            this.显示湿度toolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.显示湿度toolStripMenuItem.Text = "显示湿度";
-            this.显示湿度toolStripMenuItem.Click += new System.EventHandler(this.显示湿度toolStripMenuItem_Click);
             // 
             // 监测点视图ToolStripMenuItem
             // 
@@ -915,8 +893,6 @@
         public System.Windows.Forms.Timer timerGetdeviceinfo;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ToolStripMenuItem 显示温度toolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 显示湿度toolStripMenuItem;
     }
 }
 
